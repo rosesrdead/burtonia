@@ -225,7 +225,8 @@ saveItem.onclick = async () => {
 
         db.items.push({
 
-            id: Date.now(),
+            id:
+                Date.now(),
 
             title:
                 title,
