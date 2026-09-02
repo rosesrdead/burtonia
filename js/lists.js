@@ -172,7 +172,9 @@ function getFilteredItems() {
 
 
         return item.lists.some(
-            id => Number(id) === Number(currentList)
+            id =>
+                Number(id) ===
+                Number(currentList)
         );
 
     });
@@ -413,34 +415,43 @@ function editList(list) {
         newIcon.trim() || "📝";
 
 
-    /* ===== MENTÉS VAGY TÖRLÉS ===== */
+    /* ===== MENTÉS ===== */
 
-    const action =
-        confirm(
-            "OK = Mentés\n\nMégse = Lista törlése"
-        );
+    list.name =
+        value;
 
 
-    if (action) {
-
-        list.name =
-            value;
+    list.icon =
+        icon;
 
 
-        list.icon =
-            icon;
+    saveDB();
 
 
-        saveDB();
+    render();
 
-        render();
+
+    /* ===== TÖRLÉS NINCS AUTOMATIKUSAN =====
+       A lista törlését külön kezeljük,
+       hogy az emoji szerkesztése ne
+       véletlenül törölje a listát.
+    */
+
+}
+
+
+/* ===================================
+   LISTA TÖRLÉSE
+=================================== */
+
+function deleteList(list) {
+
+    if (!list) {
 
         return;
 
     }
 
-
-    /* ===== TÖRLÉS MEGERŐSÍTÉSE ===== */
 
     const reallyDelete =
         confirm(
