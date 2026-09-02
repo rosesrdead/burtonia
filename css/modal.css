@@ -24,6 +24,7 @@
     z-index: 9999;
 
     box-sizing: border-box;
+
 }
 
 
@@ -62,6 +63,7 @@
     min-height: 0;
 
     -webkit-overflow-scrolling: touch;
+
 }
 
 
@@ -71,6 +73,7 @@
 #modalBox h3 {
 
     color: #111;
+
 }
 
 
@@ -83,6 +86,7 @@
     grid-template-columns: 220px minmax(0, 1fr);
 
     gap: 24px;
+
 }
 
 
@@ -93,6 +97,7 @@
     flex-direction: column;
 
     gap: 12px;
+
 }
 
 
@@ -105,6 +110,7 @@
     gap: 10px;
 
     min-width: 0;
+
 }
 
 
@@ -135,6 +141,7 @@
     text-align: center;
 
     box-sizing: border-box;
+
 }
 
 
@@ -145,14 +152,8 @@
     height: 100%;
 
     object-fit: cover;
+
 }
-
-
-/* ===== LISTÁK ===== */
-/*
-   A listák kinézetét a listSelector.css kezeli.
-   Itt SZÁNDÉKOSAN nincs grid/kártya formázás.
-*/
 
 
 /* ===== GOMBOK ===== */
@@ -172,6 +173,7 @@
     border-top: 1px solid #ddd;
 
     flex-shrink: 0;
+
 }
 
 
@@ -184,6 +186,7 @@
     border-radius: 8px;
 
     cursor: pointer;
+
 }
 
 
@@ -200,6 +203,7 @@
         align-items: flex-start;
 
         overflow-y: auto;
+
     }
 
 
@@ -216,6 +220,7 @@
         border-radius: 12px;
 
         gap: 16px;
+
     }
 
 
@@ -224,12 +229,14 @@
         grid-template-columns: 1fr;
 
         gap: 18px;
+
     }
 
 
     .editorLeft {
 
         align-items: center;
+
     }
 
 
@@ -238,6 +245,7 @@
         width: 200px;
 
         height: 290px;
+
     }
 
 }
@@ -256,6 +264,7 @@
         align-items: flex-start;
 
         overflow-y: auto;
+
     }
 
 
@@ -272,6 +281,7 @@
         border-radius: 12px;
 
         gap: 14px;
+
     }
 
 
@@ -280,12 +290,14 @@
         grid-template-columns: 1fr;
 
         gap: 18px;
+
     }
 
 
     .editorLeft {
 
         align-items: center;
+
     }
 
 
@@ -294,12 +306,14 @@
         width: 190px;
 
         height: 275px;
+
     }
 
 
     #modalButtons {
 
         flex-direction: column;
+
     }
 
 
@@ -308,6 +322,7 @@
         width: 100%;
 
         min-height: 44px;
+
     }
 
 }
@@ -322,6 +337,7 @@
     #modal {
 
         padding: 5px;
+
     }
 
 
@@ -332,6 +348,7 @@
         padding: 12px;
 
         gap: 12px;
+
     }
 
 
@@ -340,6 +357,7 @@
         width: 170px;
 
         height: 250px;
+
     }
 
 }
