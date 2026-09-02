@@ -2,9 +2,14 @@
    BURTONIA - Render Items
 =================================== */
 
-function getFilteredItems(){
 
-    if(currentList === "all"){
+/* ===================================
+   SZŰRT ELEMEK
+=================================== */
+
+function getFilteredItems() {
+
+    if (currentList === "all") {
 
         return db.items;
 
@@ -21,41 +26,58 @@ function getFilteredItems(){
 }
 
 
+/* ===================================
+   KÁRTYA
+=================================== */
 
-function createCard(item){
+function createCard(item) {
 
-    const card = document.createElement("div");
-
-    card.className = "card";
-
-
-    const poster = document.createElement("div");
-
-    poster.className = "poster";
+    const card =
+        document.createElement("div");
 
 
-    if(item.image){
+    card.className =
+        "card";
 
-        const img = document.createElement("img");
 
-        img.src = item.image;
+    const poster =
+        document.createElement("div");
 
-        img.alt = item.title;
+
+    poster.className =
+        "poster";
+
+
+    if (item.image) {
+
+        const img =
+            document.createElement("img");
+
+
+        img.src =
+            item.image;
+
+
+        img.alt =
+            item.title;
+
 
         poster.appendChild(img);
 
+    } else {
 
-    }else{
-
-        poster.textContent = "Nincs borító";
+        poster.textContent =
+            "Nincs borító";
 
     }
 
 
+    const title =
+        document.createElement("div");
 
-    const title = document.createElement("div");
 
-    title.className = "title";
+    title.className =
+        "title";
 
 
     title.textContent =
@@ -67,85 +89,103 @@ function createCard(item){
         + item.title;
 
 
-
     card.appendChild(poster);
 
     card.appendChild(title);
 
 
+    /* ===== MEGJELENÉSI ÉV ===== */
+
+    if (item.year) {
+
+        const year =
+            document.createElement("div");
 
 
-    // Megjelenési év
+        year.className =
+            "movieYear";
 
-    if(item.year){
 
-        const year = document.createElement("div");
+        year.textContent =
+            "📅 " + item.year;
 
-        year.className = "movieYear";
-
-        year.textContent = "📅 " + item.year;
 
         card.appendChild(year);
 
     }
 
 
+    /* ===== MŰFAJOK ===== */
+
+    if (
+        item.genres &&
+        item.genres.length
+    ) {
+
+        const genres =
+            document.createElement("div");
 
 
-    // Műfajok
+        genres.className =
+            "movieGenres";
 
-    if(item.genres && item.genres.length){
-
-        const genres = document.createElement("div");
-
-        genres.className = "movieGenres";
 
         genres.textContent =
-            "🎭 " + item.genres.join(" • ");
+            "🎭 " +
+            item.genres.join(" • ");
+
 
         card.appendChild(genres);
 
     }
 
 
+    /* ===== EREDETI CÍM ===== */
+
+    if (item.originalTitle) {
+
+        const original =
+            document.createElement("div");
 
 
-    // Eredeti cím
+        original.className =
+            "originalTitle";
 
-    if(item.originalTitle){
 
-        const original = document.createElement("div");
+        original.textContent =
+            item.originalTitle;
 
-        original.className = "originalTitle";
-
-        original.textContent = item.originalTitle;
 
         card.appendChild(original);
 
     }
 
 
+    /* ===== BEFEJEZÉS ===== */
+
+    if (item.finished) {
+
+        const finished =
+            document.createElement("div");
 
 
+        finished.className =
+            "finishedDate";
 
-    // Befejezés
-
-    if(item.finished){
-
-        const finished = document.createElement("div");
-
-        finished.className = "finishedDate";
 
         finished.textContent =
-            "✅ " + item.finished;
+            "✅ " +
+            item.finished;
+
 
         card.appendChild(finished);
 
     }
 
 
+    /* ===== SZERKESZTÉS ===== */
 
-    card.onclick = ()=>{
+    card.onclick = () => {
 
         openEditor(item);
 
@@ -157,44 +197,48 @@ function createCard(item){
 }
 
 
+/* ===================================
+   FILMEK / SOROZATOK MEGJELENÍTÉSE
+=================================== */
+
+function renderItems() {
+
+    moviesGrid.innerHTML =
+        "";
 
 
-function renderItems(){
-
-    moviesGrid.innerHTML = "";
-
-    seriesGrid.innerHTML = "";
+    seriesGrid.innerHTML =
+        "";
 
 
-
-    const items = sortItems(
-
-        getFilteredItems()
-
-    );
-
+    const items =
+        sortItems(
+            getFilteredItems()
+        );
 
 
     items.forEach(item => {
 
-
-        const card = createCard(item);
-
-
-
-        if(item.type === "movie"){
-
-            moviesGrid.appendChild(card);
+        const card =
+            createCard(item);
 
 
-        }else{
+        if (
+            item.type === "movie"
+        ) {
 
-            seriesGrid.appendChild(card);
+            moviesGrid.appendChild(
+                card
+            );
+
+        } else {
+
+            seriesGrid.appendChild(
+                card
+            );
 
         }
 
-
     });
-
 
 }
