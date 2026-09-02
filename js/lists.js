@@ -2,22 +2,29 @@
    BURTONIA - Lists
 =================================== */
 
-function renderLists(){
+
+function renderLists() {
 
     sidebarItems.innerHTML = "";
 
-    // Kezdőlap
 
-    const home = document.createElement("div");
+    /* ===== KEZDŐLAP ===== */
+
+    const home =
+        document.createElement("div");
+
 
     home.className =
         currentView === "home"
-        ? "sidebarItem active"
-        : "sidebarItem";
+            ? "sidebarItem active"
+            : "sidebarItem";
 
-    home.textContent = "🏠 Kezdőlap";
 
-    home.onclick = ()=>{
+    home.textContent =
+        "🏠 Kezdőlap";
+
+
+    home.onclick = () => {
 
         currentView = "home";
 
@@ -25,21 +32,27 @@ function renderLists(){
 
     };
 
+
     sidebarItems.appendChild(home);
 
 
-    // Böngészés
+    /* ===== BÖNGÉSZÉS ===== */
 
-    const browse = document.createElement("div");
+    const browse =
+        document.createElement("div");
+
 
     browse.className =
         currentView === "browse"
-        ? "sidebarItem active"
-        : "sidebarItem";
+            ? "sidebarItem active"
+            : "sidebarItem";
 
-    browse.textContent = "🎭 Böngészés";
 
-    browse.onclick = ()=>{
+    browse.textContent =
+        "🎭 Böngészés";
+
+
+    browse.onclick = () => {
 
         currentView = "browse";
 
@@ -47,22 +60,28 @@ function renderLists(){
 
     };
 
+
     sidebarItems.appendChild(browse);
 
 
-    // Könyvtár
+    /* ===== KÖNYVTÁR ===== */
 
-    const library = document.createElement("div");
+    const library =
+        document.createElement("div");
+
 
     library.className =
         currentView === "library" &&
         currentList === "all"
-        ? "sidebarItem active"
-        : "sidebarItem";
+            ? "sidebarItem active"
+            : "sidebarItem";
 
-    library.textContent = "🎬 Könyvtár";
 
-    library.onclick = ()=>{
+    library.textContent =
+        "🎬 Könyvtár";
+
+
+    library.onclick = () => {
 
         currentView = "library";
 
@@ -72,27 +91,32 @@ function renderLists(){
 
     };
 
+
     sidebarItems.appendChild(library);
 
 
-    // Saját listák
+    /* ===== SAJÁT LISTÁK ===== */
 
-    db.lists.forEach(list=>{
+    db.lists.forEach(list => {
 
-        const row = document.createElement("div");
+        const row =
+            document.createElement("div");
+
 
         row.className =
             currentView === "library" &&
             currentList === list.id
-            ? "sidebarItem active"
-            : "sidebarItem";
+                ? "sidebarItem active"
+                : "sidebarItem";
+
 
         row.textContent =
             (list.icon || "📝") +
             " " +
             list.name;
 
-        row.onclick = ()=>{
+
+        row.onclick = () => {
 
             currentView = "library";
 
@@ -102,13 +126,15 @@ function renderLists(){
 
         };
 
-        row.ondblclick = (e)=>{
+
+        row.ondblclick = e => {
 
             e.stopPropagation();
 
             editList(list);
 
         };
+
 
         sidebarItems.appendChild(row);
 
@@ -117,17 +143,20 @@ function renderLists(){
 }
 
 
+/* ===================================
+   SZŰRT ELEMEK
+=================================== */
 
+function getFilteredItems() {
 
-function getFilteredItems(){
-
-    if(currentList === "all"){
+    if (currentList === "all") {
 
         return db.items;
 
     }
 
-    return db.items.filter(item=>
+
+    return db.items.filter(item =>
 
         item.lists &&
         item.lists.includes(currentList)
@@ -137,39 +166,53 @@ function getFilteredItems(){
 }
 
 
+/* ===================================
+   FŐ RENDER
+=================================== */
 
-
-function render(){
+function render() {
 
     renderLists();
 
-    renderListCheckboxes();
 
-    homePage.style.display = "none";
-    browsePage.style.display = "none";
-    libraryPage.style.display = "none";
+    homePage.style.display =
+        "none";
 
-    switch(currentView){
+
+    browsePage.style.display =
+        "none";
+
+
+    libraryPage.style.display =
+        "none";
+
+
+    switch (currentView) {
 
         case "home":
 
-            homePage.style.display = "block";
+            homePage.style.display =
+                "block";
 
             renderHome();
 
             break;
 
+
         case "browse":
 
-            browsePage.style.display = "block";
+            browsePage.style.display =
+                "block";
 
             renderBrowse();
 
             break;
 
+
         default:
 
-            libraryPage.style.display = "block";
+            libraryPage.style.display =
+                "block";
 
             renderItems();
 
@@ -180,41 +223,56 @@ function render(){
 }
 
 
+/* ===================================
+   ÚJ LISTA
+=================================== */
 
-
-addList.onclick = ()=>{
+addList.onclick = () => {
 
     closeFab();
 
-    const name = prompt("Új lista neve:");
 
-    if(!name){
+    const name =
+        prompt("Új lista neve:");
 
-        return;
 
-    }
-
-    const value = name.trim();
-
-    if(value === ""){
+    if (!name) {
 
         return;
 
     }
 
-    const exists = db.lists.find(list=>
 
-        list.name.toLowerCase() === value.toLowerCase()
+    const value =
+        name.trim();
 
-    );
 
-    if(exists){
-
-        alert("Ez a lista már létezik.");
+    if (value === "") {
 
         return;
 
     }
+
+
+    const exists =
+        db.lists.find(list =>
+
+            list.name.toLowerCase() ===
+            value.toLowerCase()
+
+        );
+
+
+    if (exists) {
+
+        alert(
+            "Ez a lista már létezik."
+        );
+
+        return;
+
+    }
+
 
     db.lists.push({
 
@@ -226,6 +284,7 @@ addList.onclick = ()=>{
 
     });
 
+
     saveDB();
 
     render();
@@ -233,33 +292,48 @@ addList.onclick = ()=>{
 };
 
 
+/* ===================================
+   LISTA SZERKESZTÉSE
+=================================== */
+
+function editList(list) {
+
+    const newName =
+        prompt(
+            "Lista neve:",
+            list.name
+        );
 
 
-function editList(list){
-
-    const newName = prompt("Lista neve:", list.name);
-
-    if(newName === null){
+    if (newName === null) {
 
         return;
 
     }
 
-    const value = newName.trim();
 
-    if(value === ""){
+    const value =
+        newName.trim();
+
+
+    if (value === "") {
 
         return;
 
     }
 
-    const action = confirm(
-        "OK = Mentés\n\nMégse = Lista törlése"
-    );
 
-    if(action){
+    const action =
+        confirm(
+            "OK = Mentés\n\nMégse = Lista törlése"
+        );
 
-        list.name = value;
+
+    if (action) {
+
+        list.name =
+            value;
+
 
         saveDB();
 
@@ -269,31 +343,46 @@ function editList(list){
 
     }
 
-    const reallyDelete = confirm(
-        "Biztosan törlöd ezt a listát?\n\nA filmek NEM fognak törlődni."
-    );
 
-    if(!reallyDelete){
+    const reallyDelete =
+        confirm(
+            "Biztosan törlöd ezt a listát?\n\nA filmek NEM fognak törlődni."
+        );
+
+
+    if (!reallyDelete) {
 
         return;
 
     }
 
-    db.lists = db.lists.filter(l => l.id !== list.id);
 
-    db.items.forEach(item=>{
+    db.lists =
+        db.lists.filter(
+            l => l.id !== list.id
+        );
 
-        if(item.lists){
 
-            item.lists = item.lists.filter(id=>id !== list.id);
+    db.items.forEach(item => {
+
+        if (item.lists) {
+
+            item.lists =
+                item.lists.filter(
+                    id => id !== list.id
+                );
 
         }
 
     });
 
+
     saveDB();
 
-    currentList = "all";
+
+    currentList =
+        "all";
+
 
     render();
 
