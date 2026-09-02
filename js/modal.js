@@ -3,10 +3,6 @@
 =================================== */
 
 
-/* ===================================
-   ÚJ FILM / ÚJ SOROZAT
-=================================== */
-
 function openModal(type) {
 
     editMode = false;
@@ -14,7 +10,6 @@ function openModal(type) {
     selectedItem = null;
 
     modal.style.display = "flex";
-
 
     modalTitle.textContent =
         type === "movie"
@@ -48,18 +43,35 @@ function openModal(type) {
     refreshStatusUI();
 
 
+    /* ===== MŰFAJOK ===== */
+
+    const genreCheckboxes =
+        document.querySelectorAll(
+            "#genreContainer input"
+        );
+
+
+    genreCheckboxes.forEach(cb => {
+
+        cb.checked = false;
+
+    });
+
+
+    /* ===== LISTÁK ===== */
+
+    renderListCheckboxes();
+
+
     closeFab();
 
 }
 
 
-/* ===================================
-   MODAL BEZÁRÁSA
-=================================== */
-
 function closeModal() {
 
-    modal.style.display = "none";
+    modal.style.display =
+        "none";
 
     selectedItem = null;
 
@@ -68,19 +80,11 @@ function closeModal() {
 }
 
 
-/* ===================================
-   MÉGSE
-=================================== */
-
 cancelItem.onclick =
     closeModal;
 
 
-/* ===================================
-   KATTINTÁS A HÁTTÉRRE
-=================================== */
-
-modal.onclick = e => {
+modal.onclick = (e) => {
 
     if (e.target === modal) {
 
@@ -91,10 +95,6 @@ modal.onclick = e => {
 };
 
 
-/* ===================================
-   ÚJ FILM
-=================================== */
-
 addMovie.onclick = () => {
 
     openModal("movie");
@@ -102,20 +102,12 @@ addMovie.onclick = () => {
 };
 
 
-/* ===================================
-   ÚJ SOROZAT
-=================================== */
-
 addSeries.onclick = () => {
 
     openModal("series");
 
 };
 
-
-/* ===================================
-   ESC
-=================================== */
 
 document.addEventListener(
     "keydown",
