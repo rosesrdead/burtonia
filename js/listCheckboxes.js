@@ -10,7 +10,9 @@
 function renderListCheckboxes(selectedLists = []) {
 
     const container =
-        document.getElementById("listCheckboxContainer");
+        document.getElementById(
+            "listCheckboxContainer"
+        );
 
 
     if (!container) {
@@ -23,15 +25,27 @@ function renderListCheckboxes(selectedLists = []) {
     container.innerHTML = "";
 
 
-    if (!db || !db.lists || db.lists.length === 0) {
+    /* ===================================
+       NINCS MÉG LISTA
+    =================================== */
+
+    if (
+        !db ||
+        !Array.isArray(db.lists) ||
+        db.lists.length === 0
+    ) {
 
         const empty =
             document.createElement("div");
 
-        empty.className = "listCheckboxEmpty";
+
+        empty.className =
+            "listCheckboxEmpty";
+
 
         empty.textContent =
             "Még nincs létrehozott lista.";
+
 
         container.appendChild(empty);
 
@@ -39,6 +53,20 @@ function renderListCheckboxes(selectedLists = []) {
 
     }
 
+
+    /* ===================================
+       KIVÁLASZTOTT LISTÁK EGYSÉGESÍTÉSE
+    =================================== */
+
+    const selectedIds =
+        selectedLists.map(id =>
+            String(id)
+        );
+
+
+    /* ===================================
+       LISTÁK KIRAJZOLÁSA
+    =================================== */
 
     db.lists.forEach(list => {
 
@@ -55,14 +83,13 @@ function renderListCheckboxes(selectedLists = []) {
 
 
         checkbox.value =
-            list.id;
+            String(list.id);
 
 
         checkbox.checked =
-            selectedLists.includes(list.id);
-
-
-        label.appendChild(checkbox);
+            selectedIds.includes(
+                String(list.id)
+            );
 
 
         const icon =
@@ -70,13 +97,23 @@ function renderListCheckboxes(selectedLists = []) {
 
 
         label.appendChild(
+            checkbox
+        );
+
+
+        label.appendChild(
             document.createTextNode(
-                icon + " " + list.name
+                " " +
+                icon +
+                " " +
+                list.name
             )
         );
 
 
-        container.appendChild(label);
+        container.appendChild(
+            label
+        );
 
     });
 
@@ -91,7 +128,7 @@ function getSelectedLists() {
 
     return [
         ...document.querySelectorAll(
-            "#listCheckboxContainer input:checked"
+            "#listCheckboxContainer input[type='checkbox']:checked"
         )
     ].map(cb => {
 
