@@ -2,62 +2,159 @@
    BURTONIA - List Selector
 =================================== */
 
-#listContainer{
+#listContainer {
 
-    display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
-    gap:12px;
+    display: grid;
 
-    margin-top:12px;
+    grid-template-columns:
+        repeat(auto-fill, minmax(180px, 1fr));
 
-}
+    gap: 12px;
 
-.listCard{
+    margin-top: 12px;
 
-    display:flex;
-    align-items:center;
-    gap:12px;
+    /*
+       A listák kapjanak valódi helyet.
+    */
 
-    padding:12px;
+    min-height: 100px;
 
-    border:1px solid #555;
-    border-radius:10px;
+    max-height: 280px;
 
-    background:rgba(255,255,255,.05);
+    overflow-y: auto;
 
-    cursor:pointer;
+    overflow-x: hidden;
 
-    transition:.2s;
+    padding: 4px;
 
-}
+    box-sizing: border-box;
 
-.listCard:hover{
+    /*
+       Ne zsugorodjon össze a modal flex
+       elrendezése miatt.
+    */
 
-    border-color:gold;
+    flex-shrink: 0;
 
-    transform:translateY(-2px);
+    -webkit-overflow-scrolling: touch;
 
-}
-
-.listCard input{
-
-    width:18px;
-    height:18px;
-
-    margin:0;
+    overscroll-behavior: contain;
 
 }
 
-.listCardIcon{
 
-    font-size:22px;
+/* ===================================
+   LISTA KÁRTYA
+=================================== */
+
+.listCard {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    min-height: 58px;
+
+    padding: 12px;
+
+    border: 1px solid #555;
+
+    border-radius: 10px;
+
+    background: rgba(255,255,255,.05);
+
+    cursor: pointer;
+
+    transition: .2s;
+
+    box-sizing: border-box;
 
 }
 
-.listCardName{
 
-    font-weight:600;
+.listCard:hover {
 
-    flex:1;
+    border-color: gold;
+
+    transform: translateY(-2px);
+
+}
+
+
+/* ===================================
+   CHECKBOX
+=================================== */
+
+.listCard input {
+
+    width: 18px;
+
+    height: 18px;
+
+    margin: 0;
+
+    flex-shrink: 0;
+
+}
+
+
+/* ===================================
+   IKON
+=================================== */
+
+.listCardIcon {
+
+    font-size: 22px;
+
+    flex-shrink: 0;
+
+}
+
+
+/* ===================================
+   LISTA NEVE
+=================================== */
+
+.listCardName {
+
+    font-weight: 600;
+
+    flex: 1;
+
+    min-width: 0;
+
+    overflow-wrap: anywhere;
+
+}
+
+
+/* ===================================
+   MOBIL
+=================================== */
+
+@media (max-width: 600px) {
+
+    #listContainer {
+
+        grid-template-columns: 1fr;
+
+        max-height: 260px;
+
+        min-height: 100px;
+
+        gap: 8px;
+
+    }
+
+
+    .listCard {
+
+        min-height: 54px;
+
+        padding: 10px;
+
+    }
 
 }
