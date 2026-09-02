@@ -23,12 +23,20 @@
     <link rel="stylesheet"
           href="style.css">
 
+    <link rel="stylesheet"
+          href="css/listCheckboxes.css">
+
 </head>
+
 
 <body>
 
     <div id="backgroundOverlay"></div>
 
+
+    <!-- ===================================
+         FEJLÉC
+    =================================== -->
 
     <header>
 
@@ -43,7 +51,16 @@
     </header>
 
 
+    <!-- ===================================
+         FŐ ELRENDEZÉS
+    =================================== -->
+
     <div id="layout">
+
+
+        <!-- ===================================
+             OLDALSÁV
+        =================================== -->
 
         <aside id="sidebar">
 
@@ -56,10 +73,23 @@
         </aside>
 
 
+        <!-- ===================================
+             FŐ TARTALOM
+        =================================== -->
+
         <main>
+
+
+            <!-- ===================================
+                 KEZDŐLAP
+            =================================== -->
 
             <div id="homePage"></div>
 
+
+            <!-- ===================================
+                 BÖNGÉSZÉS
+            =================================== -->
 
             <div id="browsePage"
                  style="display:none;">
@@ -72,6 +102,10 @@
 
             </div>
 
+
+            <!-- ===================================
+                 KÖNYVTÁR
+            =================================== -->
 
             <div id="libraryPage">
 
@@ -122,6 +156,10 @@
     </div>
 
 
+    <!-- ===================================
+         FAB
+    =================================== -->
+
     <button id="fab">
         +
     </button>
@@ -152,12 +190,18 @@
 
         <div id="modalBox">
 
+
             <h2 id="modalTitle">
                 Új elem
             </h2>
 
 
             <div class="editorTop">
+
+
+                <!-- ===================================
+                     BAL OLDAL
+                =================================== -->
 
                 <div class="editorLeft">
 
@@ -185,7 +229,14 @@
                 </div>
 
 
+                <!-- ===================================
+                     JOBB OLDAL
+                =================================== -->
+
                 <div class="editorRight">
+
+
+                    <!-- CÍM -->
 
                     <label for="itemTitle">
                         Magyar cím
@@ -197,6 +248,8 @@
                         placeholder="Magyar cím">
 
 
+                    <!-- EREDETI CÍM -->
+
                     <label for="itemOriginalTitle">
                         Eredeti cím
                     </label>
@@ -206,6 +259,8 @@
                         type="text"
                         placeholder="Eredeti cím">
 
+
+                    <!-- TÍPUS -->
 
                     <label for="itemType">
                         Típus
@@ -224,12 +279,16 @@
                     </select>
 
 
+                    <!-- ÁLLAPOT -->
+
                     <label for="itemStatus">
                         Állapot
                     </label>
 
                     <select id="itemStatus"></select>
 
+
+                    <!-- ÉV -->
 
                     <label for="itemYear">
                         Megjelenés éve
@@ -243,6 +302,10 @@
                         placeholder="2024">
 
 
+                    <!-- ===================================
+                         MŰFAJOK
+                    =================================== -->
+
                     <label>
                         Műfaj(ok)
                     </label>
@@ -250,135 +313,162 @@
 
                     <div id="genreContainer">
 
+
                         <label>
                             <input type="checkbox" value="Akció">
                             Akció
                         </label>
+
 
                         <label>
                             <input type="checkbox" value="Animáció">
                             Animáció
                         </label>
 
+
                         <label>
                             <input type="checkbox" value="Anime">
                             Anime
                         </label>
+
 
                         <label>
                             <input type="checkbox" value="Családi">
                             Családi
                         </label>
 
+
                         <label>
                             <input type="checkbox" value="Dokumentum">
                             Dokumentum
                         </label>
+
 
                         <label>
                             <input type="checkbox" value="Dráma">
                             Dráma
                         </label>
 
+
                         <label>
                             <input type="checkbox" value="Fantasy">
                             Fantasy
                         </label>
+
 
                         <label>
                             <input type="checkbox" value="Filmdráma">
                             Filmdráma
                         </label>
 
+
                         <label>
                             <input type="checkbox" value="Független film">
                             Független film
                         </label>
+
 
                         <label>
                             <input type="checkbox" value="Gyerek">
                             Gyerek
                         </label>
 
+
                         <label>
                             <input type="checkbox" value="Háborús">
                             Háborús
                         </label>
+
 
                         <label>
                             <input type="checkbox" value="Horror">
                             Horror
                         </label>
 
+
                         <label>
                             <input type="checkbox" value="Kaland">
                             Kaland
                         </label>
+
 
                         <label>
                             <input type="checkbox" value="Katasztrófa">
                             Katasztrófa
                         </label>
 
+
                         <label>
                             <input type="checkbox" value="Krimi">
                             Krimi
                         </label>
+
 
                         <label>
                             <input type="checkbox" value="Misztikus">
                             Misztikus
                         </label>
 
+
                         <label>
                             <input type="checkbox" value="Musical">
                             Musical
                         </label>
+
 
                         <label>
                             <input type="checkbox" value="Paródia">
                             Paródia
                         </label>
 
+
                         <label>
                             <input type="checkbox" value="Romantikus">
                             Romantikus
                         </label>
+
 
                         <label>
                             <input type="checkbox" value="Sci-Fi">
                             Sci-Fi
                         </label>
 
+
                         <label>
                             <input type="checkbox" value="Stop motion">
                             Stop motion
                         </label>
+
 
                         <label>
                             <input type="checkbox" value="Szitkom">
                             Szitkom
                         </label>
 
+
                         <label>
                             <input type="checkbox" value="Thriller">
                             Thriller
                         </label>
+
 
                         <label>
                             <input type="checkbox" value="Történelmi">
                             Történelmi
                         </label>
 
+
                         <label>
                             <input type="checkbox" value="Western">
                             Western
                         </label>
 
+
                         <label>
                             <input type="checkbox" value="Vígjáték">
                             Vígjáték
                         </label>
+
 
                         <label>
                             <input type="checkbox" value="Életrajzi">
@@ -387,6 +477,22 @@
 
                     </div>
 
+
+                    <!-- ===================================
+                         LISTÁK
+                    =================================== -->
+
+                    <label>
+                        Listák
+                    </label>
+
+
+                    <div id="listCheckboxContainer"></div>
+
+
+                    <!-- ===================================
+                         BEFEJEZÉS
+                    =================================== -->
 
                     <label for="itemFinished">
                         Befejezés dátuma
@@ -400,6 +506,10 @@
 
             </div>
 
+
+            <!-- ===================================
+                 MODAL GOMBOK
+            =================================== -->
 
             <div id="modalButtons">
 
@@ -430,16 +540,22 @@
 
         <div id="settingsBox">
 
+
             <h2>
                 ⚙️ Beállítások
             </h2>
 
+
+            <!-- ===================================
+                 BETŰK
+            =================================== -->
 
             <div class="settingsGroup">
 
                 <h3>
                     📝 Betűk
                 </h3>
+
 
                 <label for="fontSize">
                     Betűméret
@@ -452,9 +568,11 @@
                     max="30"
                     value="16">
 
+
                 <div id="fontSizeValue">
                     16 px
                 </div>
+
 
                 <label for="fontWeight">
                     Betűvastagság
@@ -468,6 +586,7 @@
                     step="100"
                     value="500">
 
+
                 <div id="fontWeightValue">
                     500
                 </div>
@@ -475,28 +594,37 @@
             </div>
 
 
+            <!-- ===================================
+                 HÁTTÉR
+            =================================== -->
+
             <div class="settingsGroup">
 
                 <h3>
                     🎨 Háttér
                 </h3>
 
+
                 <label for="backgroundText">
                     Egyedi szín
                 </label>
+
 
                 <input
                     id="backgroundText"
                     type="text"
                     placeholder="#111111 vagy black">
 
+
                 <button id="applyBackground">
                     Alkalmaz
                 </button>
 
+
                 <label for="backgroundPicker">
                     Színválasztó
                 </label>
+
 
                 <input
                     id="backgroundPicker"
@@ -506,15 +634,21 @@
             </div>
 
 
+            <!-- ===================================
+                 HÁTTÉRKÉP
+            =================================== -->
+
             <div class="settingsGroup">
 
                 <h3>
                     🖼 Háttérkép
                 </h3>
 
+
                 <button id="changeWallpaper">
                     Kép kiválasztása
                 </button>
+
 
                 <button id="removeWallpaper">
                     Háttér törlése
@@ -523,19 +657,26 @@
             </div>
 
 
+            <!-- ===================================
+                 CLOUD SYNC
+            =================================== -->
+
             <div class="settingsGroup cloudSyncGroup">
 
                 <h3>
                     ☁️ Felhős szinkronizálás
                 </h3>
 
+
                 <div id="cloudSyncStatus">
                     Nincs bejelentkezve.
                 </div>
 
+
                 <label for="cloudEmail">
                     E-mail cím
                 </label>
+
 
                 <input
                     id="cloudEmail"
@@ -543,9 +684,11 @@
                     placeholder="te@email.com"
                     autocomplete="email">
 
+
                 <button id="cloudLoginButton">
                     ✉️ Belépési link küldése
                 </button>
+
 
                 <button
                     id="cloudLogoutButton"
@@ -555,6 +698,7 @@
 
                 </button>
 
+
                 <div
                     id="cloudSyncActions"
                     style="display:none;">
@@ -563,11 +707,13 @@
                         ☁️ Helyi adatok feltöltése
                     </button>
 
+
                     <button id="cloudDownloadButton">
                         ⬇️ Felhőből betöltés
                     </button>
 
                 </div>
+
 
                 <small>
                     Ugyanazzal az e-mail címmel jelentkezz be
@@ -589,6 +735,10 @@
     </div>
 
 
+    <!-- ===================================
+         SCRIPT-EK
+    =================================== -->
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script src="js/config.js"></script>
@@ -604,6 +754,8 @@
     <script src="js/home.js"></script>
 
     <script src="js/lists.js"></script>
+
+    <script src="js/listCheckboxes.js"></script>
 
     <script src="js/stats.js"></script>
 
