@@ -5,410 +5,479 @@
 
 /* ===== ÁLTALÁNOS MODAL ===== */
 
-#modal{
+#modal {
+    position: fixed;
+    inset: 0;
 
-    position:fixed;
+    display: none;
 
-    inset:0;
+    justify-content: center;
+    align-items: center;
 
-    display:none;
+    background: rgba(0, 0, 0, .6);
 
-    justify-content:center;
+    padding: 20px;
 
-    align-items:center;
+    z-index: 9999;
 
-    background:rgba(0,0,0,.6);
-
-    padding:20px;
-
-    z-index:9999;
-
+    box-sizing: border-box;
 }
 
 
 /* ===== MODAL DOBOZ ===== */
 
-#modalBox{
+#modalBox {
+    width: 900px;
+    max-width: 95vw;
 
-    width:900px;
+    max-height: 90vh;
 
-    max-width:95vw;
+    overflow-y: auto;
+    overflow-x: hidden;
 
-    max-height:90vh;
+    background: #ffffff;
+    color: #111;
 
-    overflow-y:auto;
+    border-radius: 14px;
 
-    overflow-x:hidden;
+    padding: 24px;
 
-    background:#ffffff;
+    display: flex;
+    flex-direction: column;
 
-    color:#111;
+    gap: 20px;
 
-    border-radius:14px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, .35);
 
-    padding:24px;
+    box-sizing: border-box;
 
-    display:flex;
+    min-height: 0;
 
-    flex-direction:column;
-
-    gap:20px;
-
-    box-shadow:0 20px 60px rgba(0,0,0,.35);
-
-    box-sizing:border-box;
-
-    min-height:0;
-
-    -webkit-overflow-scrolling:touch;
-
+    -webkit-overflow-scrolling: touch;
 }
 
 
 /* ===== CÍMEK ===== */
 
 #modalBox h2,
-#modalBox h3{
-
-    color:#111;
-
+#modalBox h3 {
+    color: #111;
 }
 
 
 /* ===== EDITOR ELRENDEZÉS ===== */
 
-.editorTop{
+.editorTop {
+    display: grid;
 
-    display:grid;
+    grid-template-columns: 220px minmax(0, 1fr);
 
-    grid-template-columns:220px 1fr;
-
-    gap:24px;
-
+    gap: 24px;
 }
 
 
-.editorLeft{
+.editorLeft {
+    display: flex;
 
-    display:flex;
+    flex-direction: column;
 
-    flex-direction:column;
-
-    gap:12px;
-
+    gap: 12px;
 }
 
 
-.editorRight{
+.editorRight {
+    display: flex;
 
-    display:flex;
+    flex-direction: column;
 
-    flex-direction:column;
+    gap: 10px;
 
-    gap:10px;
-
-    min-width:0;
-
+    min-width: 0;
 }
 
 
 /* ===== BORÍTÓ ELŐNÉZET ===== */
 
-#coverPreview{
+#coverPreview {
+    width: 220px;
+    height: 320px;
 
-    width:220px;
+    border: 2px dashed #bbb;
 
-    height:320px;
+    border-radius: 12px;
 
-    border:2px dashed #bbb;
+    display: flex;
 
-    border-radius:12px;
+    align-items: center;
+    justify-content: center;
 
-    display:flex;
+    overflow: hidden;
 
-    align-items:center;
+    background: #f5f5f5;
 
-    justify-content:center;
+    color: #777;
 
-    overflow:hidden;
+    text-align: center;
 
-    background:#f5f5f5;
-
-    color:#777;
-
-    text-align:center;
-
+    box-sizing: border-box;
 }
 
 
-#coverPreview img{
+#coverPreview img {
+    width: 100%;
+    height: 100%;
 
-    width:100%;
-
-    height:100%;
-
-    object-fit:cover;
-
+    object-fit: cover;
 }
 
 
-/* ===== LISTÁK ===== */
+/* ===================================
+   LISTÁK
+=================================== */
 
-#listContainer{
+#listContainer {
+    width: 100%;
 
-    width:100%;
+    /* FONTOS: nem hagyjuk óriásira nyúlni */
+    min-height: 0;
 
-    min-height:320px;
+    max-height: 360px;
 
-    max-height:520px;
+    overflow-y: auto;
+    overflow-x: hidden;
 
-    overflow-y:auto;
+    border: 1px solid #ccc;
 
-    overflow-x:hidden;
+    border-radius: 10px;
 
-    box-sizing:border-box;
+    padding: 10px;
 
-    flex-shrink:0;
+    box-sizing: border-box;
 
-    -webkit-overflow-scrolling:touch;
+    /* GRID */
+    display: grid;
 
-    overscroll-behavior:contain;
+    grid-template-columns: repeat(
+        auto-fill,
+        minmax(220px, 1fr)
+    );
 
+    gap: 10px;
+
+    /* EZ akadályozza meg az óriási üres sorokat */
+    align-content: start;
+
+    -webkit-overflow-scrolling: touch;
+
+    overscroll-behavior: contain;
 }
 
 
-/* ===== LISTA KÁRTYÁK ===== */
+/* ===== LISTA KÁRTYA ===== */
 
-.listCard{
+.listCard {
+    width: 100%;
 
-    display:flex;
+    min-height: 58px;
+    height: auto;
 
-    align-items:center;
+    display: flex;
 
-    gap:12px;
+    align-items: center;
 
-    min-height:64px;
+    gap: 12px;
 
-    padding:12px;
+    padding: 12px;
 
-    border:1px solid #bbb;
+    border: 1px solid #bbb;
 
-    border-radius:10px;
+    border-radius: 10px;
 
-    background:#fff;
+    background: #fff;
 
-    color:#111;
+    color: #111;
 
-    cursor:pointer;
+    cursor: pointer;
 
-    transition:.2s;
+    box-sizing: border-box;
 
-    box-sizing:border-box;
-
+    transition: .2s;
 }
 
 
-.listCard:hover{
+.listCard:hover {
+    border-color: gold;
 
-    border-color:gold;
+    transform: translateY(-2px);
 
-    transform:translateY(-2px);
-
-    box-shadow:0 3px 10px rgba(0,0,0,.12);
-
+    box-shadow: 0 3px 10px rgba(0, 0, 0, .12);
 }
 
 
-.listCard input{
+/* ===== PIPA ===== */
 
-    width:20px;
+.listCard input {
+    width: 20px;
+    height: 20px;
 
-    height:20px;
+    margin: 0;
 
-    margin:0;
-
-    flex-shrink:0;
-
+    flex: 0 0 20px;
 }
 
 
-.listCardIcon{
+/* ===== IKON ===== */
 
-    font-size:24px;
+.listCardIcon {
+    font-size: 24px;
 
-    flex-shrink:0;
+    flex: 0 0 auto;
 
+    line-height: 1;
 }
 
 
-.listCardName{
+/* ===== LISTA NEVE ===== */
 
-    font-weight:600;
+.listCardName {
+    font-weight: 600;
 
-    flex:1;
+    color: #111;
 
-    min-width:0;
+    flex: 1;
 
-    overflow-wrap:anywhere;
+    min-width: 0;
 
+    overflow-wrap: anywhere;
+
+    word-break: break-word;
+
+    line-height: 1.3;
 }
 
 
 /* ===== GOMBOK ===== */
 
-#modalButtons{
+#modalButtons {
+    display: flex;
 
-    display:flex;
+    justify-content: flex-end;
 
-    justify-content:flex-end;
+    gap: 12px;
 
-    gap:12px;
+    margin-top: 10px;
 
-    margin-top:10px;
+    padding-top: 18px;
 
-    padding-top:18px;
+    border-top: 1px solid #ddd;
 
-    border-top:1px solid #ddd;
-
-    flex-shrink:0;
-
+    flex-shrink: 0;
 }
 
 
-#modalButtons button{
+#modalButtons button {
+    padding: 10px 18px;
 
-    padding:10px 18px;
+    border: none;
 
-    border:none;
+    border-radius: 8px;
 
-    border-radius:8px;
-
-    cursor:pointer;
-
+    cursor: pointer;
 }
 
 
-/* ===== MOBIL ===== */
+/* ===================================
+   TABLET
+=================================== */
 
-@media (max-width:600px){
+@media (max-width: 900px) {
 
-    #modal{
+    #modal {
+        padding: 12px;
 
-        padding:10px;
+        align-items: flex-start;
 
-        align-items:flex-start;
-
-        overflow-y:auto;
-
+        overflow-y: auto;
     }
 
 
-    #modalBox{
+    #modalBox {
+        width: 100%;
 
-        width:100%;
+        max-width: 100%;
 
-        max-width:100%;
+        max-height: 95vh;
 
-        max-height:95vh;
+        padding: 18px;
 
-        padding:18px;
+        border-radius: 12px;
 
-        border-radius:12px;
-
-        gap:16px;
-
+        gap: 16px;
     }
 
 
-    .editorTop{
+    .editorTop {
+        grid-template-columns: 1fr;
 
-        grid-template-columns:1fr;
-
-        gap:18px;
-
+        gap: 18px;
     }
 
 
-    .editorLeft{
-
-        align-items:center;
-
+    .editorLeft {
+        align-items: center;
     }
 
 
-    #coverPreview{
-
-        width:200px;
-
-        height:290px;
-
+    #coverPreview {
+        width: 200px;
+        height: 290px;
     }
 
 
-    #listContainer{
+    /* TABLETEN 2 OSZLOP */
+    #listContainer {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
 
-        min-height:300px;
+        max-height: 360px;
 
-        max-height:500px;
-
+        align-content: start;
     }
 
 
-    #modalButtons{
-
-        flex-direction:column;
-
+    .listCard {
+        min-height: 58px;
     }
-
-
-    #modalButtons button{
-
-        width:100%;
-
-        min-height:44px;
-
-    }
-
 }
 
 
-/* ===== NAGYON KIS MOBIL ===== */
+/* ===================================
+   MOBIL
+=================================== */
 
-@media (max-width:420px){
+@media (max-width: 600px) {
 
-    #modal{
+    #modal {
+        padding: 8px;
 
-        padding:6px;
+        align-items: flex-start;
 
+        overflow-y: auto;
     }
 
 
-    #modalBox{
+    #modalBox {
+        width: 100%;
 
-        max-height:96vh;
+        max-width: 100%;
 
-        padding:14px;
+        max-height: 96vh;
 
-        gap:14px;
+        padding: 16px;
 
+        border-radius: 12px;
+
+        gap: 14px;
     }
 
 
-    #coverPreview{
+    .editorTop {
+        grid-template-columns: 1fr;
 
-        width:180px;
-
-        height:260px;
-
+        gap: 18px;
     }
 
 
-    #listContainer{
-
-        min-height:280px;
-
-        max-height:450px;
-
+    .editorLeft {
+        align-items: center;
     }
 
+
+    #coverPreview {
+        width: 190px;
+        height: 275px;
+    }
+
+
+    /* MOBILON 1 OSZLOP */
+    #listContainer {
+        grid-template-columns: 1fr;
+
+        min-height: 0;
+
+        max-height: 380px;
+
+        padding: 8px;
+
+        gap: 8px;
+
+        align-content: start;
+    }
+
+
+    .listCard {
+        min-height: 56px;
+
+        padding: 10px;
+    }
+
+
+    .listCardIcon {
+        font-size: 22px;
+    }
+
+
+    .listCardName {
+        font-size: 15px;
+    }
+
+
+    #modalButtons {
+        flex-direction: column;
+    }
+
+
+    #modalButtons button {
+        width: 100%;
+
+        min-height: 44px;
+    }
+}
+
+
+/* ===================================
+   NAGYON KIS MOBIL
+=================================== */
+
+@media (max-width: 420px) {
+
+    #modal {
+        padding: 5px;
+    }
+
+
+    #modalBox {
+        max-height: 97vh;
+
+        padding: 12px;
+
+        gap: 12px;
+    }
+
+
+    #coverPreview {
+        width: 170px;
+        height: 250px;
+    }
+
+
+    #listContainer {
+        max-height: 340px;
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .listCard {
+        min-height: 54px;
+    }
 }
