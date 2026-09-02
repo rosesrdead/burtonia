@@ -2,158 +2,164 @@
    BURTONIA - List Selector
 =================================== */
 
-#listContainer {
+#listContainer{
 
-    display: grid;
+    display:grid;
 
     grid-template-columns:
-        repeat(auto-fill, minmax(180px, 1fr));
+        repeat(auto-fill, minmax(200px, 1fr));
 
-    gap: 12px;
+    gap:12px;
 
-    margin-top: 12px;
+    margin-top:12px;
 
-    /*
-       A listák kapjanak valódi helyet.
-    */
+    width:100%;
 
-    min-height: 100px;
+    min-height:220px;
 
-    max-height: 280px;
+    max-height:500px;
 
-    overflow-y: auto;
+    overflow-y:auto;
 
-    overflow-x: hidden;
+    overflow-x:hidden;
 
-    padding: 4px;
+    padding:12px;
 
-    box-sizing: border-box;
+    border:1px solid #ccc;
 
-    /*
-       Ne zsugorodjon össze a modal flex
-       elrendezése miatt.
-    */
+    border-radius:10px;
 
-    flex-shrink: 0;
+    box-sizing:border-box;
 
-    -webkit-overflow-scrolling: touch;
+    flex-shrink:0;
 
-    overscroll-behavior: contain;
+    background:#fafafa;
 
 }
 
 
-/* ===================================
-   LISTA KÁRTYA
-=================================== */
+/* ===== LISTA KÁRTYA ===== */
 
-.listCard {
+.listCard{
 
-    display: flex;
+    display:flex;
 
-    align-items: center;
+    align-items:center;
 
-    gap: 12px;
+    gap:12px;
 
-    min-height: 58px;
+    min-height:64px;
 
-    padding: 12px;
+    padding:12px;
 
-    border: 1px solid #555;
+    border:1px solid #bbb;
 
-    border-radius: 10px;
+    border-radius:10px;
 
-    background: rgba(255,255,255,.05);
+    background:#fff;
 
-    cursor: pointer;
+    color:#111;
 
-    transition: .2s;
+    cursor:pointer;
 
-    box-sizing: border-box;
+    transition:.2s;
 
-}
-
-
-.listCard:hover {
-
-    border-color: gold;
-
-    transform: translateY(-2px);
+    box-sizing:border-box;
 
 }
 
 
-/* ===================================
-   CHECKBOX
-=================================== */
+.listCard:hover{
 
-.listCard input {
+    border-color:gold;
 
-    width: 18px;
+    transform:translateY(-2px);
 
-    height: 18px;
-
-    margin: 0;
-
-    flex-shrink: 0;
+    box-shadow:0 3px 10px rgba(0,0,0,.12);
 
 }
 
 
-/* ===================================
-   IKON
-=================================== */
+/* ===== CHECKBOX ===== */
 
-.listCardIcon {
+.listCard input{
 
-    font-size: 22px;
+    width:20px;
 
-    flex-shrink: 0;
+    height:20px;
 
-}
+    margin:0;
 
-
-/* ===================================
-   LISTA NEVE
-=================================== */
-
-.listCardName {
-
-    font-weight: 600;
-
-    flex: 1;
-
-    min-width: 0;
-
-    overflow-wrap: anywhere;
+    flex-shrink:0;
 
 }
 
 
-/* ===================================
-   MOBIL
-=================================== */
+/* ===== IKON ===== */
 
-@media (max-width: 600px) {
+.listCardIcon{
 
-    #listContainer {
+    font-size:24px;
 
-        grid-template-columns: 1fr;
+    flex-shrink:0;
 
-        max-height: 260px;
+}
 
-        min-height: 100px;
 
-        gap: 8px;
+/* ===== LISTA NEVE ===== */
+
+.listCardName{
+
+    font-weight:600;
+
+    flex:1;
+
+    min-width:0;
+
+    overflow-wrap:anywhere;
+
+}
+
+
+/* ===== MOBIL ===== */
+
+@media (max-width:600px){
+
+    #listContainer{
+
+        grid-template-columns:1fr;
+
+        min-height:200px;
+
+        max-height:450px;
+
+        gap:10px;
+
+        padding:10px;
 
     }
 
 
-    .listCard {
+    .listCard{
 
-        min-height: 54px;
+        min-height:58px;
 
-        padding: 10px;
+        padding:11px;
+
+    }
+
+}
+
+
+/* ===== KIS MOBIL ===== */
+
+@media (max-width:420px){
+
+    #listContainer{
+
+        min-height:180px;
+
+        max-height:400px;
 
     }
 
