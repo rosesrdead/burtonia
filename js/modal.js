@@ -1,4 +1,13 @@
-function openModal(type){
+/* ===================================
+   BURTONIA - Modal
+=================================== */
+
+
+/* ===================================
+   ÚJ FILM / ÚJ SOROZAT
+=================================== */
+
+function openModal(type) {
 
     editMode = false;
 
@@ -6,10 +15,12 @@ function openModal(type){
 
     modal.style.display = "flex";
 
+
     modalTitle.textContent =
         type === "movie"
-        ? "Új film"
-        : "Új sorozat";
+            ? "Új film"
+            : "Új sorozat";
+
 
     itemTitle.value = "";
 
@@ -19,22 +30,34 @@ function openModal(type){
 
     itemCoverUrl.value = "";
 
+
     updateCoverPreview("");
 
-    itemType.value = type;
 
-    itemStatus.value = "planned";
+    itemType.value =
+        type;
+
+
+    itemStatus.value =
+        "planned";
+
 
     itemFinished.value = "";
 
+
     refreshStatusUI();
+
 
     closeFab();
 
 }
 
 
-function closeModal(){
+/* ===================================
+   MODAL BEZÁRÁSA
+=================================== */
+
+function closeModal() {
 
     modal.style.display = "none";
 
@@ -45,12 +68,21 @@ function closeModal(){
 }
 
 
-cancelItem.onclick = closeModal;
+/* ===================================
+   MÉGSE
+=================================== */
+
+cancelItem.onclick =
+    closeModal;
 
 
-modal.onclick = (e)=>{
+/* ===================================
+   KATTINTÁS A HÁTTÉRRE
+=================================== */
 
-    if(e.target === modal){
+modal.onclick = e => {
+
+    if (e.target === modal) {
 
         closeModal();
 
@@ -59,28 +91,43 @@ modal.onclick = (e)=>{
 };
 
 
-addMovie.onclick = ()=>{
+/* ===================================
+   ÚJ FILM
+=================================== */
+
+addMovie.onclick = () => {
 
     openModal("movie");
 
 };
 
 
-addSeries.onclick = ()=>{
+/* ===================================
+   ÚJ SOROZAT
+=================================== */
+
+addSeries.onclick = () => {
 
     openModal("series");
 
 };
 
 
-document.addEventListener("keydown", e=>{
+/* ===================================
+   ESC
+=================================== */
 
-    if(e.key === "Escape"){
+document.addEventListener(
+    "keydown",
+    e => {
 
-        closeModal();
+        if (e.key === "Escape") {
 
-        closeFab();
+            closeModal();
+
+            closeFab();
+
+        }
 
     }
-
-});
+);
