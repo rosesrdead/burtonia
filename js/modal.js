@@ -3,6 +3,10 @@
 =================================== */
 
 
+/* ===================================
+   MODAL MEGNYITÁSA
+=================================== */
+
 function openModal(type) {
 
     editMode = false;
@@ -11,11 +15,20 @@ function openModal(type) {
 
     modal.style.display = "flex";
 
+
+    /* ===================================
+       CÍM
+    =================================== */
+
     modalTitle.textContent =
         type === "movie"
             ? "Új film"
             : "Új sorozat";
 
+
+    /* ===================================
+       ALAPADATOK TÖRLÉSE
+    =================================== */
 
     itemTitle.value = "";
 
@@ -25,29 +38,43 @@ function openModal(type) {
 
     itemCoverUrl.value = "";
 
+    itemFinished.value = "";
+
+    itemYear.value = "";
+
+
+    /* ===================================
+       BORÍTÓ
+    =================================== */
 
     updateCoverPreview("");
 
+
+    /* ===================================
+       TÍPUS
+    =================================== */
 
     itemType.value =
         type;
 
 
+    /* ===================================
+       ÁLLAPOT
+    =================================== */
+
+    refreshStatusUI();
+
     itemStatus.value =
         "planned";
 
 
-    itemFinished.value = "";
-
-
-    refreshStatusUI();
-
-
-    /* ===== MŰFAJOK ===== */
+    /* ===================================
+       MŰFAJOK
+    =================================== */
 
     const genreCheckboxes =
         document.querySelectorAll(
-            "#genreContainer input"
+            "#genreContainer input[type='checkbox']"
         );
 
 
@@ -58,20 +85,36 @@ function openModal(type) {
     });
 
 
-    /* ===== LISTÁK ===== */
+    /* ===================================
+       LISTÁK
+    =================================== */
 
-    renderListCheckboxes();
+    /*
+       Új filmnél / sorozatnál
+       egyetlen lista sincs kiválasztva.
+    */
 
+    renderListCheckboxes([]);
+
+
+    /* ===================================
+       FAB BEZÁRÁSA
+    =================================== */
 
     closeFab();
 
 }
 
 
+/* ===================================
+   MODAL BEZÁRÁSA
+=================================== */
+
 function closeModal() {
 
     modal.style.display =
         "none";
+
 
     selectedItem = null;
 
@@ -80,9 +123,17 @@ function closeModal() {
 }
 
 
+/* ===================================
+   MÉGSE
+=================================== */
+
 cancelItem.onclick =
     closeModal;
 
+
+/* ===================================
+   HÁTTÉRRE KATTINTÁS
+=================================== */
 
 modal.onclick = (e) => {
 
@@ -95,6 +146,10 @@ modal.onclick = (e) => {
 };
 
 
+/* ===================================
+   ÚJ FILM
+=================================== */
+
 addMovie.onclick = () => {
 
     openModal("movie");
@@ -102,12 +157,20 @@ addMovie.onclick = () => {
 };
 
 
+/* ===================================
+   ÚJ SOROZAT
+=================================== */
+
 addSeries.onclick = () => {
 
     openModal("series");
 
 };
 
+
+/* ===================================
+   ESCAPE
+=================================== */
 
 document.addEventListener(
     "keydown",
