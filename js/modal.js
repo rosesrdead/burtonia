@@ -18,7 +18,7 @@ function openModal(type){
     itemCover.value = "";
 
     itemCoverUrl.value = "";
-    
+
     updateCoverPreview("");
 
     itemType.value = type;
@@ -29,11 +29,10 @@ function openModal(type){
 
     refreshStatusUI();
 
-    renderListCheckboxes();
-
     closeFab();
 
 }
+
 
 function closeModal(){
 
@@ -45,7 +44,9 @@ function closeModal(){
 
 }
 
+
 cancelItem.onclick = closeModal;
+
 
 modal.onclick = (e)=>{
 
@@ -57,17 +58,20 @@ modal.onclick = (e)=>{
 
 };
 
+
 addMovie.onclick = ()=>{
 
     openModal("movie");
 
 };
 
+
 addSeries.onclick = ()=>{
 
     openModal("series");
 
 };
+
 
 document.addEventListener("keydown", e=>{
 
