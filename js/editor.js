@@ -3,6 +3,10 @@
 =================================== */
 
 
+/* ===================================
+   ELEM SZERKESZTÉSE
+=================================== */
+
 function openEditor(item) {
 
     selectedItem = item;
@@ -223,7 +227,8 @@ saveItem.onclick = async () => {
 
             id: Date.now(),
 
-            title: title,
+            title:
+                title,
 
             originalTitle:
                 originalTitle,
