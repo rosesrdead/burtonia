@@ -86,6 +86,13 @@ function openEditor(item) {
 
     }
 
+
+    /* ===== LISTÁK ===== */
+
+    renderListCheckboxes();
+
+    setItemLists(item);
+
 }
 
 
@@ -151,6 +158,12 @@ saveItem.onclick = async () => {
     ].map(cb => cb.value);
 
 
+    /* ===== LISTÁK ===== */
+
+    const lists =
+        getSelectedLists();
+
+
     const finished =
         itemFinished.value;
 
@@ -209,6 +222,10 @@ saveItem.onclick = async () => {
             genres;
 
 
+        selectedItem.lists =
+            lists;
+
+
         if (image) {
 
             selectedItem.image =
@@ -248,6 +265,9 @@ saveItem.onclick = async () => {
 
             genres:
                 genres,
+
+            lists:
+                lists,
 
             finished:
                 finished || ""
