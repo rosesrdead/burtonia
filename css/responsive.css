@@ -3,17 +3,20 @@
    Responsive
 =================================== */
 
+
 /* ===== Nagy monitorok ===== */
 
 @media (min-width:1600px){
 
     .grid{
 
-        grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+        grid-template-columns:
+            repeat(auto-fill,minmax(210px,1fr));
 
     }
 
 }
+
 
 /* ===== Laptop ===== */
 
@@ -27,13 +30,16 @@
 
     }
 
+
     .grid{
 
-        grid-template-columns:repeat(auto-fill,minmax(170px,1fr));
+        grid-template-columns:
+            repeat(auto-fill,minmax(170px,1fr));
 
     }
 
 }
+
 
 /* ===== Tablet ===== */
 
@@ -45,17 +51,20 @@
 
     }
 
+
     #sidebar{
 
         order:1;
 
     }
 
+
     main{
 
         order:2;
 
     }
+
 
     header{
 
@@ -65,17 +74,20 @@
 
     }
 
+
     .editorTop{
 
         grid-template-columns:1fr;
 
     }
 
+
     .editorLeft{
 
         align-items:center;
 
     }
+
 
     #coverPreview{
 
@@ -85,6 +97,7 @@
 
     }
 
+
     #modalBox{
 
         width:95vw;
@@ -92,6 +105,7 @@
     }
 
 }
+
 
 /* ===== Mobil ===== */
 
@@ -103,6 +117,7 @@
 
     }
 
+
     header h1{
 
         font-size:26px;
@@ -111,25 +126,30 @@
 
     }
 
+
     #layout{
 
         padding:12px;
 
     }
 
+
     .grid{
 
-        grid-template-columns:repeat(2,minmax(0,1fr));
+        grid-template-columns:
+            repeat(2,minmax(0,1fr));
 
         gap:12px;
 
     }
+
 
     .title{
 
         font-size:14px;
 
     }
+
 
     #fab{
 
@@ -145,6 +165,7 @@
 
     }
 
+
     #fabMenu{
 
         right:16px;
@@ -153,11 +174,13 @@
 
     }
 
+
     #fabMenu button{
 
         min-width:160px;
 
     }
+
 
     #modalButtons{
 
@@ -165,19 +188,15 @@
 
     }
 
+
     #modalButtons button{
 
         width:100%;
 
     }
 
-    #listContainer{
-
-        grid-template-columns:1fr;
-
-    }
-
 }
+
 
 /* ===== Kis mobil ===== */
 
@@ -188,6 +207,7 @@
         grid-template-columns:1fr;
 
     }
+
 
     #coverPreview{
 
