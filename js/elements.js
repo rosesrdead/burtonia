@@ -1,56 +1,102 @@
 const homePage =
     document.getElementById("homePage");
 
+
 const libraryPage =
     document.getElementById("libraryPage");
 
-const sidebarItems = document.getElementById("sidebarItems");
 
-const moviesGrid = document.getElementById("moviesGrid");
+const sidebarItems =
+    document.getElementById("sidebarItems");
 
-const seriesGrid = document.getElementById("seriesGrid");
 
-const movieCount = document.getElementById("movieCount");
+const moviesGrid =
+    document.getElementById("moviesGrid");
 
-const seriesCount = document.getElementById("seriesCount");
 
-const listStats = document.getElementById("listStats");
+const seriesGrid =
+    document.getElementById("seriesGrid");
 
-const fab = document.getElementById("fab");
 
-const fabMenu = document.getElementById("fabMenu");
+const movieCount =
+    document.getElementById("movieCount");
 
-const addMovie = document.getElementById("addMovie");
 
-const addSeries = document.getElementById("addSeries");
+const seriesCount =
+    document.getElementById("seriesCount");
 
-const addList = document.getElementById("addList");
 
-const modal = document.getElementById("modal");
+const listStats =
+    document.getElementById("listStats");
 
-const modalTitle = document.getElementById("modalTitle");
 
-const itemTitle = document.getElementById("itemTitle");
+const fab =
+    document.getElementById("fab");
 
-const itemOriginalTitle = document.getElementById("itemOriginalTitle");
 
-const itemCover = document.getElementById("itemCover");
+const fabMenu =
+    document.getElementById("fabMenu");
 
-const itemCoverUrl = document.getElementById("itemCoverUrl");
 
-const itemType = document.getElementById("itemType");
+const addMovie =
+    document.getElementById("addMovie");
 
-const itemFinished = document.getElementById("itemFinished");
 
-const itemStatus = document.getElementById("itemStatus");
+const addSeries =
+    document.getElementById("addSeries");
 
-const listContainer = document.getElementById("listContainer");
 
-const cancelItem = document.getElementById("cancelItem");
+const addList =
+    document.getElementById("addList");
 
-const deleteItem = document.getElementById("deleteItem");
 
-const saveItem = document.getElementById("saveItem");
+const modal =
+    document.getElementById("modal");
+
+
+const modalTitle =
+    document.getElementById("modalTitle");
+
+
+const itemTitle =
+    document.getElementById("itemTitle");
+
+
+const itemOriginalTitle =
+    document.getElementById("itemOriginalTitle");
+
+
+const itemCover =
+    document.getElementById("itemCover");
+
+
+const itemCoverUrl =
+    document.getElementById("itemCoverUrl");
+
+
+const itemType =
+    document.getElementById("itemType");
+
+
+const itemFinished =
+    document.getElementById("itemFinished");
+
+
+const itemStatus =
+    document.getElementById("itemStatus");
+
+
+const cancelItem =
+    document.getElementById("cancelItem");
+
+
+const deleteItem =
+    document.getElementById("deleteItem");
+
+
+const saveItem =
+    document.getElementById("saveItem");
+
 
 const coverPreview =
     document.getElementById("coverPreview");
