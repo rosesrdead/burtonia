@@ -6,12 +6,15 @@
 /* ===== ÁLTALÁNOS MODAL ===== */
 
 #modal {
+
     position: fixed;
+
     inset: 0;
 
     display: none;
 
     justify-content: center;
+
     align-items: center;
 
     background: rgba(0, 0, 0, .6);
@@ -27,15 +30,19 @@
 /* ===== MODAL DOBOZ ===== */
 
 #modalBox {
+
     width: 900px;
+
     max-width: 95vw;
 
     max-height: 90vh;
 
     overflow-y: auto;
+
     overflow-x: hidden;
 
     background: #ffffff;
+
     color: #111;
 
     border-radius: 14px;
@@ -43,6 +50,7 @@
     padding: 24px;
 
     display: flex;
+
     flex-direction: column;
 
     gap: 20px;
@@ -61,6 +69,7 @@
 
 #modalBox h2,
 #modalBox h3 {
+
     color: #111;
 }
 
@@ -68,6 +77,7 @@
 /* ===== EDITOR ELRENDEZÉS ===== */
 
 .editorTop {
+
     display: grid;
 
     grid-template-columns: 220px minmax(0, 1fr);
@@ -77,6 +87,7 @@
 
 
 .editorLeft {
+
     display: flex;
 
     flex-direction: column;
@@ -86,6 +97,7 @@
 
 
 .editorRight {
+
     display: flex;
 
     flex-direction: column;
@@ -99,7 +111,9 @@
 /* ===== BORÍTÓ ELŐNÉZET ===== */
 
 #coverPreview {
+
     width: 220px;
+
     height: 320px;
 
     border: 2px dashed #bbb;
@@ -109,6 +123,7 @@
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
     overflow: hidden;
@@ -124,141 +139,26 @@
 
 
 #coverPreview img {
+
     width: 100%;
+
     height: 100%;
 
     object-fit: cover;
 }
 
 
-/* ===================================
-   LISTÁK
-=================================== */
-
-#listContainer {
-    width: 100%;
-
-    /* FONTOS: nem hagyjuk óriásira nyúlni */
-    min-height: 0;
-
-    max-height: 360px;
-
-    overflow-y: auto;
-    overflow-x: hidden;
-
-    border: 1px solid #ccc;
-
-    border-radius: 10px;
-
-    padding: 10px;
-
-    box-sizing: border-box;
-
-    /* GRID */
-    display: grid;
-
-    grid-template-columns: repeat(
-        auto-fill,
-        minmax(220px, 1fr)
-    );
-
-    gap: 10px;
-
-    /* EZ akadályozza meg az óriási üres sorokat */
-    align-content: start;
-
-    -webkit-overflow-scrolling: touch;
-
-    overscroll-behavior: contain;
-}
-
-
-/* ===== LISTA KÁRTYA ===== */
-
-.listCard {
-    width: 100%;
-
-    min-height: 58px;
-    height: auto;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 12px;
-
-    padding: 12px;
-
-    border: 1px solid #bbb;
-
-    border-radius: 10px;
-
-    background: #fff;
-
-    color: #111;
-
-    cursor: pointer;
-
-    box-sizing: border-box;
-
-    transition: .2s;
-}
-
-
-.listCard:hover {
-    border-color: gold;
-
-    transform: translateY(-2px);
-
-    box-shadow: 0 3px 10px rgba(0, 0, 0, .12);
-}
-
-
-/* ===== PIPA ===== */
-
-.listCard input {
-    width: 20px;
-    height: 20px;
-
-    margin: 0;
-
-    flex: 0 0 20px;
-}
-
-
-/* ===== IKON ===== */
-
-.listCardIcon {
-    font-size: 24px;
-
-    flex: 0 0 auto;
-
-    line-height: 1;
-}
-
-
-/* ===== LISTA NEVE ===== */
-
-.listCardName {
-    font-weight: 600;
-
-    color: #111;
-
-    flex: 1;
-
-    min-width: 0;
-
-    overflow-wrap: anywhere;
-
-    word-break: break-word;
-
-    line-height: 1.3;
-}
+/* ===== LISTÁK ===== */
+/*
+   A listák kinézetét a listSelector.css kezeli.
+   Itt SZÁNDÉKOSAN nincs grid/kártya formázás.
+*/
 
 
 /* ===== GOMBOK ===== */
 
 #modalButtons {
+
     display: flex;
 
     justify-content: flex-end;
@@ -276,6 +176,7 @@
 
 
 #modalButtons button {
+
     padding: 10px 18px;
 
     border: none;
@@ -293,6 +194,7 @@
 @media (max-width: 900px) {
 
     #modal {
+
         padding: 12px;
 
         align-items: flex-start;
@@ -302,6 +204,7 @@
 
 
     #modalBox {
+
         width: 100%;
 
         max-width: 100%;
@@ -317,6 +220,7 @@
 
 
     .editorTop {
+
         grid-template-columns: 1fr;
 
         gap: 18px;
@@ -324,29 +228,18 @@
 
 
     .editorLeft {
+
         align-items: center;
     }
 
 
     #coverPreview {
+
         width: 200px;
+
         height: 290px;
     }
 
-
-    /* TABLETEN 2 OSZLOP */
-    #listContainer {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-
-        max-height: 360px;
-
-        align-content: start;
-    }
-
-
-    .listCard {
-        min-height: 58px;
-    }
 }
 
 
@@ -357,6 +250,7 @@
 @media (max-width: 600px) {
 
     #modal {
+
         padding: 8px;
 
         align-items: flex-start;
@@ -366,6 +260,7 @@
 
 
     #modalBox {
+
         width: 100%;
 
         max-width: 100%;
@@ -381,6 +276,7 @@
 
 
     .editorTop {
+
         grid-template-columns: 1fr;
 
         gap: 18px;
@@ -388,59 +284,32 @@
 
 
     .editorLeft {
+
         align-items: center;
     }
 
 
     #coverPreview {
+
         width: 190px;
+
         height: 275px;
     }
 
 
-    /* MOBILON 1 OSZLOP */
-    #listContainer {
-        grid-template-columns: 1fr;
-
-        min-height: 0;
-
-        max-height: 380px;
-
-        padding: 8px;
-
-        gap: 8px;
-
-        align-content: start;
-    }
-
-
-    .listCard {
-        min-height: 56px;
-
-        padding: 10px;
-    }
-
-
-    .listCardIcon {
-        font-size: 22px;
-    }
-
-
-    .listCardName {
-        font-size: 15px;
-    }
-
-
     #modalButtons {
+
         flex-direction: column;
     }
 
 
     #modalButtons button {
+
         width: 100%;
 
         min-height: 44px;
     }
+
 }
 
 
@@ -451,11 +320,13 @@
 @media (max-width: 420px) {
 
     #modal {
+
         padding: 5px;
     }
 
 
     #modalBox {
+
         max-height: 97vh;
 
         padding: 12px;
@@ -465,19 +336,10 @@
 
 
     #coverPreview {
+
         width: 170px;
+
         height: 250px;
     }
 
-
-    #listContainer {
-        max-height: 340px;
-
-        grid-template-columns: 1fr;
-    }
-
-
-    .listCard {
-        min-height: 54px;
-    }
 }
