@@ -1,0 +1,63 @@
+/* ===================================
+   BURTONIA - List Selector
+=================================== */
+
+#listContainer{
+
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+    gap:12px;
+
+    margin-top:12px;
+
+}
+
+.listCard{
+
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    padding:12px;
+
+    border:1px solid #555;
+    border-radius:10px;
+
+    background:rgba(255,255,255,.05);
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+.listCard:hover{
+
+    border-color:gold;
+
+    transform:translateY(-2px);
+
+}
+
+.listCard input{
+
+    width:18px;
+    height:18px;
+
+    margin:0;
+
+}
+
+.listCardIcon{
+
+    font-size:22px;
+
+}
+
+.listCardName{
+
+    font-weight:600;
+
+    flex:1;
+
+}
