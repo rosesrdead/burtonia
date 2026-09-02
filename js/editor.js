@@ -19,6 +19,8 @@ function openEditor(item) {
         "Elem szerkesztése";
 
 
+    /* ===== ALAPADATOK ===== */
+
     itemTitle.value =
         item.title || "";
 
@@ -58,7 +60,9 @@ function openEditor(item) {
         item.year || "";
 
 
-    /* ===== MŰFAJOK ===== */
+    /* ===================================
+       MŰFAJOK
+    =================================== */
 
     const genreCheckboxes =
         document.querySelectorAll(
@@ -73,7 +77,7 @@ function openEditor(item) {
     });
 
 
-    if (item.genres) {
+    if (Array.isArray(item.genres)) {
 
         genreCheckboxes.forEach(cb => {
 
@@ -87,11 +91,13 @@ function openEditor(item) {
     }
 
 
-    /* ===== LISTÁK ===== */
+    /* ===================================
+       LISTÁK
+    =================================== */
 
-    renderListCheckboxes();
-
-    setItemLists(item);
+    renderListCheckboxes(
+        item.lists || []
+    );
 
 }
 
@@ -147,7 +153,9 @@ saveItem.onclick = async () => {
     }
 
 
-    /* ===== MŰFAJOK ===== */
+    /* ===================================
+       MŰFAJOK
+    =================================== */
 
     const genres = [
 
@@ -158,11 +166,17 @@ saveItem.onclick = async () => {
     ].map(cb => cb.value);
 
 
-    /* ===== LISTÁK ===== */
+    /* ===================================
+       LISTÁK
+    =================================== */
 
     const lists =
         getSelectedLists();
 
+
+    /* ===================================
+       EGYÉB ADATOK
+    =================================== */
 
     const finished =
         itemFinished.value;
@@ -180,6 +194,10 @@ saveItem.onclick = async () => {
         itemCoverUrl.value.trim();
 
 
+    /* ===================================
+       BORÍTÓ FELTÖLTÉSE
+    =================================== */
+
     if (itemCover.files.length) {
 
         image =
@@ -190,9 +208,11 @@ saveItem.onclick = async () => {
     }
 
 
-    /* ===== SZERKESZTÉS ===== */
+    /* ===================================
+       SZERKESZTÉS
+    =================================== */
 
-    if (editMode) {
+    if (editMode && selectedItem) {
 
         selectedItem.title =
             title;
@@ -236,7 +256,9 @@ saveItem.onclick = async () => {
     }
 
 
-    /* ===== ÚJ ELEM ===== */
+    /* ===================================
+       ÚJ ELEM
+    =================================== */
 
     else {
 
@@ -276,6 +298,10 @@ saveItem.onclick = async () => {
 
     }
 
+
+    /* ===================================
+       MENTÉS + FRISSÍTÉS
+    =================================== */
 
     saveDB();
 
