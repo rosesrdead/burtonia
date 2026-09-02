@@ -3,7 +3,7 @@
 =================================== */
 
 
-/* ===== LISTA CHECKBOXOK ===== */
+/* ===== LISTÁK ===== */
 
 #listContainer {
 
@@ -15,16 +15,17 @@
 
     padding: 10px;
 
+    width: 100%;
+
     border-radius: 10px;
 
-    background: rgba(0,0,0,.08);
+    background: rgba(0, 0, 0, .08);
 
     box-sizing: border-box;
-
 }
 
 
-/* ===== LISTA SOR ===== */
+/* ===== LISTA ELEMEK ===== */
 
 #listContainer label {
 
@@ -39,7 +40,6 @@
     font-weight: normal;
 
     cursor: pointer;
-
 }
 
 
@@ -50,7 +50,6 @@
     width: auto;
 
     margin: 0;
-
 }
 
 
