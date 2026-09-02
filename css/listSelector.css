@@ -2,9 +2,6 @@
    BURTONIA - List Selector
 =================================== */
 
-
-/* ===== LISTÁK ===== */
-
 #listContainer {
 
     display: grid;
@@ -15,17 +12,14 @@
 
     padding: 10px;
 
-    width: 100%;
-
     border-radius: 10px;
 
-    background: rgba(0, 0, 0, .08);
+    background: rgba(0,0,0,.08);
 
     box-sizing: border-box;
+
 }
 
-
-/* ===== LISTA ELEMEK ===== */
 
 #listContainer label {
 
@@ -40,16 +34,16 @@
     font-weight: normal;
 
     cursor: pointer;
+
 }
 
-
-/* ===== CHECKBOX ===== */
 
 #listContainer input {
 
     width: auto;
 
     margin: 0;
+
 }
 
 
