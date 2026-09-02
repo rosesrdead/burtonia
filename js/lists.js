@@ -313,6 +313,8 @@ addList.onclick = () => {
 
 function editList(list) {
 
+    /* ===== LISTA NEVE ===== */
+
     const newName =
         prompt(
             "Lista neve:",
@@ -338,6 +340,28 @@ function editList(list) {
     }
 
 
+    /* ===== EMOJI ===== */
+
+    const newIcon =
+        prompt(
+            "Lista emoji:",
+            list.icon || "📝"
+        );
+
+
+    if (newIcon === null) {
+
+        return;
+
+    }
+
+
+    const icon =
+        newIcon.trim() || "📝";
+
+
+    /* ===== MENTÉS ===== */
+
     const action =
         confirm(
             "OK = Mentés\n\nMégse = Lista törlése"
@@ -350,6 +374,10 @@ function editList(list) {
             value;
 
 
+        list.icon =
+            icon;
+
+
         saveDB();
 
         render();
@@ -358,6 +386,8 @@ function editList(list) {
 
     }
 
+
+    /* ===== TÖRLÉS ===== */
 
     const reallyDelete =
         confirm(
