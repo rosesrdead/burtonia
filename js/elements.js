@@ -1,3 +1,8 @@
+/* ===================================
+   BURTONIA - Elements
+=================================== */
+
+
 const homePage =
     document.getElementById("homePage");
 
