@@ -10,9 +10,6 @@
 
     <title>BURTONIA</title>
 
-
-    <!-- Google Fonts -->
-
     <link rel="preconnect"
           href="https://fonts.googleapis.com">
 
@@ -23,14 +20,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&display=swap"
           rel="stylesheet">
 
-
-    <!-- Fő CSS -->
-
     <link rel="stylesheet"
           href="style.css">
-
-
-    <!-- Lista checkboxok -->
 
     <link rel="stylesheet"
           href="css/listCheckboxes.css">
@@ -39,11 +30,6 @@
 
 
 <body>
-
-
-    <!-- ===================================
-         HÁTTÉR
-    =================================== -->
 
     <div id="backgroundOverlay"></div>
 
@@ -153,8 +139,7 @@
                 </h2>
 
                 <div id="moviesGrid"
-                     class="grid">
-                </div>
+                     class="grid"></div>
 
 
                 <h2 class="sectionTitle">
@@ -162,8 +147,7 @@
                 </h2>
 
                 <div id="seriesGrid"
-                     class="grid">
-                </div>
+                     class="grid"></div>
 
             </div>
 
@@ -301,8 +285,7 @@
                         Állapot
                     </label>
 
-                    <select id="itemStatus">
-                    </select>
+                    <select id="itemStatus"></select>
 
 
                     <!-- ÉV -->
@@ -504,8 +487,7 @@
                     </label>
 
 
-                    <div id="listCheckboxContainer">
-                    </div>
+                    <div id="listCheckboxContainer"></div>
 
 
                     <!-- ===================================
@@ -755,6 +737,10 @@
 
     <!-- ===================================
          SCRIPT-EK
+         
+         FONTOS:
+         Az elements.js ELŐBB töltődik be,
+         mint az azt használó fájlok.
     =================================== -->
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -764,6 +750,9 @@
     <script src="js/cloudSync.js"></script>
 
     <script src="js/database.js"></script>
+
+    <!-- EZT FELJEBB HOZTUK -->
+    <script src="js/elements.js"></script>
 
     <script src="js/status.js"></script>
 
@@ -782,8 +771,6 @@
     <script src="js/browse.js"></script>
 
     <script src="js/editor.js"></script>
-
-    <script src="js/elements.js"></script>
 
     <script src="js/fab.js"></script>
 
