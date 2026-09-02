@@ -2,7 +2,8 @@
    BURTONIA - Editor
 =================================== */
 
-function openEditor(item){
+
+function openEditor(item) {
 
     selectedItem = item;
 
@@ -10,32 +11,56 @@ function openEditor(item){
 
     modal.style.display = "flex";
 
-    modalTitle.textContent = "Elem szerkesztése";
+    modalTitle.textContent =
+        "Elem szerkesztése";
 
-    itemTitle.value = item.title;
 
-    itemOriginalTitle.value = item.originalTitle || "";
+    itemTitle.value =
+        item.title || "";
+
+
+    itemOriginalTitle.value =
+        item.originalTitle || "";
+
 
     itemCover.value = "";
 
-    itemCoverUrl.value = item.image || "";
+
+    itemCoverUrl.value =
+        item.image || "";
+
 
     updateCoverPreview(
         item.image || ""
     );
 
-    itemType.value = item.type;
+
+    itemType.value =
+        item.type || "movie";
+
 
     refreshStatusUI();
 
-    itemStatus.value = item.status || "planned";
 
-    itemFinished.value = item.finished || "";
-
-    itemYear.value = item.year || "";
+    itemStatus.value =
+        item.status || "planned";
 
 
-    const genreCheckboxes = document.querySelectorAll("#genreContainer input");
+    itemFinished.value =
+        item.finished || "";
+
+
+    itemYear.value =
+        item.year || "";
+
+
+    /* ===== MŰFAJOK ===== */
+
+    const genreCheckboxes =
+        document.querySelectorAll(
+            "#genreContainer input"
+        );
+
 
     genreCheckboxes.forEach(cb => {
 
@@ -44,45 +69,42 @@ function openEditor(item){
     });
 
 
-    if(item.genres){
+    if (item.genres) {
 
         genreCheckboxes.forEach(cb => {
 
-            cb.checked = item.genres.includes(cb.value);
+            cb.checked =
+                item.genres.includes(
+                    cb.value
+                );
 
         });
 
     }
 
-
-    renderListCheckboxes();
-
-
-    const checkboxes = listContainer.querySelectorAll("input");
-
-    checkboxes.forEach(cb => {
-
-        cb.checked =
-            item.lists &&
-            item.lists.includes(Number(cb.value));
-
-    });
-
 }
 
 
+/* ===================================
+   FILE → BASE64
+=================================== */
 
-function fileToBase64(file){
+function fileToBase64(file) {
 
-    return new Promise(resolve=>{
+    return new Promise(resolve => {
 
-        const reader = new FileReader();
+        const reader =
+            new FileReader();
+
 
         reader.onload = e => {
 
-            resolve(e.target.result);
+            resolve(
+                e.target.result
+            );
 
         };
+
 
         reader.readAsDataURL(file);
 
@@ -91,15 +113,21 @@ function fileToBase64(file){
 }
 
 
+/* ===================================
+   MENTÉS
+=================================== */
 
-saveItem.onclick = async()=>{
+saveItem.onclick = async () => {
 
-    const title = itemTitle.value.trim();
+    const title =
+        itemTitle.value.trim();
 
-    const originalTitle = itemOriginalTitle.value.trim();
+
+    const originalTitle =
+        itemOriginalTitle.value.trim();
 
 
-    if(title === ""){
+    if (title === "") {
 
         alert("Adj meg címet!");
 
@@ -108,72 +136,88 @@ saveItem.onclick = async()=>{
     }
 
 
+    /* ===== MŰFAJOK ===== */
+
     const genres = [
 
-        ...document.querySelectorAll("#genreContainer input:checked")
+        ...document.querySelectorAll(
+            "#genreContainer input:checked"
+        )
 
     ].map(cb => cb.value);
 
 
-
-    const checked = [
-
-        ...listContainer.querySelectorAll("input:checked")
-
-    ].map(cb => Number(cb.value));
+    const finished =
+        itemFinished.value;
 
 
-
-    const finished = itemFinished.value;
-
-    const year = itemYear.value;
-
-    const status = itemStatus.value;
+    const year =
+        itemYear.value;
 
 
-    let image = itemCoverUrl.value.trim();
+    const status =
+        itemStatus.value;
 
 
-    if(itemCover.files.length){
+    let image =
+        itemCoverUrl.value.trim();
 
-        image = await fileToBase64(
 
-            itemCover.files[0]
+    if (itemCover.files.length) {
 
-        );
+        image =
+            await fileToBase64(
+                itemCover.files[0]
+            );
 
     }
 
 
+    /* ===== SZERKESZTÉS ===== */
 
-    if(editMode){
+    if (editMode) {
 
-        selectedItem.title = title;
-
-        selectedItem.originalTitle = originalTitle;
-
-        selectedItem.type = itemType.value;
-
-        selectedItem.lists = checked;
-
-        selectedItem.finished = finished;
-
-        selectedItem.status = status;
-
-        selectedItem.year = year;
-
-        selectedItem.genres = genres;
+        selectedItem.title =
+            title;
 
 
-        if(image){
+        selectedItem.originalTitle =
+            originalTitle;
 
-            selectedItem.image = image;
+
+        selectedItem.type =
+            itemType.value;
+
+
+        selectedItem.finished =
+            finished;
+
+
+        selectedItem.status =
+            status;
+
+
+        selectedItem.year =
+            year;
+
+
+        selectedItem.genres =
+            genres;
+
+
+        if (image) {
+
+            selectedItem.image =
+                image;
 
         }
 
+    }
 
-    }else{
 
+    /* ===== ÚJ ELEM ===== */
+
+    else {
 
         db.items.push({
 
@@ -181,24 +225,28 @@ saveItem.onclick = async()=>{
 
             title: title,
 
-            originalTitle: originalTitle,
+            originalTitle:
+                originalTitle,
 
-            type: itemType.value,
+            type:
+                itemType.value,
 
-            image: image,
+            image:
+                image,
 
-            lists: checked,
+            status:
+                status,
 
-            status: status,
+            year:
+                year,
 
-            year: year,
+            genres:
+                genres,
 
-            genres: genres,
-
-            finished: finished || ""
+            finished:
+                finished || ""
 
         });
-
 
     }
 
@@ -212,29 +260,40 @@ saveItem.onclick = async()=>{
 };
 
 
+/* ===================================
+   TÖRLÉS
+=================================== */
 
+deleteItem.onclick = () => {
 
-deleteItem.onclick = ()=>{
-
-    if(!editMode || !selectedItem){
-
-        return;
-
-    }
-
-
-    if(!confirm("Biztosan törölni szeretnéd?")){
+    if (
+        !editMode ||
+        !selectedItem
+    ) {
 
         return;
 
     }
 
 
-    db.items = db.items.filter(item =>
+    if (
+        !confirm(
+            "Biztosan törölni szeretnéd?"
+        )
+    ) {
 
-        item.id !== selectedItem.id
+        return;
 
-    );
+    }
+
+
+    db.items =
+        db.items.filter(item =>
+
+            item.id !==
+            selectedItem.id
+
+        );
 
 
     selectedItem = null;
