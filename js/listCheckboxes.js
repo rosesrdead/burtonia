@@ -1,14 +1,19 @@
 /* ===================================
-   BURTONIA - Lista checkboxok
+   BURTONIA - List Checkboxes
 =================================== */
 
-function renderListCheckboxes(){
+
+/* ===================================
+   LISTÁK CHECKBOXAINAK MEGJELENÍTÉSE
+=================================== */
+
+function renderListCheckboxes(selectedLists = []) {
 
     const container =
         document.getElementById("listCheckboxContainer");
 
 
-    if(!container){
+    if (!container) {
 
         return;
 
@@ -18,15 +23,15 @@ function renderListCheckboxes(){
     container.innerHTML = "";
 
 
-    if(!Array.isArray(db.lists) || db.lists.length === 0){
+    if (!db || !db.lists || db.lists.length === 0) {
 
         const empty =
             document.createElement("div");
 
+        empty.className = "listCheckboxEmpty";
+
         empty.textContent =
             "Még nincs létrehozott lista.";
-
-        empty.style.color = "#777";
 
         container.appendChild(empty);
 
@@ -48,22 +53,25 @@ function renderListCheckboxes(){
         checkbox.type =
             "checkbox";
 
+
         checkbox.value =
             list.id;
 
-        checkbox.dataset.listId =
-            list.id;
+
+        checkbox.checked =
+            selectedLists.includes(list.id);
 
 
         label.appendChild(checkbox);
 
 
+        const icon =
+            list.icon || "📝";
+
+
         label.appendChild(
             document.createTextNode(
-                " " +
-                (list.icon || "📝") +
-                " " +
-                list.name
+                icon + " " + list.name
             )
         );
 
@@ -75,36 +83,19 @@ function renderListCheckboxes(){
 }
 
 
-function getSelectedLists(){
+/* ===================================
+   KIVÁLASZTOTT LISTÁK LEKÉRÉSE
+=================================== */
 
-    const checkboxes =
-        document.querySelectorAll(
+function getSelectedLists() {
+
+    return [
+        ...document.querySelectorAll(
             "#listCheckboxContainer input:checked"
-        );
+        )
+    ].map(cb => {
 
-
-    return [...checkboxes].map(
-        checkbox => Number(checkbox.value)
-    );
-
-}
-
-
-function setSelectedLists(item){
-
-    const checkboxes =
-        document.querySelectorAll(
-            "#listCheckboxContainer input"
-        );
-
-
-    checkboxes.forEach(checkbox => {
-
-        checkbox.checked =
-            Array.isArray(item.lists) &&
-            item.lists.includes(
-                Number(checkbox.value)
-            );
+        return Number(cb.value);
 
     });
 
