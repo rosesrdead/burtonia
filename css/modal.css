@@ -158,19 +158,13 @@
 
     width:100%;
 
-    min-height:220px;
+    min-height:320px;
 
-    max-height:500px;
+    max-height:520px;
 
     overflow-y:auto;
 
     overflow-x:hidden;
-
-    padding:12px;
-
-    border:1px solid #ccc;
-
-    border-radius:10px;
 
     box-sizing:border-box;
 
@@ -179,21 +173,6 @@
     -webkit-overflow-scrolling:touch;
 
     overscroll-behavior:contain;
-
-}
-
-
-/* ===== LISTA CHECKBOX SOR ===== */
-
-.checkboxRow{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:8px;
-
-    margin-bottom:8px;
 
 }
 
@@ -366,6 +345,15 @@
     }
 
 
+    #listContainer{
+
+        min-height:300px;
+
+        max-height:500px;
+
+    }
+
+
     #modalButtons{
 
         flex-direction:column;
@@ -411,6 +399,15 @@
         width:180px;
 
         height:260px;
+
+    }
+
+
+    #listContainer{
+
+        min-height:280px;
+
+        max-height:450px;
 
     }
 
