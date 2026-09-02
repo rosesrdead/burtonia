@@ -1,0 +1,180 @@
+/* ===================================
+   BURTONIA - Cards
+=================================== */
+
+
+/* ===== KÁRTYA RÁCS ===== */
+
+
+.grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fill,minmax(160px,1fr));
+
+    gap:15px;
+
+}
+
+
+
+
+
+/* ===== KÁRTYA ===== */
+
+
+.card{
+
+    background:rgba(15,15,15,.28);
+
+    backdrop-filter:blur(8px);
+
+    -webkit-backdrop-filter:blur(8px);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    transition:.25s;
+
+    cursor:pointer;
+
+}
+
+
+
+.card:hover{
+
+    transform:translateY(-6px);
+
+    background:rgba(25,25,25,.38);
+
+}
+
+
+
+
+
+/* ===== BORÍTÓ ===== */
+
+
+.poster{
+
+    width:100%;
+
+    aspect-ratio:2/3;
+
+    background:#222;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:#aaa;
+
+}
+
+
+
+.poster img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+}
+
+
+
+
+
+/* ===== CÍM ===== */
+
+
+.title{
+
+    padding:10px;
+
+    text-align:center;
+
+    font-weight:bold;
+
+    line-height:1.3;
+
+}
+
+
+
+
+
+/* ===== EXTRA ADATOK ===== */
+
+
+.movieYear{
+
+    color:#cfcfcf;
+
+    font-size:14px;
+
+    margin-top:5px;
+
+    text-align:center;
+
+}
+
+
+
+.movieGenres{
+
+    color:#8fd0ff;
+
+    font-size:13px;
+
+    margin-top:5px;
+
+    line-height:1.4;
+
+    text-align:center;
+
+    padding:0 8px;
+
+}
+
+
+
+.originalTitle{
+
+    color:#bbb;
+
+    font-size:12px;
+
+    font-style:italic;
+
+    text-align:center;
+
+    margin-top:5px;
+
+}
+
+
+
+.finishedDate{
+
+    color:#9cff9c;
+
+    font-size:12px;
+
+    text-align:center;
+
+    margin-top:5px;
+
+    padding-bottom:10px;
+
+}

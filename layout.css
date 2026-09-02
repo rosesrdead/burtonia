@@ -1,0 +1,245 @@
+/* ===================================
+   BURTONIA - Layout
+=================================== */
+
+
+/* ===== FEJLÉC ===== */
+
+
+header{
+
+    position:relative;
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    align-items:center;
+
+    padding:20px 30px;
+
+    margin:20px;
+
+    border-radius:18px;
+
+    background:rgba(0,0,0,.18);
+
+    backdrop-filter:blur(12px);
+
+    -webkit-backdrop-filter:blur(12px);
+
+    border:1px solid rgba(255,255,255,.08);
+
+}
+
+
+
+header h1{
+
+    position:absolute;
+
+    left:50%;
+
+    top:50%;
+
+    transform:translate(-50%,-50%);
+
+    margin:0;
+
+    font-family:"Cinzel",serif;
+
+    color:white;
+
+    letter-spacing:5px;
+
+    font-size:34px;
+
+    font-weight:700;
+
+    text-shadow:0 0 18px rgba(255,255,255,.15);
+
+}
+
+
+
+#settingsButton{
+
+    width:48px;
+
+    height:48px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.08);
+
+    color:white;
+
+    cursor:pointer;
+
+    font-size:22px;
+
+    transition:.25s;
+
+    backdrop-filter:blur(10px);
+
+}
+
+
+
+#settingsButton:hover{
+
+    background:rgba(255,255,255,.18);
+
+    transform:rotate(90deg);
+
+}
+
+
+
+
+
+/* ===== FŐ ELRENDEZÉS ===== */
+
+
+#layout{
+
+    display:grid;
+
+    grid-template-columns:220px 1fr;
+
+    gap:30px;
+
+    padding:25px;
+
+    align-items:start;
+
+}
+
+
+
+
+
+/* ===== SIDEBAR ===== */
+
+
+#sidebar{
+
+    padding:18px;
+
+    border-radius:20px;
+
+    background:rgba(0,0,0,.18);
+
+    backdrop-filter:blur(10px);
+
+    -webkit-backdrop-filter:blur(10px);
+
+    border:1px solid rgba(255,255,255,.08);
+
+}
+
+
+
+#sidebar h2{
+
+    margin-bottom:15px;
+
+}
+
+
+
+.sidebarItem{
+
+    padding:10px 14px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+
+
+.sidebarItem:hover{
+
+    background:rgba(255,255,255,.12);
+
+    transform:translateX(6px);
+
+}
+
+
+
+.sidebarItem.active{
+
+    background:rgba(255,255,255,.18);
+
+    font-weight:bold;
+
+}
+
+
+
+
+
+/* ===== TARTALOM ===== */
+
+
+main{
+
+    padding:10px;
+
+}
+
+
+
+.sectionTitle{
+
+    margin:20px 0 10px;
+
+}
+
+
+
+
+/* ===== OLDALAK ===== */
+
+
+#homePage{
+
+    display:none;
+
+}
+
+
+
+#libraryPage{
+
+    display:block;
+
+}
+
+
+
+
+
+/* ===== ESZKÖZTÁR ===== */
+
+
+.libraryToolbar{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin-bottom:20px;
+
+    flex-wrap:wrap;
+
+}

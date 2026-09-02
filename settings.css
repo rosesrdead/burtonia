@@ -1,0 +1,491 @@
+```css
+/* ===================================
+   BURTONIA - Settings
+=================================== */
+
+
+/* ===== SETTINGS GOMB ===== */
+
+#settingsButton{
+
+    width:48px;
+
+    height:48px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.08);
+
+    color:white;
+
+    cursor:pointer;
+
+    font-size:22px;
+
+    transition:.25s;
+
+    backdrop-filter:blur(10px);
+
+}
+
+
+#settingsButton:hover{
+
+    background:rgba(255,255,255,.18);
+
+    transform:rotate(90deg);
+
+}
+
+
+/* ===== SETTINGS MODAL ===== */
+
+#settingsModal{
+
+    position:fixed;
+
+    inset:0;
+
+    width:100%;
+
+    height:100%;
+
+    background:rgba(0,0,0,.65);
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:9999;
+
+    padding:20px;
+
+    box-sizing:border-box;
+
+    overflow-y:auto;
+
+    overflow-x:hidden;
+
+}
+
+
+/* ===== SETTINGS BOX ===== */
+
+#settingsBox{
+
+    width:420px;
+
+    max-width:90vw;
+
+    max-height:90vh;
+
+    /*
+       EZ A FONTOS JAVÍTÁS.
+       A flex elem engedje magát
+       kisebbre méretezni.
+    */
+
+    min-height:0;
+
+    /*
+       A tartalom ezen belül
+       görgethető.
+    */
+
+    overflow-y:auto;
+
+    overflow-x:hidden;
+
+    background:#1f1f1f;
+
+    border-radius:18px;
+
+    padding:30px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:14px;
+
+    box-shadow:0 0 35px rgba(0,0,0,.5);
+
+    box-sizing:border-box;
+
+    /*
+       Telefonon is normálisan
+       működjön az érintéses görgetés.
+    */
+
+    -webkit-overflow-scrolling:touch;
+
+    /*
+       Fontos mobilos flex-beállítás.
+    */
+
+    overscroll-behavior:contain;
+
+}
+
+
+/* ===== CÍM ===== */
+
+#settingsBox h2{
+
+    margin:0;
+
+    text-align:center;
+
+}
+
+
+/* ===== ALCÍMEK ===== */
+
+#settingsBox h3{
+
+    margin-top:10px;
+
+}
+
+
+/* ===== SETTINGS GROUP ===== */
+
+.settingsGroup{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+
+}
+
+
+/* ===== SETTINGS INPUTOK ===== */
+
+#settingsBox input,
+#settingsBox select{
+
+    box-sizing:border-box;
+
+    max-width:100%;
+
+}
+
+
+/* ===== SETTINGS GOMBOK ===== */
+
+#settingsBox button{
+
+    padding:12px;
+
+    border:none;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+}
+
+
+/* ===== ELVÁLASZTÓ ===== */
+
+#settingsBox hr{
+
+    width:100%;
+
+    opacity:.25;
+
+    flex-shrink:0;
+
+}
+
+
+/* ===== HÁTTÉR ===== */
+
+#backgroundOverlay{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.35);
+
+    pointer-events:none;
+
+    z-index:-1;
+
+}
+
+
+/* ===================================
+   CLOUD SYNC
+=================================== */
+
+#cloudSyncActions{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+
+}
+
+
+#cloudSyncStatus{
+
+    padding:10px 12px;
+
+    border-radius:10px;
+
+    background:rgba(255,255,255,.06);
+
+    font-size:14px;
+
+    line-height:1.4;
+
+}
+
+
+#cloudSyncStatus[data-state="connected"]{
+
+    border:1px solid rgba(120,190,140,.25);
+
+}
+
+
+#cloudSyncStatus[data-state="error"]{
+
+    border:1px solid rgba(220,90,90,.35);
+
+}
+
+
+.cloudSyncGroup{
+
+    flex-shrink:0;
+
+}
+
+
+.cloudSyncGroup small{
+
+    display:block;
+
+    opacity:.7;
+
+    line-height:1.45;
+
+}
+
+
+/* ===================================
+   CLOUD SYNC GOMBOK
+=================================== */
+
+#cloudLoginButton,
+#cloudLogoutButton,
+#cloudUploadButton,
+#cloudDownloadButton{
+
+    width:100%;
+
+    box-sizing:border-box;
+
+}
+
+
+/* ===================================
+   BEÁLLÍTÁSOK BEZÁRÁS
+=================================== */
+
+#closeSettings{
+
+    width:100%;
+
+    box-sizing:border-box;
+
+    flex-shrink:0;
+
+}
+
+
+/* ===================================
+   MOBIL
+=================================== */
+
+@media (max-width:600px){
+
+    #settingsModal{
+
+        /*
+           A teljes képernyőt használjuk,
+           és a modal tetejétől indulunk.
+        */
+
+        padding:10px;
+
+        align-items:flex-start;
+
+        justify-content:center;
+
+        overflow-y:auto;
+
+    }
+
+
+    #settingsBox{
+
+        width:100%;
+
+        max-width:100%;
+
+        /*
+           Biztos magasságkorlát.
+        */
+
+        height:auto;
+
+        max-height:90vh;
+
+        min-height:0;
+
+        /*
+           EZ fogja lehetővé tenni,
+           hogy az alsó részekhez
+           legörgethess.
+        */
+
+        overflow-y:auto;
+
+        overflow-x:hidden;
+
+        padding:22px;
+
+        border-radius:16px;
+
+        box-sizing:border-box;
+
+        -webkit-overflow-scrolling:touch;
+
+        overscroll-behavior:contain;
+
+    }
+
+
+    #settingsBox button{
+
+        min-height:44px;
+
+    }
+
+
+    #cloudSyncStatus{
+
+        word-break:break-word;
+
+    }
+
+
+    #cloudSyncGroup{
+
+        min-height:0;
+
+    }
+
+}
+
+
+/* ===================================
+   NAGYON KIS MOBIL
+=================================== */
+
+@media (max-width:420px){
+
+    #settingsModal{
+
+        padding:6px;
+
+        align-items:flex-start;
+
+    }
+
+
+    #settingsBox{
+
+        width:100%;
+
+        max-width:100%;
+
+        max-height:94vh;
+
+        min-height:0;
+
+        padding:18px;
+
+        border-radius:14px;
+
+        gap:12px;
+
+    }
+
+
+    #settingsBox h2{
+
+        font-size:20px;
+
+    }
+
+
+    #settingsBox h3{
+
+        font-size:16px;
+
+    }
+
+
+    #settingsBox button{
+
+        min-height:44px;
+
+    }
+
+}
+```
+/* ===================================
+   CLOUD LOGIN - FIX
+=================================== */
+
+#settingsBox .cloudSyncGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    min-width: 0;
+    flex: 0 0 auto;
+}
+
+#settingsBox .cloudSyncGroup > * {
+    flex: 0 0 auto;
+}
+
+#settingsBox #cloudLoginButton,
+#settingsBox #cloudLogoutButton,
+#settingsBox #cloudUploadButton,
+#settingsBox #cloudDownloadButton {
+    display: block;
+    width: 100%;
+    min-height: 44px;
+    height: auto;
+    flex: 0 0 auto;
+    visibility: visible;
+    opacity: 1;
+    box-sizing: border-box;
+}

@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>BURTONIA</title>
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="style.css">
+
+</head>
+
+<body>
+
+    <div id="backgroundOverlay"></div>
+
+
+    <header>
+
+        <h1>
+            BURTONIA
+        </h1>
+
+        <button id="settingsButton">
+            ⚙️
+        </button>
+
+    </header>
+
+
+    <div id="layout">
+
+        <aside id="sidebar">
+
+            <h2>
+                Könyvtár
+            </h2>
+
+            <div id="sidebarItems"></div>
+
+        </aside>
+
+
+        <main>
+
+            <div id="homePage"></div>
+
+
+            <div id="browsePage"
+                 style="display:none;">
+
+                <h2 class="sectionTitle">
+                    🎭 Böngészés
+                </h2>
+
+                <div id="genresContainer"></div>
+
+            </div>
+
+
+            <div id="libraryPage">
+
+                <div class="libraryToolbar">
+
+                    <label for="sortSelect">
+                        Rendezés:
+                    </label>
+
+                    <select id="sortSelect">
+
+                        <option value="abc">
+                            ABC
+                        </option>
+
+                        <option value="za">
+                            Z-A
+                        </option>
+
+                        <option value="finished">
+                            Befejezés dátuma
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <h2 class="sectionTitle">
+                    🎬 Filmek
+                </h2>
+
+                <div id="moviesGrid"
+                     class="grid"></div>
+
+
+                <h2 class="sectionTitle">
+                    📺 Sorozatok
+                </h2>
+
+                <div id="seriesGrid"
+                     class="grid"></div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <button id="fab">
+        +
+    </button>
+
+
+    <div id="fabMenu">
+
+        <button id="addMovie">
+            🎬 Új film
+        </button>
+
+        <button id="addSeries">
+            📺 Új sorozat
+        </button>
+
+        <button id="addList">
+            📝 Új lista
+        </button>
+
+    </div>
+
+
+    <div id="modal">
+
+        <div id="modalBox">
+
+            <h2 id="modalTitle">
+                Új elem
+            </h2>
+
+
+            <div class="editorTop">
+
+                <div class="editorLeft">
+
+                    <div id="coverPreview">
+                        Nincs borító
+                    </div>
+
+
+                    <input
+                        id="itemCover"
+                        type="file"
+                        accept="image/*">
+
+
+                    <label for="itemCoverUrl">
+                        vagy Borító URL
+                    </label>
+
+
+                    <input
+                        id="itemCoverUrl"
+                        type="url"
+                        placeholder="https://...">
+
+                </div>
+
+
+                <div class="editorRight">
+
+                    <label for="itemTitle">
+                        Magyar cím
+                    </label>
+
+                    <input
+                        id="itemTitle"
+                        type="text"
+                        placeholder="Magyar cím">
+
+
+                    <label for="itemOriginalTitle">
+                        Eredeti cím
+                    </label>
+
+                    <input
+                        id="itemOriginalTitle"
+                        type="text"
+                        placeholder="Eredeti cím">
+
+
+                    <label for="itemType">
+                        Típus
+                    </label>
+
+                    <select id="itemType">
+
+                        <option value="movie">
+                            Film
+                        </option>
+
+                        <option value="series">
+                            Sorozat
+                        </option>
+
+                    </select>
+
+
+                    <label for="itemStatus">
+                        Állapot
+                    </label>
+
+                    <select id="itemStatus"></select>
+
+
+                    <label for="itemYear">
+                        Megjelenés éve
+                    </label>
+
+                    <input
+                        id="itemYear"
+                        type="number"
+                        min="1888"
+                        max="2100"
+                        placeholder="2024">
+
+
+                    <label>
+                        Műfaj(ok)
+                    </label>
+
+
+                    <div id="genreContainer">
+
+                        <label>
+                            <input type="checkbox" value="Akció">
+                            Akció
+                        </label>
+
+                        <label>
+                            <input type="checkbox" value="Animáció">
+                            Animáció
+                        </label>
+
+                        <label>
+                            <input type="checkbox" value="Anime">
+                            Anime
+                        </label>
+
+                        <label>
+                            <input type="checkbox" value="Családi">
+                            Családi
+                        </label>
+
+                        <label>
+                            <input type="checkbox" value="Dokumentum">
+                            Dokumentum
+                        </label>
+
+                        <label>
+                            <input type="checkbox" value="Dráma">
+                            Dráma
+                        </label>
+
+                        <label>
+                            <input type="checkbox" value="Fantasy">
+                            Fantasy
+                        </label>
+
+                        <label>
+                            <input type="checkbox" value="Filmdráma">
+                            Filmdráma
+                        </label>
+
+                        <label>
+                            <input type="checkbox" value="Független film">
+                            Független film
+                        </label>
+
+                        <label>
+                            <input type="checkbox" value="Gyerek">
+                            Gyerek
+                        </label>
+
+                        <label>
+                            <input type="checkbox" value="Háborús">
+                            Háborús
+                        </label>
+
+                        <label>
+                            <input type="checkbox" value="Horror">
+                            Horror
+                        </label>
+
+                        <label>
+                            <input type="checkbox" value="Kaland">
+                            Kaland
+                        </label>
+
+                        <label>
+                            <input type="checkbox" value="Katasztrófa">
+                            Katasztrófa
+                        </label>
+
+                        <label>
+                            <input type="checkbox" value="Krimi">
+                            Krimi
+                        </label>
+
+                        <label>
+                            <input type="checkbox" value="Misztikus">
+                            Misztikus
+                        </label>
+
+                        <label>
+                            <input type="checkbox" value="Musical">
+                            Musical
+                        </label>
+
+                        <label>
+                            <input type="checkbox" value="Paródia">
+                            Paródia
+                        </label>
+
+                        <label>
+                            <input type="checkbox" value="Romantikus">
+                            Romantikus
+                        </label>
+
+                        <label>
+                            <input type="checkbox" value="Sci-Fi">
+                            Sci-Fi
+                        </label>
+
+                        <label>
+                            <input type="checkbox" value="Stop motion">
+                            Stop motion
+                        </label>
+
+                        <label>
+                            <input type="checkbox" value="Szitkom">
+                            Szitkom
+                        </label>
+
+                        <label>
+                            <input type="checkbox" value="Thriller">
+                            Thriller
+                        </label>
+
+                        <label>
+                            <input type="checkbox" value="Történelmi">
+                            Történelmi
+                        </label>
+
+                        <label>
+                            <input type="checkbox" value="Western">
+                            Western
+                        </label>
+
+                        <label>
+                            <input type="checkbox" value="Vígjáték">
+                            Vígjáték
+                        </label>
+
+                        <label>
+                            <input type="checkbox" value="Életrajzi">
+                            Életrajzi
+                        </label>
+
+                    </div>
+
+
+                    <label for="itemFinished">
+                        Befejezés dátuma
+                    </label>
+
+                    <input
+                        id="itemFinished"
+                        type="date">
+
+                </div>
+
+            </div>
+
+
+            <h3>
+                Listák
+            </h3>
+
+            <div id="listContainer"></div>
+
+
+            <div id="modalButtons">
+
+                <button id="deleteItem">
+                    🗑 Törlés
+                </button>
+
+                <button id="cancelItem">
+                    Mégse
+                </button>
+
+                <button id="saveItem">
+                    💾 Mentés
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div id="settingsModal">
+
+        <div id="settingsBox">
+
+            <h2>
+                ⚙️ Beállítások
+            </h2>
+
+
+            <div class="settingsGroup">
+
+                <h3>
+                    📝 Betűk
+                </h3>
+
+                <label for="fontSize">
+                    Betűméret
+                </label>
+
+                <input
+                    id="fontSize"
+                    type="range"
+                    min="12"
+                    max="30"
+                    value="16">
+
+                <div id="fontSizeValue">
+                    16 px
+                </div>
+
+                <label for="fontWeight">
+                    Betűvastagság
+                </label>
+
+                <input
+                    id="fontWeight"
+                    type="range"
+                    min="400"
+                    max="700"
+                    step="100"
+                    value="500">
+
+                <div id="fontWeightValue">
+                    500
+                </div>
+
+            </div>
+
+
+            <div class="settingsGroup">
+
+                <h3>
+                    🎨 Háttér
+                </h3>
+
+                <label for="backgroundText">
+                    Egyedi szín
+                </label>
+
+                <input
+                    id="backgroundText"
+                    type="text"
+                    placeholder="#111111 vagy black">
+
+                <button id="applyBackground">
+                    Alkalmaz
+                </button>
+
+                <label for="backgroundPicker">
+                    Színválasztó
+                </label>
+
+                <input
+                    id="backgroundPicker"
+                    type="color"
+                    value="#111111">
+
+            </div>
+
+
+            <div class="settingsGroup">
+
+                <h3>
+                    🖼 Háttérkép
+                </h3>
+
+                <button id="changeWallpaper">
+                    Kép kiválasztása
+                </button>
+
+                <button id="removeWallpaper">
+                    Háttér törlése
+                </button>
+
+            </div>
+
+
+            <div class="settingsGroup cloudSyncGroup">
+
+                <h3>
+                    ☁️ Felhős szinkronizálás
+                </h3>
+
+                <div id="cloudSyncStatus">
+                    Nincs bejelentkezve.
+                </div>
+
+                <label for="cloudEmail">
+                    E-mail cím
+                </label>
+
+                <input
+                    id="cloudEmail"
+                    type="email"
+                    placeholder="te@email.com"
+                    autocomplete="email">
+
+                <button id="cloudLoginButton">
+                    ✉️ Belépési link küldése
+                </button>
+
+                <button
+                    id="cloudLogoutButton"
+                    style="display:none;">
+
+                    Kilépés
+
+                </button>
+
+                <div
+                    id="cloudSyncActions"
+                    style="display:none;">
+
+                    <button id="cloudUploadButton">
+                        ☁️ Helyi adatok feltöltése
+                    </button>
+
+                    <button id="cloudDownloadButton">
+                        ⬇️ Felhőből betöltés
+                    </button>
+
+                </div>
+
+                <small>
+                    Ugyanazzal az e-mail címmel jelentkezz be
+                    laptopon és telefonon.
+                </small>
+
+            </div>
+
+
+            <hr>
+
+
+            <button id="closeSettings">
+                Bezárás
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="js/config.js"></script>
+
+    <script src="js/cloudSync.js"></script>
+
+
+    <script src="js/database.js"></script>
+
+    <script src="js/status.js"></script>
+
+    <script src="js/sorting.js"></script>
+
+    <script src="js/home.js"></script>
+
+    <script src="js/lists.js"></script>
+
+    <script src="js/listSelector.js"></script>
+
+    <script src="js/stats.js"></script>
+
+    <script src="js/movies.js"></script>
+
+    <script src="js/browse.js"></script>
+
+    <script src="js/editor.js"></script>
+
+    <script src="js/elements.js"></script>
+
+    <script src="js/fab.js"></script>
+
+    <script src="js/preview.js"></script>
+
+    <script src="js/modal.js"></script>
+
+    <script src="js/settings/theme.js"></script>
+
+    <script src="js/settings/wallpaper.js"></script>
+
+    <script src="js/settings/settings.js"></script>
+
+    <script src="js/app.js"></script>
+
+</body>
+
+</html>

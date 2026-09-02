@@ -1,0 +1,212 @@
+/* ===================================
+   BURTONIA
+   Buttons
+=================================== */
+
+/* ===== Általános gomb ===== */
+
+button{
+
+    font-family:"Cinzel", serif;
+
+    border:none;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+button:hover{
+
+    transform:translateY(-2px);
+
+}
+
+/* ===== FEJLÉC ===== */
+
+#settingsButton{
+
+    width:48px;
+
+    height:48px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.08);
+
+    color:white;
+
+    font-size:22px;
+
+    backdrop-filter:blur(10px);
+
+}
+
+#settingsButton:hover{
+
+    background:rgba(255,255,255,.18);
+
+    transform:rotate(90deg);
+
+}
+
+/* ===== FAB ===== */
+
+#fab{
+
+    position:fixed;
+
+    right:24px;
+
+    bottom:24px;
+
+    width:64px;
+
+    height:64px;
+
+    border-radius:50%;
+
+    background:#4a6cf7;
+
+    color:white;
+
+    font-size:34px;
+
+    box-shadow:0 12px 30px rgba(0,0,0,.35);
+
+    z-index:500;
+
+}
+
+#fab:hover{
+
+    transform:scale(1.08);
+
+}
+
+/* ===== FAB MENÜ ===== */
+
+#fabMenu{
+
+    position:fixed;
+
+    right:24px;
+
+    bottom:100px;
+
+    display:none;
+
+    flex-direction:column;
+
+    gap:10px;
+
+    z-index:500;
+
+}
+
+#fabMenu button{
+
+    min-width:180px;
+
+    padding:12px 16px;
+
+    text-align:left;
+
+    color:white;
+
+    background:rgba(20,20,20,.92);
+
+    backdrop-filter:blur(12px);
+
+    border:1px solid rgba(255,255,255,.08);
+
+}
+
+#fabMenu button:hover{
+
+    background:rgba(60,60,60,.95);
+
+}
+
+/* ===== MODAL GOMBOK ===== */
+
+#modalButtons button{
+
+    min-width:120px;
+
+    padding:11px 18px;
+
+}
+
+#saveItem{
+
+    background:#4caf50;
+
+    color:white;
+
+}
+
+#saveItem:hover{
+
+    background:#43a047;
+
+}
+
+#cancelItem{
+
+    background:#757575;
+
+    color:white;
+
+}
+
+#cancelItem:hover{
+
+    background:#616161;
+
+}
+
+#deleteItem{
+
+    background:#d32f2f;
+
+    color:white;
+
+}
+
+#deleteItem:hover{
+
+    background:#b71c1c;
+
+}
+
+/* ===== BEÁLLÍTÁSOK ===== */
+
+#settingsBox button{
+
+    width:100%;
+
+    padding:12px;
+
+    margin-top:6px;
+
+}
+
+/* ===== TÉMA GOMBOK ===== */
+
+.themePreset{
+
+    background:#2c2c2c;
+
+    color:white;
+
+}
+
+.themePreset:hover{
+
+    background:#3b3b3b;
+
+}

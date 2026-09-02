@@ -1,0 +1,200 @@
+/* ===================================
+   BURTONIA
+   Responsive
+=================================== */
+
+/* ===== Nagy monitorok ===== */
+
+@media (min-width:1600px){
+
+    .grid{
+
+        grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+
+    }
+
+}
+
+/* ===== Laptop ===== */
+
+@media (max-width:1200px){
+
+    #layout{
+
+        grid-template-columns:200px 1fr;
+
+        gap:20px;
+
+    }
+
+    .grid{
+
+        grid-template-columns:repeat(auto-fill,minmax(170px,1fr));
+
+    }
+
+}
+
+/* ===== Tablet ===== */
+
+@media (max-width:900px){
+
+    #layout{
+
+        grid-template-columns:1fr;
+
+    }
+
+    #sidebar{
+
+        order:1;
+
+    }
+
+    main{
+
+        order:2;
+
+    }
+
+    header{
+
+        margin:10px;
+
+        padding:16px;
+
+    }
+
+    .editorTop{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .editorLeft{
+
+        align-items:center;
+
+    }
+
+    #coverPreview{
+
+        width:180px;
+
+        height:270px;
+
+    }
+
+    #modalBox{
+
+        width:95vw;
+
+    }
+
+}
+
+/* ===== Mobil ===== */
+
+@media (max-width:600px){
+
+    body{
+
+        font-size:15px;
+
+    }
+
+    header h1{
+
+        font-size:26px;
+
+        letter-spacing:2px;
+
+    }
+
+    #layout{
+
+        padding:12px;
+
+    }
+
+    .grid{
+
+        grid-template-columns:repeat(2,minmax(0,1fr));
+
+        gap:12px;
+
+    }
+
+    .title{
+
+        font-size:14px;
+
+    }
+
+    #fab{
+
+        width:56px;
+
+        height:56px;
+
+        font-size:28px;
+
+        right:16px;
+
+        bottom:16px;
+
+    }
+
+    #fabMenu{
+
+        right:16px;
+
+        bottom:82px;
+
+    }
+
+    #fabMenu button{
+
+        min-width:160px;
+
+    }
+
+    #modalButtons{
+
+        flex-direction:column;
+
+    }
+
+    #modalButtons button{
+
+        width:100%;
+
+    }
+
+    #listContainer{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+/* ===== Kis mobil ===== */
+
+@media (max-width:420px){
+
+    .grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    #coverPreview{
+
+        width:150px;
+
+        height:225px;
+
+    }
+
+}

@@ -1,0 +1,168 @@
+/* ===================================
+   BURTONIA - Forms
+=================================== */
+
+
+/* ===== LABEL ===== */
+
+
+label{
+
+    color:white;
+
+    font-weight:bold;
+
+}
+
+
+
+
+
+/* ===== INPUTOK ===== */
+
+
+input,
+select,
+textarea{
+
+    font-family:Arial, Helvetica, sans-serif;
+
+}
+
+
+
+
+
+#modalBox input,
+#modalBox select{
+
+    width:100%;
+
+    padding:10px;
+
+    border:1px solid #ccc;
+
+    border-radius:8px;
+
+    box-sizing:border-box;
+
+}
+
+
+
+
+
+#modalBox label{
+
+    color:#111;
+
+}
+
+
+
+
+
+/* ===== SELECT ===== */
+
+
+select{
+
+    padding:10px 14px;
+
+    border-radius:12px;
+
+    border:1px solid rgba(255,255,255,.1);
+
+    background:rgba(0,0,0,.18);
+
+    color:white;
+
+    backdrop-filter:blur(8px);
+
+}
+
+
+
+
+
+select option{
+
+    background:#202020;
+
+    color:white;
+
+}
+
+
+
+
+
+select:hover{
+
+    background:rgba(255,255,255,.08);
+
+}
+
+
+
+
+
+/* ===== MŰFAJ CHECKBOXOK ===== */
+
+
+#genreContainer{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:8px;
+
+    padding:10px;
+
+    border-radius:10px;
+
+    background:rgba(0,0,0,.08);
+
+}
+
+
+
+
+
+#genreContainer label{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    color:#111;
+
+    font-weight:normal;
+
+}
+
+
+
+
+
+#genreContainer input{
+
+    width:auto;
+
+}
+
+
+
+
+
+/* ===== SORT ===== */
+
+
+.libraryToolbar label{
+
+    color:white;
+
+}

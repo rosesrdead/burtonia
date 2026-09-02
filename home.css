@@ -1,0 +1,124 @@
+/* ===================================
+   BURTONIA
+   Home
+=================================== */
+
+/* ====== SZEKCIÓK ====== */
+
+#homePage section{
+
+    margin-bottom:40px;
+
+}
+
+/* ====== ÜRES ÁLLAPOT ====== */
+
+.emptyHome{
+
+    padding:30px;
+
+    text-align:center;
+
+    border:1px dashed rgba(255,255,255,.20);
+
+    border-radius:12px;
+
+    background:rgba(255,255,255,.03);
+
+    opacity:.9;
+
+}
+
+.emptyHome h2{
+
+    margin-bottom:15px;
+
+}
+
+.emptyHome p{
+
+    font-size:16px;
+
+    color:#d0d0d0;
+
+}
+
+/* ====== HOME STATISZTIKA ====== */
+
+.homeStats{
+
+    margin-top:40px;
+
+    padding:20px;
+
+    border-radius:18px;
+
+    background:rgba(0,0,0,.18);
+
+    backdrop-filter:blur(10px);
+
+    -webkit-backdrop-filter:blur(10px);
+
+    border:1px solid rgba(255,255,255,.08);
+
+}
+
+.homeStats .sectionTitle{
+
+    margin-top:0;
+
+}
+
+/* ====== STAT SOR ====== */
+
+.homeStat{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:10px 0;
+
+    font-size:18px;
+
+    border-bottom:1px solid rgba(255,255,255,.08);
+
+}
+
+.homeStat:last-child{
+
+    border-bottom:none;
+
+}
+
+.homeStat span{
+
+    color:#dddddd;
+
+}
+
+.homeStat b{
+
+    color:#ffffff;
+
+    font-size:20px;
+
+}
+
+/* ====== FOLYTATÁS ====== */
+
+#homePage .grid{
+
+    margin-top:15px;
+
+}
+
+/* ====== LEGUTÓBB HOZZÁADOTT ====== */
+
+#homePage section:last-child{
+
+    margin-bottom:0;
+
+}
