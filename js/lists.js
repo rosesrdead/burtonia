@@ -160,12 +160,20 @@ function getFilteredItems() {
     }
 
 
-    return db.items.filter(item =>
+    return db.items.filter(item => {
 
-        item.lists &&
-        item.lists.includes(currentList)
+        if (!Array.isArray(item.lists)) {
 
-    );
+            return false;
+
+        }
+
+
+        return item.lists.some(
+            id => Number(id) === Number(currentList)
+        );
+
+    });
 
 }
 
@@ -280,11 +288,14 @@ addList.onclick = () => {
 
     db.lists.push({
 
-        id: Date.now(),
+        id:
+            Date.now(),
 
-        name: value,
+        name:
+            value,
 
-        icon: "📝"
+        icon:
+            "📝"
 
     });
 
@@ -369,11 +380,13 @@ function editList(list) {
 
     db.items.forEach(item => {
 
-        if (item.lists) {
+        if (Array.isArray(item.lists)) {
 
             item.lists =
                 item.lists.filter(
-                    id => id !== list.id
+                    id =>
+                        Number(id) !==
+                        Number(list.id)
                 );
 
         }
