@@ -131,6 +131,8 @@ function renderLists() {
         };
 
 
+        /* ===== DUPLA KATTINTÁS = SZERKESZTÉS ===== */
+
         row.ondblclick = e => {
 
             e.stopPropagation();
@@ -244,11 +246,15 @@ addList.onclick = () => {
     closeFab();
 
 
+    /* ===== LISTA NEVE ===== */
+
     const name =
-        prompt("Új lista neve:");
+        prompt(
+            "Új lista neve:"
+        );
 
 
-    if (!name) {
+    if (name === null) {
 
         return;
 
@@ -265,6 +271,8 @@ addList.onclick = () => {
 
     }
 
+
+    /* ===== DUPLIKÁCIÓ ELLENŐRZÉS ===== */
 
     const exists =
         db.lists.find(list =>
@@ -286,6 +294,28 @@ addList.onclick = () => {
     }
 
 
+    /* ===== EMOJI ===== */
+
+    const iconInput =
+        prompt(
+            "Lista emoji (opcionális):",
+            "📝"
+        );
+
+
+    if (iconInput === null) {
+
+        return;
+
+    }
+
+
+    const icon =
+        iconInput.trim() || "📝";
+
+
+    /* ===== LISTA LÉTREHOZÁSA ===== */
+
     db.lists.push({
 
         id:
@@ -295,7 +325,7 @@ addList.onclick = () => {
             value,
 
         icon:
-            "📝"
+            icon
 
     });
 
@@ -340,6 +370,29 @@ function editList(list) {
     }
 
 
+    /* ===== DUPLIKÁCIÓ ELLENŐRZÉS ===== */
+
+    const duplicate =
+        db.lists.find(existingList =>
+
+            existingList.id !== list.id &&
+            existingList.name.toLowerCase() ===
+            value.toLowerCase()
+
+        );
+
+
+    if (duplicate) {
+
+        alert(
+            "Ez a lista már létezik."
+        );
+
+        return;
+
+    }
+
+
     /* ===== EMOJI ===== */
 
     const newIcon =
@@ -360,7 +413,7 @@ function editList(list) {
         newIcon.trim() || "📝";
 
 
-    /* ===== MENTÉS ===== */
+    /* ===== MENTÉS VAGY TÖRLÉS ===== */
 
     const action =
         confirm(
@@ -387,7 +440,7 @@ function editList(list) {
     }
 
 
-    /* ===== TÖRLÉS ===== */
+    /* ===== TÖRLÉS MEGERŐSÍTÉSE ===== */
 
     const reallyDelete =
         confirm(
@@ -402,11 +455,16 @@ function editList(list) {
     }
 
 
+    /* ===== LISTA TÖRLÉSE ===== */
+
     db.lists =
         db.lists.filter(
-            l => l.id !== list.id
+            l =>
+                l.id !== list.id
         );
 
+
+    /* ===== LISTA LEVÉTELE A FILMEKRŐL / SOROZATOKRÓL ===== */
 
     db.items.forEach(item => {
 
