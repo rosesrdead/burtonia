@@ -9,10 +9,20 @@
 
 function renderLists() {
 
-    sidebarItems.innerHTML = "";
+    if (!sidebarItems) {
+
+        return;
+
+    }
 
 
-    /* ===== KEZDŐLAP ===== */
+    sidebarItems.innerHTML =
+        "";
+
+
+    /* ===================================
+       🏠 KEZDŐLAP
+    =================================== */
 
     const home =
         document.createElement("div");
@@ -30,17 +40,27 @@ function renderLists() {
 
     home.onclick = () => {
 
-        currentView = "home";
+        currentView =
+            "home";
+
+
+        currentList =
+            "all";
+
 
         render();
 
     };
 
 
-    sidebarItems.appendChild(home);
+    sidebarItems.appendChild(
+        home
+    );
 
 
-    /* ===== BÖNGÉSZÉS ===== */
+    /* ===================================
+       🎭 BÖNGÉSZÉS
+    =================================== */
 
     const browse =
         document.createElement("div");
@@ -58,17 +78,23 @@ function renderLists() {
 
     browse.onclick = () => {
 
-        currentView = "browse";
+        currentView =
+            "browse";
+
 
         render();
 
     };
 
 
-    sidebarItems.appendChild(browse);
+    sidebarItems.appendChild(
+        browse
+    );
 
 
-    /* ===== KÖNYVTÁR ===== */
+    /* ===================================
+       📚 KÖNYVTÁR
+    =================================== */
 
     const library =
         document.createElement("div");
@@ -76,32 +102,50 @@ function renderLists() {
 
     library.className =
         currentView === "library" &&
-        currentList === "all"
+        (
+            currentList === "all" ||
+            currentList === null ||
+            currentList === undefined
+        )
             ? "sidebarItem active"
             : "sidebarItem";
 
 
     library.textContent =
-        "🎬 Könyvtár";
+        "📚 Könyvtár";
 
 
     library.onclick = () => {
 
-        currentView = "library";
+        currentView =
+            "library";
 
-        currentList = "all";
+
+        currentList =
+            "all";
+
 
         render();
 
     };
 
 
-    sidebarItems.appendChild(library);
+    sidebarItems.appendChild(
+        library
+    );
 
 
-    /* ===== SAJÁT LISTÁK ===== */
+    /* ===================================
+       SAJÁT LISTÁK
+    =================================== */
 
-    db.lists.forEach(list => {
+    const lists =
+        Array.isArray(db.lists)
+            ? db.lists
+            : [];
+
+
+    lists.forEach(list => {
 
         const row =
             document.createElement("div");
@@ -109,7 +153,8 @@ function renderLists() {
 
         row.className =
             currentView === "library" &&
-            currentList === list.id
+            String(currentList) ===
+            String(list.id)
                 ? "sidebarItem active"
                 : "sidebarItem";
 
@@ -117,64 +162,51 @@ function renderLists() {
         row.textContent =
             (list.icon || "📝") +
             " " +
-            list.name;
+            (list.name || "Névtelen lista");
 
+
+        /* ===================================
+           LISTA MEGNYITÁSA
+        =================================== */
 
         row.onclick = () => {
 
-            currentView = "library";
+            currentView =
+                "library";
 
-            currentList = list.id;
+
+            currentList =
+                list.id;
+
 
             render();
 
         };
 
 
-        /* ===== DUPLA KATTINTÁS = SZERKESZTÉS ===== */
+        /* ===================================
+           DUPLA KATTINTÁS = SZERKESZTÉS
+        =================================== */
 
         row.ondblclick = e => {
 
             e.stopPropagation();
 
-            editList(list);
+
+            if (
+                typeof editList ===
+                "function"
+            ) {
+
+                editList(list);
+
+            }
 
         };
 
 
-        sidebarItems.appendChild(row);
-
-    });
-
-}
-
-
-/* ===================================
-   SZŰRT ELEMEK
-=================================== */
-
-function getFilteredItems() {
-
-    if (currentList === "all") {
-
-        return db.items;
-
-    }
-
-
-    return db.items.filter(item => {
-
-        if (!Array.isArray(item.lists)) {
-
-            return false;
-
-        }
-
-
-        return item.lists.some(
-            id =>
-                Number(id) ===
-                Number(currentList)
+        sidebarItems.appendChild(
+            row
         );
 
     });
@@ -188,49 +220,150 @@ function getFilteredItems() {
 
 function render() {
 
+    /*
+       Biztonsági ellenőrzés.
+    */
+
+    if (
+        typeof db === "undefined"
+    ) {
+
+        return;
+
+    }
+
+
+    if (!Array.isArray(db.items)) {
+
+        db.items = [];
+
+    }
+
+
+    if (!Array.isArray(db.lists)) {
+
+        db.lists = [];
+
+    }
+
+
+    /* ===================================
+       OLDALSÁV
+    =================================== */
+
     renderLists();
 
 
-    homePage.style.display =
-        "none";
+    /* ===================================
+       OLDALAK ELREJTÉSE
+    =================================== */
+
+    if (homePage) {
+
+        homePage.style.display =
+            "none";
+
+    }
 
 
-    browsePage.style.display =
-        "none";
+    if (browsePage) {
+
+        browsePage.style.display =
+            "none";
+
+    }
 
 
-    libraryPage.style.display =
-        "none";
+    if (libraryPage) {
 
+        libraryPage.style.display =
+            "none";
+
+    }
+
+
+    /* ===================================
+       NÉZET
+    =================================== */
 
     switch (currentView) {
 
+        /* ===============================
+           KEZDŐLAP
+        =============================== */
+
         case "home":
 
-            homePage.style.display =
-                "block";
+            if (homePage) {
 
-            renderHome();
+                homePage.style.display =
+                    "block";
+
+            }
+
+
+            if (
+                typeof renderHome ===
+                "function"
+            ) {
+
+                renderHome();
+
+            }
 
             break;
 
+
+        /* ===============================
+           BÖNGÉSZÉS
+        =============================== */
 
         case "browse":
 
-            browsePage.style.display =
-                "block";
+            if (browsePage) {
 
-            renderBrowse();
+                browsePage.style.display =
+                    "block";
+
+            }
+
+
+            if (
+                typeof renderBrowse ===
+                "function"
+            ) {
+
+                renderBrowse();
+
+            }
 
             break;
 
 
+        /* ===============================
+           KÖNYVTÁR
+        =============================== */
+
+        case "library":
+
         default:
 
-            libraryPage.style.display =
-                "block";
+            if (libraryPage) {
 
-            renderItems();
+                libraryPage.style.display =
+                    "block";
+
+            }
+
+
+            if (
+                typeof renderItems ===
+                "function"
+            ) {
+
+                renderItems();
+
+            }
 
             break;
 
@@ -243,100 +376,134 @@ function render() {
    ÚJ LISTA
 =================================== */
 
-addList.onclick = () => {
+if (typeof addList !== "undefined") {
 
-    closeFab();
+    addList.onclick = () => {
 
+        if (
+            typeof closeFab ===
+            "function"
+        ) {
 
-    /* ===== LISTA NEVE ===== */
+            closeFab();
 
-    const name =
-        prompt(
-            "Új lista neve:"
-        );
-
-
-    if (name === null) {
-
-        return;
-
-    }
+        }
 
 
-    const value =
-        name.trim();
+        /* ===============================
+           LISTA NEVE
+        =============================== */
+
+        const name =
+            prompt(
+                "Új lista neve:"
+            );
 
 
-    if (value === "") {
+        if (name === null) {
 
-        return;
+            return;
 
-    }
-
-
-    /* ===== DUPLIKÁCIÓ ELLENŐRZÉS ===== */
-
-    const exists =
-        db.lists.find(list =>
-
-            list.name.toLowerCase() ===
-            value.toLowerCase()
-
-        );
+        }
 
 
-    if (exists) {
-
-        alert(
-            "Ez a lista már létezik."
-        );
-
-        return;
-
-    }
+        const value =
+            name.trim();
 
 
-    /* ===== EMOJI ===== */
+        if (value === "") {
 
-    const iconInput =
-        prompt(
-            "Lista emoji (opcionális):",
-            "📝"
-        );
+            return;
+
+        }
 
 
-    if (iconInput === null) {
+        /* ===============================
+           DUPLIKÁCIÓ
+        =============================== */
 
-        return;
+        const exists =
+            db.lists.find(list => {
 
-    }
+                return (
+                    String(list.name || "")
+                        .trim()
+                        .toLowerCase() ===
+                    value.toLowerCase()
+                );
 
-
-    const icon =
-        iconInput.trim() || "📝";
-
-
-    /* ===== LISTA LÉTREHOZÁSA ===== */
-
-    db.lists.push({
-
-        id:
-            Date.now(),
-
-        name:
-            value,
-
-        icon:
-            icon
-
-    });
+            });
 
 
-    saveDB();
+        if (exists) {
 
-    render();
+            alert(
+                "Ez a lista már létezik."
+            );
 
-};
+
+            return;
+
+        }
+
+
+        /* ===============================
+           EMOJI
+        =============================== */
+
+        const iconInput =
+            prompt(
+                "Lista emoji (opcionális):",
+                "📝"
+            );
+
+
+        if (iconInput === null) {
+
+            return;
+
+        }
+
+
+        const icon =
+            iconInput.trim() ||
+            "📝";
+
+
+        /* ===============================
+           LISTA LÉTREHOZÁSA
+        =============================== */
+
+        db.lists.push({
+
+            id:
+                Date.now(),
+
+            name:
+                value,
+
+            icon:
+                icon
+
+        });
+
+
+        saveDB();
+
+
+        currentList =
+            "all";
+
+
+        currentView =
+            "library";
+
+
+        render();
+
+    };
+
+}
 
 
 /* ===================================
@@ -345,12 +512,21 @@ addList.onclick = () => {
 
 function editList(list) {
 
-    /* ===== LISTA NEVE ===== */
+    if (!list) {
+
+        return;
+
+    }
+
+
+    /* ===================================
+       NÉV
+    =================================== */
 
     const newName =
         prompt(
             "Lista neve:",
-            list.name
+            list.name || ""
         );
 
 
@@ -372,16 +548,26 @@ function editList(list) {
     }
 
 
-    /* ===== DUPLIKÁCIÓ ELLENŐRZÉS ===== */
+    /* ===================================
+       DUPLIKÁCIÓ
+    =================================== */
 
     const duplicate =
-        db.lists.find(existingList =>
+        db.lists.find(existingList => {
 
-            existingList.id !== list.id &&
-            existingList.name.toLowerCase() ===
-            value.toLowerCase()
+            return (
+                existingList.id !==
+                list.id &&
 
-        );
+                String(
+                    existingList.name || ""
+                )
+                    .trim()
+                    .toLowerCase() ===
+                value.toLowerCase()
+            );
+
+        });
 
 
     if (duplicate) {
@@ -390,12 +576,15 @@ function editList(list) {
             "Ez a lista már létezik."
         );
 
+
         return;
 
     }
 
 
-    /* ===== EMOJI ===== */
+    /* ===================================
+       EMOJI
+    =================================== */
 
     const newIcon =
         prompt(
@@ -412,10 +601,13 @@ function editList(list) {
 
 
     const icon =
-        newIcon.trim() || "📝";
+        newIcon.trim() ||
+        "📝";
 
 
-    /* ===== MENTÉS ===== */
+    /* ===================================
+       MENTÉS
+    =================================== */
 
     list.name =
         value;
@@ -429,13 +621,6 @@ function editList(list) {
 
 
     render();
-
-
-    /* ===== TÖRLÉS NINCS AUTOMATIKUSAN =====
-       A lista törlését külön kezeljük,
-       hogy az emoji szerkesztése ne
-       véletlenül törölje a listát.
-    */
 
 }
 
@@ -455,7 +640,10 @@ function deleteList(list) {
 
     const reallyDelete =
         confirm(
-            "Biztosan törlöd ezt a listát?\n\nA filmek NEM fognak törlődni."
+
+            "Biztosan törlöd ezt a listát?\n\n" +
+            "A filmek, sorozatok, animék és könyvek NEM fognak törlődni."
+
         );
 
 
@@ -466,31 +654,42 @@ function deleteList(list) {
     }
 
 
-    /* ===== LISTA TÖRLÉSE ===== */
+    /* ===================================
+       LISTA TÖRLÉSE
+    =================================== */
 
     db.lists =
         db.lists.filter(
             l =>
-                l.id !== list.id
+                String(l.id) !==
+                String(list.id)
         );
 
 
-    /* ===== LISTA LEVÉTELE A FILMEKRŐL / SOROZATOKRÓL ===== */
+    /* ===================================
+       LISTA LEVÉTELE MINDEN ELEMről
+    =================================== */
 
-    db.items.forEach(item => {
+    if (Array.isArray(db.items)) {
 
-        if (Array.isArray(item.lists)) {
+        db.items.forEach(item => {
 
-            item.lists =
-                item.lists.filter(
-                    id =>
-                        Number(id) !==
-                        Number(list.id)
-                );
+            if (
+                Array.isArray(item.lists)
+            ) {
 
-        }
+                item.lists =
+                    item.lists.filter(
+                        id =>
+                            String(id) !==
+                            String(list.id)
+                    );
 
-    });
+            }
+
+        });
+
+    }
 
 
     saveDB();
@@ -498,6 +697,10 @@ function deleteList(list) {
 
     currentList =
         "all";
+
+
+    currentView =
+        "library";
 
 
     render();
