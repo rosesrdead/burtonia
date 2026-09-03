@@ -22,43 +22,12 @@ function normalizeItemType(item) {
             .toLowerCase();
 
 
-    /*
-       Új rendszer
-    */
-
-    if (type === "movie") {
-
-        return "movie";
-
-    }
-
-
-    if (type === "series") {
-
-        return "series";
-
-    }
-
-
-    if (type === "anime") {
-
-        return "anime";
-
-    }
-
-
-    if (type === "book") {
-
-        return "book";
-
-    }
-
-
-    /*
-       Régebbi / esetleges értékek
-    */
+    /* ===================================
+       FILM
+    =================================== */
 
     if (
+        type === "movie" ||
         type === "film" ||
         type === "movies"
     ) {
@@ -68,7 +37,12 @@ function normalizeItemType(item) {
     }
 
 
+    /* ===================================
+       SOROZAT
+    =================================== */
+
     if (
+        type === "series" ||
         type === "sorozat" ||
         type === "tv" ||
         type === "show"
@@ -79,10 +53,28 @@ function normalizeItemType(item) {
     }
 
 
+    /* ===================================
+       ANIME
+    =================================== */
+
     if (
+        type === "anime"
+    ) {
+
+        return "anime";
+
+    }
+
+
+    /* ===================================
+       KÖNYV
+    =================================== */
+
+    if (
+        type === "book" ||
+        type === "books" ||
         type === "könyv" ||
-        type === "konyv" ||
-        type === "books"
+        type === "konyv"
     ) {
 
         return "book";
@@ -101,13 +93,6 @@ function normalizeItemType(item) {
 
 function getFilteredItems() {
 
-    /*
-       Biztonságos fallback.
-
-       Ha nincs kiválasztott lista,
-       akkor a teljes könyvtár jelenik meg.
-    */
-
     const items =
         Array.isArray(db.items)
             ? db.items
@@ -115,7 +100,7 @@ function getFilteredItems() {
 
 
     /*
-       "all" = teljes könyvtár
+       Teljes könyvtár
     */
 
     if (
@@ -133,14 +118,13 @@ function getFilteredItems() {
     /*
        Saját lista.
 
-       Az item.lists lehet:
-       - szám
-       - string
-       - régi formátum
-
-       Ezért többféleképpen is
-       ellenőrizzük.
+       Az ID lehet szám vagy string,
+       ezért mindkettőt String-é alakítjuk.
     */
+
+    const wantedListId =
+        String(currentList);
+
 
     return items.filter(item => {
 
@@ -157,7 +141,7 @@ function getFilteredItems() {
 
             return (
                 String(listId) ===
-                String(currentList)
+                wantedListId
             );
 
         });
@@ -211,15 +195,11 @@ function createCard(item) {
             "lazy";
 
 
-        /*
-           Ha a kép hibás,
-           ne törjön össze a kártya.
-        */
-
         img.onerror = () => {
 
             img.style.display =
                 "none";
+
 
             poster.textContent =
                 "Nincs borító";
@@ -295,32 +275,34 @@ function createCard(item) {
        TÍPUS
     =================================== */
 
-    const normalizedType =
+    const type =
         normalizeItemType(item);
 
 
     /*
-       Könyveknél legyen egy kis jelzés.
+       Csak könyvnél írjuk ki külön,
+       hogy ne változtassuk meg nagyon
+       a régi kártyák kinézetét.
     */
 
     if (
-        normalizedType === "book"
+        type === "book"
     ) {
 
-        const type =
+        const typeLabel =
             document.createElement("div");
 
 
-        type.className =
+        typeLabel.className =
             "itemType";
 
 
-        type.textContent =
+        typeLabel.textContent =
             "📖 Könyv";
 
 
         card.appendChild(
-            type
+            typeLabel
         );
 
     }
@@ -358,7 +340,7 @@ function createCard(item) {
 
     if (
         Array.isArray(item.genres) &&
-        item.genres.length
+        item.genres.length > 0
     ) {
 
         const genres =
@@ -447,11 +429,16 @@ function getSortedItems(items) {
 
 
     return [...items].sort(
-        (a, b) =>
-            (a.title || "").localeCompare(
+        (a, b) => {
+
+            return (
+                a.title || ""
+            ).localeCompare(
                 b.title || "",
                 "hu"
-            )
+            );
+
+        }
     );
 
 }
@@ -487,9 +474,9 @@ function renderItems() {
         );
 
 
-    /*
-       MINDEN SZEKCIÓ ÜRÍTÉSE
-    */
+    /* ===================================
+       GRIDEK ÜRÍTÉSE
+    =================================== */
 
     if (moviesGrid) {
 
@@ -523,9 +510,9 @@ function renderItems() {
     }
 
 
-    /*
+    /* ===================================
        ADATOK
-    */
+    =================================== */
 
     const filteredItems =
         getFilteredItems();
@@ -537,10 +524,9 @@ function renderItems() {
         );
 
 
-    /*
-       MINDEN ELEM A SAJÁT
-       SZEKCIÓJÁBA KERÜL
-    */
+    /* ===================================
+       ELEMEK SZÉTVÁLOGATÁSA
+    =================================== */
 
     items.forEach(item => {
 
@@ -553,7 +539,7 @@ function renderItems() {
 
 
         /* ===============================
-           FILM
+           🎬 FILM
         =============================== */
 
         if (
@@ -574,7 +560,7 @@ function renderItems() {
 
 
         /* ===============================
-           SOROZAT
+           📺 SOROZAT
         =============================== */
 
         if (
@@ -595,7 +581,7 @@ function renderItems() {
 
 
         /* ===============================
-           ANIME
+           🌸 ANIME
         =============================== */
 
         if (
@@ -616,7 +602,7 @@ function renderItems() {
 
 
         /* ===============================
-           KÖNYV
+           📖 KÖNYV
         =============================== */
 
         if (
