@@ -2,167 +2,165 @@
    BURTONIA - Forms
 =================================== */
 
-
-/* ===== LABEL ===== */
-
-
-label{
-
-    color:white;
-
-    font-weight:bold;
-
+label {
+    color: white;
+    font-weight: 600;
 }
-
-
-
-
-
-/* ===== INPUTOK ===== */
-
 
 input,
 select,
-textarea{
-
-    font-family:Arial, Helvetica, sans-serif;
-
+textarea {
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
 }
 
 
+/* ===== ÁLTALÁNOS INPUTOK ===== */
+
+input,
+select,
+textarea {
+    background: rgba(20,12,30,.55);
+    border: 1px solid rgba(190,150,230,.2);
+    border-radius: 10px;
+    outline: none;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: rgba(210,175,245,.55);
+    box-shadow: 0 0 0 3px rgba(120,80,160,.18);
+}
 
 
+/* ===== MODAL INPUTOK ===== */
 
 #modalBox input,
-#modalBox select{
+#modalBox select,
+#modalBox textarea {
+    width: 100%;
+    padding: 11px 12px;
+    box-sizing: border-box;
+    background: rgba(10,7,15,.42);
+    color: white;
+    border: 1px solid rgba(190,150,230,.22);
+    border-radius: 10px;
+}
 
-    width:100%;
-
-    padding:10px;
-
-    border:1px solid #ccc;
-
-    border-radius:8px;
-
-    box-sizing:border-box;
-
+#modalBox input::placeholder,
+#modalBox textarea::placeholder {
+    color: rgba(255,255,255,.45);
 }
 
 
+/* ===== MODAL CÍMKÉK ===== */
 
-
-
-#modalBox label{
-
-    color:#111;
-
+#modalBox label {
+    color: rgba(255,255,255,.88);
 }
-
-
-
 
 
 /* ===== SELECT ===== */
 
+select {
+    padding: 10px 14px;
+    border-radius: 10px;
+    color: white;
+    background: rgba(20,12,30,.65);
+    backdrop-filter: blur(8px);
+}
 
-select{
-
-    padding:10px 14px;
-
-    border-radius:12px;
-
-    border:1px solid rgba(255,255,255,.1);
-
-    background:rgba(0,0,0,.18);
-
-    color:white;
-
-    backdrop-filter:blur(8px);
-
+select option {
+    background: #241a2d;
+    color: white;
 }
 
 
+/* ===== FILE INPUT ===== */
 
-
-
-select option{
-
-    background:#202020;
-
-    color:white;
-
+#modalBox input[type="file"] {
+    padding: 8px;
+    background: rgba(255,255,255,.05);
 }
 
 
+/* ===== DÁTUM / SZÁM ===== */
 
-
-
-select:hover{
-
-    background:rgba(255,255,255,.08);
-
+#modalBox input[type="date"],
+#modalBox input[type="number"] {
+    color-scheme: dark;
 }
-
-
-
 
 
 /* ===== MŰFAJ CHECKBOXOK ===== */
 
+#genreContainer {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 8px;
+    padding: 10px;
+    border-radius: 12px;
+    background: rgba(0,0,0,.16);
+    border: 1px solid rgba(255,255,255,.06);
+}
 
-#genreContainer{
+#genreContainer label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: rgba(255,255,255,.85);
+    font-weight: normal;
+}
 
-    display:grid;
-
-    grid-template-columns:repeat(2,1fr);
-
-    gap:8px;
-
-    padding:10px;
-
-    border-radius:10px;
-
-    background:rgba(0,0,0,.08);
-
+#genreContainer input {
+    width: auto;
+    accent-color: #9a70c5;
 }
 
 
+/* ===== LISTA CHECKBOXOK ===== */
 
+#listCheckboxContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
 
+#listCheckboxContainer label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: rgba(255,255,255,.85);
+}
 
-#genreContainer label{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:8px;
-
-    color:#111;
-
-    font-weight:normal;
-
+#listCheckboxContainer input {
+    width: auto;
+    accent-color: #9a70c5;
 }
 
 
+/* ===== RENDEZÉS ===== */
 
-
-
-#genreContainer input{
-
-    width:auto;
-
+.libraryToolbar label {
+    color: white;
 }
 
 
+/* ===== LISTA SZERKESZTŐ INPUTOK ===== */
 
+#listEditModal input {
+    width: 100%;
+    padding: 11px 12px !important;
+    box-sizing: border-box;
+    background: rgba(10,7,15,.5) !important;
+    color: white !important;
+    border: 1px solid rgba(190,150,230,.22) !important;
+    border-radius: 10px !important;
+    outline: none;
+}
 
-
-/* ===== SORT ===== */
-
-
-.libraryToolbar label{
-
-    color:white;
-
+#listEditModal input:focus {
+    border-color: rgba(210,175,245,.55) !important;
+    box-shadow: 0 0 0 3px rgba(120,80,160,.18);
 }
