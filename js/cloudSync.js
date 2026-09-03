@@ -8,23 +8,37 @@ let cloudUser = null;
 let cloudReady = false;
 let cloudSyncInProgress = false;
 
-const CLOUD_TABLE = "burtonia_data";
-const CLOUD_ROW_ID = "burtonia";
+const CLOUD_TABLE =
+    "burtonia_data";
+
+const CLOUD_ROW_ID =
+    "burtonia";
 
 
 /* ===================================
    KONFIGURÁCIÓ
 =================================== */
 
-function cloudIsConfigured(){
+function cloudIsConfigured() {
 
     return Boolean(
+
         window.BURTONIA_CLOUD &&
+
         window.BURTONIA_CLOUD.enabled &&
+
         window.BURTONIA_CLOUD.supabaseUrl &&
+
         window.BURTONIA_CLOUD.supabaseAnonKey &&
-        !window.BURTONIA_CLOUD.supabaseUrl.includes("IDE_JON") &&
-        !window.BURTONIA_CLOUD.supabaseAnonKey.includes("IDE_JON")
+
+        !window.BURTONIA_CLOUD.supabaseUrl.includes(
+            "IDE_JON"
+        ) &&
+
+        !window.BURTONIA_CLOUD.supabaseAnonKey.includes(
+            "IDE_JON"
+        )
+
     );
 
 }
@@ -34,113 +48,146 @@ function cloudIsConfigured(){
    ÁLLAPOTÜZENET
 =================================== */
 
-function setCloudStatus(text, state = ""){
+function setCloudStatus(
+    text,
+    state = ""
+) {
 
     const element =
-        document.getElementById("cloudSyncStatus");
+        document.getElementById(
+            "cloudSyncStatus"
+        );
 
-    if(!element){
+
+    if (!element) {
+
         return;
+
     }
 
-    element.textContent = text;
-    element.dataset.state = state;
+
+    element.textContent =
+        text;
+
+
+    element.dataset.state =
+        state;
 
 }
 
 
 /* ===================================
-   FELHŐS UI
+   FELHŐ UI
 =================================== */
 
-function updateCloudUI(){
+function updateCloudUI() {
 
     const loginButton =
-        document.getElementById("cloudLoginButton");
+        document.getElementById(
+            "cloudLoginButton"
+        );
+
 
     const logoutButton =
-        document.getElementById("cloudLogoutButton");
+        document.getElementById(
+            "cloudLogoutButton"
+        );
+
 
     const actions =
-        document.getElementById("cloudSyncActions");
+        document.getElementById(
+            "cloudSyncActions"
+        );
+
 
     const email =
-        document.getElementById("cloudEmail");
+        document.getElementById(
+            "cloudEmail"
+        );
 
 
-    /*
-       Ha a HTML még nem állt fel,
-       egyszerűen kilépünk.
-    */
-
-    if(
+    if (
         !loginButton ||
         !logoutButton ||
         !actions
-    ){
+    ) {
 
         return;
 
     }
 
 
-    /*
-       FELHŐ NINCS BEÁLLÍTVA
-    */
+    /* ===== NINCS BEÁLLÍTVA ===== */
 
-    if(!cloudIsConfigured()){
+    if (!cloudIsConfigured()) {
 
-        loginButton.style.display = "block";
-        logoutButton.style.display = "none";
-        actions.style.display = "none";
+        loginButton.style.display =
+            "block";
+
+        logoutButton.style.display =
+            "none";
+
+        actions.style.display =
+            "none";
+
 
         setCloudStatus(
+
             "A felhő még nincs beállítva. Ellenőrizd a js/config.js fájlt.",
+
             "error"
+
         );
+
 
         return;
 
     }
 
 
-    /*
-       FELHŐ MÉG TÖLTŐDIK
-    */
+    /* ===== BETÖLTÉS ===== */
 
-    if(!cloudReady){
+    if (!cloudReady) {
 
-        /*
-           A login gombot nem rejtjük el.
-           Így nem lesz 0×0 vagy eltűnt gomb.
-        */
+        loginButton.style.display =
+            "block";
 
-        loginButton.style.display = "block";
-        logoutButton.style.display = "none";
-        actions.style.display = "none";
+        logoutButton.style.display =
+            "none";
+
+        actions.style.display =
+            "none";
+
 
         setCloudStatus(
+
             "☁️ Felhő inicializálása...",
+
             "loading"
+
         );
+
 
         return;
 
     }
 
 
-    /*
-       BEJELENTKEZVE
-    */
+    /* ===== BEJELENTKEZVE ===== */
 
-    if(cloudUser){
+    if (cloudUser) {
 
-        loginButton.style.display = "none";
-        logoutButton.style.display = "block";
-        actions.style.display = "flex";
+        loginButton.style.display =
+            "none";
+
+        logoutButton.style.display =
+            "block";
+
+        actions.style.display =
+            "flex";
 
 
-        if(email){
+        if (email) {
 
             email.value =
                 cloudUser.email || "";
@@ -149,29 +196,39 @@ function updateCloudUI(){
 
 
         setCloudStatus(
+
             `☁️ Bejelentkezve: ${
                 cloudUser.email || "felhasználó"
             }`,
+
             "connected"
+
         );
+
 
         return;
 
     }
 
 
-    /*
-       NINCS BEJELENTKEZVE
-    */
+    /* ===== NINCS BEJELENTKEZVE ===== */
 
-    loginButton.style.display = "block";
-    logoutButton.style.display = "none";
-    actions.style.display = "none";
+    loginButton.style.display =
+        "block";
+
+    logoutButton.style.display =
+        "none";
+
+    actions.style.display =
+        "none";
 
 
     setCloudStatus(
+
         "Nincs bejelentkezve.",
+
         "offline"
+
     );
 
 }
@@ -181,27 +238,26 @@ function updateCloudUI(){
    FELHŐ INICIALIZÁLÁSA
 =================================== */
 
-async function initCloudSync(){
-
-    /*
-       Először mindig frissítjük a UI-t.
-    */
+async function initCloudSync() {
 
     updateCloudUI();
 
 
-    if(!cloudIsConfigured()){
+    if (!cloudIsConfigured()) {
 
         return;
 
     }
 
 
-    if(!window.supabase){
+    if (!window.supabase) {
 
         setCloudStatus(
+
             "A Supabase könyvtár nem töltődött be.",
+
             "error"
+
         );
 
         return;
@@ -209,20 +265,27 @@ async function initCloudSync(){
     }
 
 
-    try{
+    try {
 
         cloudClient =
             window.supabase.createClient(
+
                 window.BURTONIA_CLOUD.supabaseUrl,
+
                 window.BURTONIA_CLOUD.supabaseAnonKey
+
             );
 
+
+        /* ===================================
+           AKTUÁLIS SESSION
+        =================================== */
 
         const result =
             await cloudClient.auth.getSession();
 
 
-        if(result.error){
+        if (result.error) {
 
             throw result.error;
 
@@ -235,15 +298,45 @@ async function initCloudSync(){
                 : null;
 
 
-        cloudReady = true;
+        cloudReady =
+            true;
+
+
+        updateCloudUI();
 
 
         /*
-           Auth változás figyelése.
+           Ha már eleve be volt jelentkezve,
+           AZONNAL töltjük a felhőt.
+
+           Ez volt az egyik hiányzó rész.
         */
 
+        if (cloudUser) {
+
+            const loaded =
+                await pullCloudDB(false);
+
+
+            if (
+                loaded &&
+                typeof render === "function"
+            ) {
+
+                render();
+
+            }
+
+        }
+
+
+        /* ===================================
+           AUTH VÁLTOZÁS FIGYELÉSE
+        =================================== */
+
         cloudClient.auth.onAuthStateChange(
-            (event, session)=>{
+
+            (event, session) => {
 
                 cloudUser =
                     session
@@ -255,45 +348,46 @@ async function initCloudSync(){
 
 
                 /*
-                   Sikeres bejelentkezés után
-                   letöltjük a felhős adatokat.
+                   Új bejelentkezés után
+                   felhőből töltünk.
                 */
 
-                if(
+                if (
                     cloudUser &&
                     event === "SIGNED_IN"
-                ){
+                ) {
 
                     setTimeout(
-                        async()=>{
+
+                        async () => {
 
                             const loaded =
                                 await pullCloudDB(false);
 
 
-                            if(
+                            if (
                                 loaded &&
                                 typeof render === "function"
-                            ){
+                            ) {
 
                                 render();
 
                             }
 
                         },
+
                         150
+
                     );
 
                 }
 
             }
+
         );
 
 
-        updateCloudUI();
-
-
-    }catch(error){
+    } catch (error) {
 
         console.error(
             "BURTONIA cloud init error:",
@@ -301,20 +395,19 @@ async function initCloudSync(){
         );
 
 
-        cloudReady = false;
+        cloudReady =
+            false;
 
-
-        /*
-           Hiba esetén sem tüntetjük el
-           a bejelentkezési gombot.
-        */
 
         updateCloudUI();
 
 
         setCloudStatus(
+
             "Nem sikerült kapcsolódni a felhőhöz.",
+
             "error"
+
         );
 
     }
@@ -323,15 +416,20 @@ async function initCloudSync(){
 
 
 /* ===================================
-   BELÉPÉSI LINK KÜLDÉSE
+   BELÉPÉSI LINK
 =================================== */
 
-async function requestCloudLogin(){
+async function requestCloudLogin() {
 
-    if(!cloudReady || !cloudClient){
+    if (
+        !cloudReady ||
+        !cloudClient
+    ) {
 
         alert(
+
             "A felhő még nem áll készen. Próbáld újra néhány másodperc múlva."
+
         );
 
         return;
@@ -340,7 +438,9 @@ async function requestCloudLogin(){
 
 
     const emailInput =
-        document.getElementById("cloudEmail");
+        document.getElementById(
+            "cloudEmail"
+        );
 
 
     const email =
@@ -349,7 +449,7 @@ async function requestCloudLogin(){
             : "";
 
 
-    if(!email){
+    if (!email) {
 
         alert(
             "Adj meg egy e-mail címet!"
@@ -365,15 +465,19 @@ async function requestCloudLogin(){
         window.location.pathname;
 
 
-    try{
+    try {
 
         const loginButton =
-            document.getElementById("cloudLoginButton");
+            document.getElementById(
+                "cloudLoginButton"
+            );
 
 
-        if(loginButton){
+        if (loginButton) {
 
-            loginButton.disabled = true;
+            loginButton.disabled =
+                true;
+
             loginButton.textContent =
                 "✉️ Küldés...";
 
@@ -381,8 +485,11 @@ async function requestCloudLogin(){
 
 
         setCloudStatus(
+
             "✉️ Belépési link küldése...",
+
             "loading"
+
         );
 
 
@@ -401,7 +508,7 @@ async function requestCloudLogin(){
             });
 
 
-        if(result.error){
+        if (result.error) {
 
             throw result.error;
 
@@ -409,17 +516,22 @@ async function requestCloudLogin(){
 
 
         setCloudStatus(
+
             "✉️ Belépési link elküldve. Nézd meg az e-mailjeidet!",
+
             "connected"
+
         );
 
 
         alert(
+
             "A belépési linket elküldtem az e-mail címedre.\n\nNyisd meg az e-mailt, majd kattints a linkre."
+
         );
 
 
-    }catch(error){
+    } catch (error) {
 
         console.error(
             "BURTONIA login error:",
@@ -428,26 +540,35 @@ async function requestCloudLogin(){
 
 
         setCloudStatus(
+
             "Nem sikerült elküldeni a belépési linket.",
+
             "error"
+
         );
 
 
         alert(
+
             "Nem sikerült elküldeni a belépési linket.\n\n" +
             error.message
+
         );
 
 
-    }finally{
+    } finally {
 
         const loginButton =
-            document.getElementById("cloudLoginButton");
+            document.getElementById(
+                "cloudLoginButton"
+            );
 
 
-        if(loginButton){
+        if (loginButton) {
 
-            loginButton.disabled = false;
+            loginButton.disabled =
+                false;
+
             loginButton.textContent =
                 "✉️ Belépési link küldése";
 
@@ -462,34 +583,36 @@ async function requestCloudLogin(){
    KIJELENTKEZÉS
 =================================== */
 
-async function logoutCloud(){
+async function logoutCloud() {
 
-    if(!cloudClient){
+    if (!cloudClient) {
 
         return;
 
     }
 
 
-    try{
+    try {
 
         const result =
             await cloudClient.auth.signOut();
 
 
-        if(result.error){
+        if (result.error) {
 
             throw result.error;
 
         }
 
 
-        cloudUser = null;
+        cloudUser =
+            null;
+
 
         updateCloudUI();
 
 
-    }catch(error){
+    } catch (error) {
 
         console.error(
             "BURTONIA logout error:",
@@ -498,8 +621,10 @@ async function logoutCloud(){
 
 
         alert(
+
             "Nem sikerült kijelentkezni.\n\n" +
             error.message
+
         );
 
     }
@@ -508,12 +633,14 @@ async function logoutCloud(){
 
 
 /* ===================================
-   HELYI ADATBÁZIS MÁSOLÁSA
+   HELYI ADATBÁZIS MÁSOLATA
 =================================== */
 
-function getLocalDBCopy(){
+function getLocalDBCopy() {
 
-    if(typeof db === "undefined"){
+    if (
+        typeof db === "undefined"
+    ) {
 
         return null;
 
@@ -531,19 +658,21 @@ function getLocalDBCopy(){
    FELHŐBE MENTÉS
 =================================== */
 
-async function pushCloudDB(showMessage = false){
+async function pushCloudDB(
+    showMessage = false
+) {
 
-    if(
+    if (
         !cloudUser ||
         !cloudClient
-    ){
+    ) {
 
         return false;
 
     }
 
 
-    if(cloudSyncInProgress){
+    if (cloudSyncInProgress) {
 
         return false;
 
@@ -554,25 +683,29 @@ async function pushCloudDB(showMessage = false){
         getLocalDBCopy();
 
 
-    if(!localDB){
+    if (!localDB) {
 
         return false;
 
     }
 
 
-    cloudSyncInProgress = true;
+    cloudSyncInProgress =
+        true;
 
 
-    try{
+    try {
 
         const payload = {
 
-            id: CLOUD_ROW_ID,
+            id:
+                CLOUD_ROW_ID,
 
-            user_id: cloudUser.id,
+            user_id:
+                cloudUser.id,
 
-            data: localDB,
+            data:
+                localDB,
 
             updated_at:
                 new Date().toISOString()
@@ -584,14 +717,18 @@ async function pushCloudDB(showMessage = false){
             await cloudClient
                 .from(CLOUD_TABLE)
                 .upsert(
+
                     payload,
+
                     {
-                        onConflict: "user_id"
+                        onConflict:
+                            "user_id"
                     }
+
                 );
 
 
-        if(result.error){
+        if (result.error) {
 
             throw result.error;
 
@@ -599,15 +736,20 @@ async function pushCloudDB(showMessage = false){
 
 
         setCloudStatus(
+
             "☁️ Szinkronizálva",
+
             "connected"
+
         );
 
 
-        if(showMessage){
+        if (showMessage) {
 
             alert(
+
                 "☁️ A BURTONIA könyvtár sikeresen felkerült a felhőbe."
+
             );
 
         }
@@ -616,7 +758,7 @@ async function pushCloudDB(showMessage = false){
         return true;
 
 
-    }catch(error){
+    } catch (error) {
 
         console.error(
             "BURTONIA push error:",
@@ -625,16 +767,21 @@ async function pushCloudDB(showMessage = false){
 
 
         setCloudStatus(
+
             "A felhőbe mentés nem sikerült.",
+
             "error"
+
         );
 
 
-        if(showMessage){
+        if (showMessage) {
 
             alert(
+
                 "Nem sikerült a felhőbe menteni.\n\n" +
                 error.message
+
             );
 
         }
@@ -643,9 +790,10 @@ async function pushCloudDB(showMessage = false){
         return false;
 
 
-    }finally{
+    } finally {
 
-        cloudSyncInProgress = false;
+        cloudSyncInProgress =
+            false;
 
     }
 
@@ -656,123 +804,197 @@ async function pushCloudDB(showMessage = false){
    FELHŐBŐL BETÖLTÉS
 =================================== */
 
-async function pullCloudDB(showMessage = false){
+async function pullCloudDB(
+    showMessage = false
+) {
 
-    if(
+    if (
         !cloudUser ||
         !cloudClient
-    ){
+    ) {
 
         return false;
 
     }
 
 
-    if(cloudSyncInProgress){
+    if (cloudSyncInProgress) {
 
         return false;
 
     }
 
 
-    cloudSyncInProgress = true;
+    cloudSyncInProgress =
+        true;
 
 
-    try{
+    try {
 
         const result =
             await cloudClient
                 .from(CLOUD_TABLE)
-                .select("data, updated_at")
-                .eq("user_id", cloudUser.id)
+                .select(
+                    "data, updated_at"
+                )
+                .eq(
+                    "user_id",
+                    cloudUser.id
+                )
                 .maybeSingle();
 
 
-        if(result.error){
+        if (result.error) {
 
             throw result.error;
 
         }
 
 
-        /*
-           Még nincs adat a felhőben.
-           Az aktuális eszköz könyvtárát
-           feltöltjük.
-        */
+        /* ===================================
+           NINCS FELHŐS ADAT
+        =================================== */
 
-        if(!result.data){
+        if (!result.data) {
 
-            cloudSyncInProgress = false;
+            /*
+               FONTOS:
 
-            return await pushCloudDB(showMessage);
+               Nem töltünk fel automatikusan
+               semmit.
 
-        }
+               Így egy üres vagy új eszköz
+               nem tudja véletlenül törölni
+               a felhő tartalmát.
+            */
 
+            setCloudStatus(
 
-        if(!result.data.data){
+                "☁️ Nincs még felhőben mentett könyvtár.",
+
+                "connected"
+
+            );
+
 
             return false;
 
         }
 
 
+        /* ===================================
+           FELHŐS ADAT ELLENŐRZÉSE
+        =================================== */
+
+        if (
+            !result.data.data ||
+            typeof result.data.data !== "object"
+        ) {
+
+            setCloudStatus(
+
+                "A felhőben lévő adat hibás.",
+
+                "error"
+
+            );
+
+
+            return false;
+
+        }
+
+
+        /* ===================================
+           FELHŐ BETÖLTÉSE
+        =================================== */
+
         db =
             result.data.data;
 
 
-        if(!Array.isArray(db.lists)){
+        if (!Array.isArray(db.lists)) {
 
             db.lists = [];
 
         }
 
 
-        if(!Array.isArray(db.items)){
+        if (!Array.isArray(db.items)) {
 
             db.items = [];
 
         }
 
 
-        if(typeof STORAGE_KEY !== "undefined"){
+        /* ===== RÉGI LISTÁK ===== */
 
-            localStorage.setItem(
-                STORAGE_KEY,
-                JSON.stringify(db)
-            );
+        db.lists.forEach(list => {
 
-        }
+            if (!list.icon) {
 
+                list.icon =
+                    "📝";
+
+            }
+
+        });
+
+
+        /* ===== HELYI MENTÉS ===== */
+
+        localStorage.setItem(
+
+            STORAGE_KEY,
+
+            JSON.stringify(db)
+
+        );
+
+
+        /* ===================================
+           DÁTUM
+        =================================== */
 
         const date =
             result.data.updated_at
+
                 ? new Date(
                     result.data.updated_at
-                ).toLocaleString("hu-HU")
+                ).toLocaleString(
+                    "hu-HU"
+                )
+
                 : "";
 
 
         setCloudStatus(
+
             "☁️ Felhő szinkronizálva" +
+
             (
                 date
                     ? ` • ${date}`
                     : ""
             ),
+
             "connected"
+
         );
 
 
-        if(showMessage){
+        if (showMessage) {
 
             alert(
+
                 "☁️ A felhős BURTONIA könyvtár betöltve." +
+
                 (
                     date
                         ? `\n\nUtolsó módosítás: ${date}`
                         : ""
                 )
+
             );
 
         }
@@ -781,7 +1003,7 @@ async function pullCloudDB(showMessage = false){
         return true;
 
 
-    }catch(error){
+    } catch (error) {
 
         console.error(
             "BURTONIA pull error:",
@@ -790,16 +1012,21 @@ async function pullCloudDB(showMessage = false){
 
 
         setCloudStatus(
+
             "A felhőből betöltés nem sikerült.",
+
             "error"
+
         );
 
 
-        if(showMessage){
+        if (showMessage) {
 
             alert(
+
                 "Nem sikerült a felhőből betölteni.\n\n" +
                 error.message
+
             );
 
         }
@@ -808,9 +1035,10 @@ async function pullCloudDB(showMessage = false){
         return false;
 
 
-    }finally{
+    } finally {
 
-        cloudSyncInProgress = false;
+        cloudSyncInProgress =
+            false;
 
     }
 
@@ -821,14 +1049,30 @@ async function pullCloudDB(showMessage = false){
    AUTOMATIKUS SZINKRON
 =================================== */
 
-function syncDBToCloud(){
+function syncDBToCloud() {
 
-    if(!cloudUser){
+    if (!cloudUser) {
 
         return;
 
     }
 
+
+    if (!cloudReady) {
+
+        return;
+
+    }
+
+
+    /*
+       Mentés a felhőbe.
+
+       FONTOS:
+       Csak akkor történik meg,
+       ha a felhasználó már be van
+       jelentkezve és a cloud kész.
+    */
 
     pushCloudDB(false);
 
@@ -839,22 +1083,35 @@ function syncDBToCloud(){
    FELHŐ GOMBOK
 =================================== */
 
-function setupCloudButtons(){
+function setupCloudButtons() {
 
     const loginButton =
-        document.getElementById("cloudLoginButton");
+        document.getElementById(
+            "cloudLoginButton"
+        );
+
 
     const logoutButton =
-        document.getElementById("cloudLogoutButton");
+        document.getElementById(
+            "cloudLogoutButton"
+        );
+
 
     const uploadButton =
-        document.getElementById("cloudUploadButton");
+        document.getElementById(
+            "cloudUploadButton"
+        );
+
 
     const downloadButton =
-        document.getElementById("cloudDownloadButton");
+        document.getElementById(
+            "cloudDownloadButton"
+        );
 
 
-    if(loginButton){
+    /* ===== LOGIN ===== */
+
+    if (loginButton) {
 
         loginButton.onclick =
             requestCloudLogin;
@@ -862,7 +1119,9 @@ function setupCloudButtons(){
     }
 
 
-    if(logoutButton){
+    /* ===== LOGOUT ===== */
+
+    if (logoutButton) {
 
         logoutButton.onclick =
             logoutCloud;
@@ -870,18 +1129,22 @@ function setupCloudButtons(){
     }
 
 
-    if(uploadButton){
+    /* ===== FELTÖLTÉS ===== */
+
+    if (uploadButton) {
 
         uploadButton.onclick =
-            async()=>{
+            async () => {
 
                 const confirmed =
                     confirm(
+
                         "A jelenlegi ezen az eszközön lévő BURTONIA könyvtár felülírja a felhőben lévő változatot.\n\nBiztosan folytatod?"
+
                     );
 
 
-                if(!confirmed){
+                if (!confirmed) {
 
                     return;
 
@@ -895,18 +1158,22 @@ function setupCloudButtons(){
     }
 
 
-    if(downloadButton){
+    /* ===== LETÖLTÉS ===== */
+
+    if (downloadButton) {
 
         downloadButton.onclick =
-            async()=>{
+            async () => {
 
                 const confirmed =
                     confirm(
+
                         "A felhőből betöltött BURTONIA könyvtár felülírja ezen az eszköz jelenlegi könyvtárát.\n\nBiztosan folytatod?"
+
                     );
 
 
-                if(!confirmed){
+                if (!confirmed) {
 
                     return;
 
@@ -917,29 +1184,16 @@ function setupCloudButtons(){
                     await pullCloudDB(true);
 
 
-                if(
+                if (
                     success &&
                     typeof render === "function"
-                ){
+                ) {
 
                     render();
 
                 }
 
             };
-
-    }
-
-
-    /*
-       FONTOS:
-       Azonnal láthatóvá tesszük a
-       login gombot, ha létezik.
-    */
-
-    if(loginButton){
-
-        loginButton.style.display = "block";
 
     }
 
@@ -954,8 +1208,13 @@ function setupCloudButtons(){
 =================================== */
 
 document.addEventListener(
+
     "DOMContentLoaded",
-    ()=>{
+
+    () => {
+
         setupCloudButtons();
+
     }
+
 );
