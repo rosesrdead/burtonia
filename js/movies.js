@@ -4,46 +4,163 @@
 
 
 /* ===================================
+   TÍPUS NORMALIZÁLÁSA
+=================================== */
+
+function normalizeItemType(item) {
+
+    if (!item) {
+
+        return "";
+
+    }
+
+
+    const type =
+        String(item.type || "")
+            .trim()
+            .toLowerCase();
+
+
+    /*
+       Új rendszer
+    */
+
+    if (type === "movie") {
+
+        return "movie";
+
+    }
+
+
+    if (type === "series") {
+
+        return "series";
+
+    }
+
+
+    if (type === "anime") {
+
+        return "anime";
+
+    }
+
+
+    if (type === "book") {
+
+        return "book";
+
+    }
+
+
+    /*
+       Régebbi / esetleges értékek
+    */
+
+    if (
+        type === "film" ||
+        type === "movies"
+    ) {
+
+        return "movie";
+
+    }
+
+
+    if (
+        type === "sorozat" ||
+        type === "tv" ||
+        type === "show"
+    ) {
+
+        return "series";
+
+    }
+
+
+    if (
+        type === "könyv" ||
+        type === "konyv" ||
+        type === "books"
+    ) {
+
+        return "book";
+
+    }
+
+
+    return type;
+
+}
+
+
+/* ===================================
    SZŰRT ELEMEK
 =================================== */
 
 function getFilteredItems() {
 
     /*
+       Biztonságos fallback.
+
+       Ha nincs kiválasztott lista,
+       akkor a teljes könyvtár jelenik meg.
+    */
+
+    const items =
+        Array.isArray(db.items)
+            ? db.items
+            : [];
+
+
+    /*
        "all" = teljes könyvtár
     */
 
-    if (currentList === "all") {
+    if (
+        currentList === "all" ||
+        currentList === null ||
+        currentList === undefined ||
+        currentList === ""
+    ) {
 
-        return Array.isArray(db.items)
-            ? db.items
-            : [];
+        return items;
 
     }
 
 
     /*
-       Saját lista esetén csak azok az
-       elemek jelenjenek meg, amelyek
-       benne vannak a listában.
+       Saját lista.
+
+       Az item.lists lehet:
+       - szám
+       - string
+       - régi formátum
+
+       Ezért többféleképpen is
+       ellenőrizzük.
     */
 
-    return db.items.filter(item => {
+    return items.filter(item => {
 
-        if (!Array.isArray(item.lists)) {
+        if (
+            !Array.isArray(item.lists)
+        ) {
 
             return false;
 
         }
 
 
-        return item.lists.some(
+        return item.lists.some(listId => {
 
-            id =>
-                Number(id) ===
-                Number(currentList)
+            return (
+                String(listId) ===
+                String(currentList)
+            );
 
-        );
+        });
 
     });
 
@@ -92,6 +209,22 @@ function createCard(item) {
 
         img.loading =
             "lazy";
+
+
+        /*
+           Ha a kép hibás,
+           ne törjön össze a kártya.
+        */
+
+        img.onerror = () => {
+
+            img.style.display =
+                "none";
+
+            poster.textContent =
+                "Nincs borító";
+
+        };
 
 
         poster.appendChild(img);
@@ -153,6 +286,41 @@ function createCard(item) {
 
         card.appendChild(
             original
+        );
+
+    }
+
+
+    /* ===================================
+       TÍPUS
+    =================================== */
+
+    const normalizedType =
+        normalizeItemType(item);
+
+
+    /*
+       Könyveknél legyen egy kis jelzés.
+    */
+
+    if (
+        normalizedType === "book"
+    ) {
+
+        const type =
+            document.createElement("div");
+
+
+        type.className =
+            "itemType";
+
+
+        type.textContent =
+            "📖 Könyv";
+
+
+        card.appendChild(
+            type
         );
 
     }
@@ -278,11 +446,6 @@ function getSortedItems(items) {
     }
 
 
-    /*
-       Ha nincs sortItems,
-       akkor ABC szerint rendezünk.
-    */
-
     return [...items].sort(
         (a, b) =>
             (a.title || "").localeCompare(
@@ -325,7 +488,7 @@ function renderItems() {
 
 
     /*
-       Minden szekció ürítése.
+       MINDEN SZEKCIÓ ÜRÍTÉSE
     */
 
     if (moviesGrid) {
@@ -361,7 +524,7 @@ function renderItems() {
 
 
     /*
-       Adatok lekérése.
+       ADATOK
     */
 
     const filteredItems =
@@ -375,23 +538,26 @@ function renderItems() {
 
 
     /*
-       Minden elem a saját
-       típusának megfelelő helyre kerül.
+       MINDEN ELEM A SAJÁT
+       SZEKCIÓJÁBA KERÜL
     */
 
     items.forEach(item => {
+
+        const type =
+            normalizeItemType(item);
+
 
         const card =
             createCard(item);
 
 
-        /*
+        /* ===============================
            FILM
-        */
+        =============================== */
 
         if (
-            item.type ===
-            "movie"
+            type === "movie"
         ) {
 
             if (moviesGrid) {
@@ -407,13 +573,12 @@ function renderItems() {
         }
 
 
-        /*
+        /* ===============================
            SOROZAT
-        */
+        =============================== */
 
         if (
-            item.type ===
-            "series"
+            type === "series"
         ) {
 
             if (seriesGrid) {
@@ -429,13 +594,12 @@ function renderItems() {
         }
 
 
-        /*
+        /* ===============================
            ANIME
-        */
+        =============================== */
 
         if (
-            item.type ===
-            "anime"
+            type === "anime"
         ) {
 
             if (animeGrid) {
@@ -451,13 +615,12 @@ function renderItems() {
         }
 
 
-        /*
+        /* ===============================
            KÖNYV
-        */
+        =============================== */
 
         if (
-            item.type ===
-            "book"
+            type === "book"
         ) {
 
             if (booksGrid) {
@@ -478,13 +641,8 @@ function renderItems() {
 
 
 /* ===================================
-   KOMPATIBILITÁS
+   RÉGI FÜGGVÉNYEK KOMPATIBILITÁSA
 =================================== */
-
-/*
-   Régebbi kódból érkező renderMovies()
-   hívások esetére.
-*/
 
 function renderMovies() {
 
@@ -492,11 +650,6 @@ function renderMovies() {
 
 }
 
-
-/*
-   Régebbi kódból érkező
-   renderLibrary() hívások esetére.
-*/
 
 function renderLibrary() {
 
