@@ -48,14 +48,26 @@ function renderLists() {
         row.textContent =
             `${list.icon || "📝"} ${list.name || "Névtelen lista"}`;
 
+        let clickTimer;
+
+        /* EGYSZERES KATTINTÁS */
         row.onclick = () => {
-            currentView = "library";
-            currentList = list.id;
-            render();
+            clearTimeout(clickTimer);
+
+            clickTimer = setTimeout(() => {
+                currentView = "library";
+                currentList = list.id;
+                render();
+            }, 250);
         };
 
+        /* DUPLA KATTINTÁS = SZERKESZTÉS */
         row.ondblclick = e => {
+            e.preventDefault();
             e.stopPropagation();
+
+            clearTimeout(clickTimer);
+
             editList(list);
         };
 
@@ -152,6 +164,7 @@ if (typeof addList !== "undefined") {
 function editList(list) {
     if (!list) return;
 
+    /* LISTA NEVE */
     const name = prompt(
         "Lista neve:",
         list.name || ""
@@ -163,6 +176,7 @@ function editList(list) {
 
     if (!value) return;
 
+    /* DUPLIKÁCIÓ */
     const duplicate = db.lists.some(item =>
         item.id !== list.id &&
         String(item.name || "")
@@ -175,30 +189,29 @@ function editList(list) {
         return;
     }
 
-    const icon = prompt(
+    /* EMOJI */
+    const iconInput = prompt(
         "Lista emoji:",
         list.icon || "📝"
     );
 
-    if (icon === null) return;
+    if (iconInput === null) return;
 
+    /* ADATOK MENTÉSE */
     list.name = value;
-    list.icon = icon.trim() || "📝";
+    list.icon = iconInput.trim() || "📝";
 
     saveDB();
     render();
 
-    /* ===================================
-       TÖRLÉS KÉRDÉSE
-    =================================== */
-
+    /* TÖRLÉS KÉRDÉSE */
     const deleteIt = confirm(
-        `A(z) "${list.name}" lista mentve.\n\n` +
+        `A(z) "${list.name}" lista módosítva.\n\n` +
         "Szeretnéd törölni ezt a listát?"
     );
 
     if (deleteIt) {
-        deleteList(list, true);
+        deleteList(list);
     }
 }
 
@@ -207,26 +220,28 @@ function editList(list) {
    LISTA TÖRLÉSE
 =================================== */
 
-function deleteList(list, skipConfirm = false) {
+function deleteList(list) {
     if (!list) return;
 
-    if (!skipConfirm) {
-        const reallyDelete = confirm(
-            `Biztosan törlöd a(z) "${list.name}" listát?\n\n` +
-            "A filmek, sorozatok, animék és könyvek nem törlődnek."
-        );
-
-        if (!reallyDelete) return;
-    }
-
-    db.lists = db.lists.filter(
-        item => String(item.id) !== String(list.id)
+    const reallyDelete = confirm(
+        `Biztosan törlöd a(z) "${list.name}" listát?\n\n` +
+        "A filmek, sorozatok, animék és könyvek nem törlődnek."
     );
 
+    if (!reallyDelete) return;
+
+    /* LISTA TÖRLÉSE */
+    db.lists = db.lists.filter(
+        item =>
+            String(item.id) !== String(list.id)
+    );
+
+    /* LISTA LEVÉTELE AZ ELEMEKRŐL */
     db.items.forEach(item => {
         if (Array.isArray(item.lists)) {
             item.lists = item.lists.filter(
-                id => String(id) !== String(list.id)
+                id =>
+                    String(id) !== String(list.id)
             );
         }
     });
