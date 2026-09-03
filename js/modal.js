@@ -20,10 +20,26 @@ function openModal(type) {
        CÍM
     =================================== */
 
+    const typeTitles = {
+
+        movie:
+            "Új film",
+
+        series:
+            "Új sorozat",
+
+        anime:
+            "Új anime",
+
+        book:
+            "Új könyv"
+
+    };
+
+
     modalTitle.textContent =
-        type === "movie"
-            ? "Új film"
-            : "Új sorozat";
+        typeTitles[type] ||
+        "Új elem";
 
 
     /* ===================================
@@ -88,11 +104,6 @@ function openModal(type) {
     /* ===================================
        LISTÁK
     =================================== */
-
-    /*
-       Új filmnél / sorozatnál
-       egyetlen lista sincs kiválasztva.
-    */
 
     renderListCheckboxes([]);
 
@@ -164,6 +175,28 @@ addMovie.onclick = () => {
 addSeries.onclick = () => {
 
     openModal("series");
+
+};
+
+
+/* ===================================
+   ÚJ ANIME
+=================================== */
+
+addAnime.onclick = () => {
+
+    openModal("anime");
+
+};
+
+
+/* ===================================
+   ÚJ KÖNYV
+=================================== */
+
+addBook.onclick = () => {
+
+    openModal("book");
 
 };
 
