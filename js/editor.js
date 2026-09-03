@@ -13,13 +13,17 @@ function openEditor(item) {
 
     editMode = true;
 
-    modal.style.display = "flex";
+    modal.style.display =
+        "flex";
+
 
     modalTitle.textContent =
         "Elem szerkesztése";
 
 
-    /* ===== ALAPADATOK ===== */
+    /* ===================================
+       ALAPADATOK
+    =================================== */
 
     itemTitle.value =
         item.title || "";
@@ -29,7 +33,8 @@ function openEditor(item) {
         item.originalTitle || "";
 
 
-    itemCover.value = "";
+    itemCover.value =
+        "";
 
 
     itemCoverUrl.value =
@@ -45,6 +50,10 @@ function openEditor(item) {
         item.type || "movie";
 
 
+    /* ===================================
+       ÁLLAPOT
+    =================================== */
+
     refreshStatusUI();
 
 
@@ -52,9 +61,17 @@ function openEditor(item) {
         item.status || "planned";
 
 
+    /* ===================================
+       BEFEJEZÉS
+    =================================== */
+
     itemFinished.value =
         item.finished || "";
 
+
+    /* ===================================
+       ÉV
+    =================================== */
 
     itemYear.value =
         item.year || "";
@@ -66,7 +83,7 @@ function openEditor(item) {
 
     const genreCheckboxes =
         document.querySelectorAll(
-            "#genreContainer input"
+            "#genreContainer input[type='checkbox']"
         );
 
 
@@ -77,7 +94,11 @@ function openEditor(item) {
     });
 
 
-    if (Array.isArray(item.genres)) {
+    if (
+        Array.isArray(
+            item.genres
+        )
+    ) {
 
         genreCheckboxes.forEach(cb => {
 
@@ -96,7 +117,9 @@ function openEditor(item) {
     =================================== */
 
     renderListCheckboxes(
-        item.lists || []
+        Array.isArray(item.lists)
+            ? item.lists
+            : []
     );
 
 }
@@ -146,7 +169,9 @@ saveItem.onclick = async () => {
 
     if (title === "") {
 
-        alert("Adj meg címet!");
+        alert(
+            "Adj meg címet!"
+        );
 
         return;
 
@@ -163,7 +188,9 @@ saveItem.onclick = async () => {
             "#genreContainer input:checked"
         )
 
-    ].map(cb => cb.value);
+    ].map(
+        cb => cb.value
+    );
 
 
     /* ===================================
@@ -198,7 +225,9 @@ saveItem.onclick = async () => {
        BORÍTÓ FELTÖLTÉSE
     =================================== */
 
-    if (itemCover.files.length) {
+    if (
+        itemCover.files.length
+    ) {
 
         image =
             await fileToBase64(
@@ -212,7 +241,10 @@ saveItem.onclick = async () => {
        SZERKESZTÉS
     =================================== */
 
-    if (editMode && selectedItem) {
+    if (
+        editMode &&
+        selectedItem
+    ) {
 
         selectedItem.title =
             title;
@@ -340,11 +372,10 @@ deleteItem.onclick = () => {
 
 
     db.items =
-        db.items.filter(item =>
-
-            item.id !==
-            selectedItem.id
-
+        db.items.filter(
+            item =>
+                item.id !==
+                selectedItem.id
         );
 
 
