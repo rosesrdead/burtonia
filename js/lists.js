@@ -1,5 +1,5 @@
 /* ===================================
-   BURTONIA - Lists
+   BURTONIA - Lists / Navigation
 =================================== */
 
 function renderLists() {
@@ -7,53 +7,43 @@ function renderLists() {
 
     sidebarItems.innerHTML = "";
 
-    // Kezdőlap
-    const home = document.createElement("div");
-    home.className = currentView === "home"
-        ? "sidebarItem active"
-        : "sidebarItem";
-    home.textContent = "🏠 Kezdőlap";
-    home.onclick = () => {
-        currentView = "home";
-        currentList = "all";
-        render();
+    const addItem = (text, view = "library", list = "all") => {
+        const row = document.createElement("div");
+
+        row.className =
+            currentView === view &&
+            String(currentList) === String(list)
+                ? "sidebarItem active"
+                : "sidebarItem";
+
+        row.textContent = text;
+
+        row.onclick = () => {
+            currentView = view;
+            currentList = list;
+            render();
+        };
+
+        sidebarItems.appendChild(row);
     };
-    sidebarItems.appendChild(home);
 
-    // Böngészés
-    const browse = document.createElement("div");
-    browse.className = currentView === "browse"
-        ? "sidebarItem active"
-        : "sidebarItem";
-    browse.textContent = "🎭 Böngészés";
-    browse.onclick = () => {
-        currentView = "browse";
-        render();
-    };
-    sidebarItems.appendChild(browse);
+    /* KEZDŐLAP */
+    addItem("🏠 Kezdőlap", "home", "all");
 
-    // Könyvtár
-    const library = document.createElement("div");
-    library.className =
-        currentView === "library" &&
-        (currentList === "all" ||
-         currentList === null ||
-         currentList === undefined)
-            ? "sidebarItem active"
-            : "sidebarItem";
+    /* BÖNGÉSZÉS */
+    addItem("🎭 Böngészés", "browse", "all");
 
-    library.textContent = "📚 Könyvtár";
-    library.onclick = () => {
-        currentView = "library";
-        currentList = "all";
-        render();
-    };
-    sidebarItems.appendChild(library);
+    /* KÖNYVTÁR */
+    addItem("📚 Könyvtár", "library", "all");
 
-    // Saját listák
-    const lists = Array.isArray(db.lists) ? db.lists : [];
+    /* TÍPUSOK */
+    addItem("🎬 Filmek", "library", "type:movie");
+    addItem("📺 Sorozatok", "library", "type:series");
+    addItem("🌸 Anime", "library", "type:anime");
+    addItem("📖 Könyvek", "library", "type:book");
 
-    lists.forEach(list => {
+    /* SAJÁT LISTÁK */
+    (Array.isArray(db.lists) ? db.lists : []).forEach(list => {
         const row = document.createElement("div");
 
         row.className =
@@ -88,8 +78,8 @@ function renderLists() {
 function render() {
     if (typeof db === "undefined") return;
 
-    if (!Array.isArray(db.items)) db.items = [];
-    if (!Array.isArray(db.lists)) db.lists = [];
+    db.items = Array.isArray(db.items) ? db.items : [];
+    db.lists = Array.isArray(db.lists) ? db.lists : [];
 
     renderLists();
 
@@ -97,24 +87,20 @@ function render() {
     if (browsePage) browsePage.style.display = "none";
     if (libraryPage) libraryPage.style.display = "none";
 
-    switch (currentView) {
-
-        case "home":
-            if (homePage) homePage.style.display = "block";
-            if (typeof renderHome === "function") renderHome();
-            break;
-
-        case "browse":
-            if (browsePage) browsePage.style.display = "block";
-            if (typeof renderBrowse === "function") renderBrowse();
-            break;
-
-        case "library":
-        default:
-            if (libraryPage) libraryPage.style.display = "block";
-            if (typeof renderItems === "function") renderItems();
-            break;
+    if (currentView === "home") {
+        if (homePage) homePage.style.display = "block";
+        if (typeof renderHome === "function") renderHome();
+        return;
     }
+
+    if (currentView === "browse") {
+        if (browsePage) browsePage.style.display = "block";
+        if (typeof renderBrowse === "function") renderBrowse();
+        return;
+    }
+
+    if (libraryPage) libraryPage.style.display = "block";
+    if (typeof renderItems === "function") renderItems();
 }
 
 
@@ -132,12 +118,10 @@ if (typeof addList !== "undefined") {
         const value = name.trim();
         if (!value) return;
 
-        const exists = db.lists.some(list =>
+        if (db.lists.some(list =>
             String(list.name || "").trim().toLowerCase() ===
             value.toLowerCase()
-        );
-
-        if (exists) {
+        )) {
             alert("Ez a lista már létezik.");
             return;
         }
@@ -157,8 +141,9 @@ if (typeof addList !== "undefined") {
 
         saveDB();
 
-        currentList = "all";
         currentView = "library";
+        currentList = "all";
+
         render();
     };
 }
@@ -171,19 +156,19 @@ if (typeof addList !== "undefined") {
 function editList(list) {
     if (!list) return;
 
-    const newName = prompt(
+    const name = prompt(
         "Lista neve:",
         list.name || ""
     );
 
-    if (newName === null) return;
+    if (name === null) return;
 
-    const value = newName.trim();
+    const value = name.trim();
     if (!value) return;
 
-    const duplicate = db.lists.some(existing =>
-        existing.id !== list.id &&
-        String(existing.name || "").trim().toLowerCase() ===
+    const duplicate = db.lists.some(item =>
+        item.id !== list.id &&
+        String(item.name || "").trim().toLowerCase() ===
         value.toLowerCase()
     );
 
@@ -192,15 +177,15 @@ function editList(list) {
         return;
     }
 
-    const newIcon = prompt(
+    const iconInput = prompt(
         "Lista emoji:",
         list.icon || "📝"
     );
 
-    if (newIcon === null) return;
+    if (iconInput === null) return;
 
     list.name = value;
-    list.icon = newIcon.trim() || "📝";
+    list.icon = iconInput.trim() || "📝";
 
     saveDB();
     render();
@@ -216,26 +201,25 @@ function deleteList(list) {
 
     if (!confirm(
         "Biztosan törlöd ezt a listát?\n\n" +
-        "A filmek, sorozatok, animék és könyvek NEM fognak törlődni."
+        "A filmek, sorozatok, animék és könyvek nem törlődnek."
     )) return;
 
     db.lists = db.lists.filter(
-        l => String(l.id) !== String(list.id)
+        item => String(item.id) !== String(list.id)
     );
 
-    if (Array.isArray(db.items)) {
-        db.items.forEach(item => {
-            if (Array.isArray(item.lists)) {
-                item.lists = item.lists.filter(
-                    id => String(id) !== String(list.id)
-                );
-            }
-        });
-    }
+    db.items.forEach(item => {
+        if (Array.isArray(item.lists)) {
+            item.lists = item.lists.filter(
+                id => String(id) !== String(list.id)
+            );
+        }
+    });
 
     saveDB();
 
-    currentList = "all";
     currentView = "library";
+    currentList = "all";
+
     render();
 }
