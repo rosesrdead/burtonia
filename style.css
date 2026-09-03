@@ -17,64 +17,74 @@
    KEZDŐLAP - GYORSKATEGÓRIÁK
 =================================== */
 
-.homeQuickNav {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(140px, 1fr));
-    gap: 16px;
-    width: min(100%, 900px);
-    margin: 0 auto 30px;
-    padding: 4px;
+.homeQuickNav{
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,minmax(140px,1fr));
+
+    gap:16px;
+
+    width:min(100%,900px);
+
+    margin:0 auto 30px;
+
+    padding:4px;
 }
 
-.homeQuickButton {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
+.homeQuickButton{
+    display:flex;
 
-    min-height: 64px;
-    padding: 14px 20px;
+    align-items:center;
+    justify-content:center;
 
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 18px;
+    gap:10px;
 
-    background: rgba(35, 20, 50, 0.72);
-    color: white;
+    min-height:64px;
 
-    font: inherit;
-    font-weight: 600;
-    font-size: 17px;
+    padding:14px 20px;
 
-    cursor: pointer;
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:18px;
 
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background:rgba(35,20,50,.72);
+
+    color:white;
+
+    font:inherit;
+    font-weight:600;
+    font-size:17px;
+
+    cursor:pointer;
+
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
 
     box-shadow:
-        0 8px 25px rgba(0, 0, 0, 0.25);
+        0 8px 25px rgba(0,0,0,.25);
 
     transition:
-        transform 0.2s ease,
-        background 0.2s ease,
-        box-shadow 0.2s ease;
+        transform .2s ease,
+        background .2s ease,
+        box-shadow .2s ease;
 }
 
-.homeQuickButton:hover {
-    transform: translateY(-4px);
+.homeQuickButton:hover{
+    transform:translateY(-4px);
 
-    background: rgba(100, 70, 125, 0.78);
+    background:rgba(100,70,125,.78);
 
     box-shadow:
-        0 12px 30px rgba(0, 0, 0, 0.35);
+        0 12px 30px rgba(0,0,0,.35);
 }
 
-.homeQuickButton:active {
-    transform: translateY(-1px);
+.homeQuickButton:active{
+    transform:translateY(-1px);
 }
 
-.homeQuickIcon {
-    font-size: 25px;
-    line-height: 1;
+.homeQuickIcon{
+    font-size:25px;
+    line-height:1;
 }
 
 
@@ -82,8 +92,8 @@
    KEZDŐLAP SZEKCIÓK
 =================================== */
 
-#homePage > section {
-    margin-bottom: 32px;
+#homePage>section{
+    margin-bottom:32px;
 }
 
 
@@ -91,8 +101,8 @@
    STATISZTIKA
 =================================== */
 
-.homeStats {
-    width: min(100%, 900px);
+.homeStats{
+    width:min(100%,900px);
 }
 
 
@@ -100,14 +110,16 @@
    ÜRES KEZDŐLAP
 =================================== */
 
-.emptyHome {
-    padding: 25px;
-    border-radius: 18px;
+.emptyHome{
+    padding:25px;
 
-    background: rgba(20, 15, 30, 0.55);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius:18px;
 
-    text-align: center;
+    background:rgba(20,15,30,.55);
+
+    border:1px solid rgba(255,255,255,.1);
+
+    text-align:center;
 }
 
 
@@ -115,33 +127,173 @@
    MOBIL
 =================================== */
 
-@media (max-width: 800px) {
-    .homeQuickNav {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
+@media(max-width:800px){
+
+    .homeQuickNav{
+        grid-template-columns:
+            repeat(2,1fr);
+
+        gap:12px;
     }
 
-    .homeQuickButton {
-        min-height: 58px;
-        padding: 12px;
-        font-size: 15px;
+    .homeQuickButton{
+        min-height:58px;
+
+        padding:12px;
+
+        font-size:15px;
     }
 
-    .homeQuickIcon {
-        font-size: 22px;
+    .homeQuickIcon{
+        font-size:22px;
     }
 }
 
 
-@media (max-width: 480px) {
-    .homeQuickNav {
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
+@media(max-width:480px){
+
+    .homeQuickNav{
+        grid-template-columns:
+            1fr 1fr;
+
+        gap:10px;
     }
 
-    .homeQuickButton {
-        border-radius: 15px;
-        min-height: 54px;
-        font-size: 14px;
+    .homeQuickButton{
+        border-radius:15px;
+
+        min-height:54px;
+
+        font-size:14px;
+    }
+}
+
+
+/* ===================================
+   LISTA SZERKESZTŐ
+=================================== */
+
+#listEditModal{
+    position:fixed;
+    inset:0;
+
+    z-index:9999;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    padding:20px;
+
+    background:rgba(5,2,10,.62);
+
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+}
+
+.listEditBox{
+    width:min(420px,90vw);
+
+    padding:26px;
+
+    border-radius:22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(65,40,90,.84),
+            rgba(15,10,24,.8)
+        );
+
+    color:white;
+
+    border:1px solid rgba(220,190,250,.2);
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.55),
+        0 0 45px rgba(110,65,155,.22);
+
+    backdrop-filter:blur(22px);
+    -webkit-backdrop-filter:blur(22px);
+
+    box-sizing:border-box;
+}
+
+.listEditBox h2{
+    margin:0 0 20px;
+    color:white;
+}
+
+.listEditBox label{
+    display:block;
+
+    margin:0 0 6px;
+
+    color:white;
+}
+
+.listEditBox input{
+    width:100%;
+
+    padding:11px 12px;
+
+    margin-bottom:15px;
+
+    box-sizing:border-box;
+
+    background:rgba(10,7,15,.42);
+
+    color:white;
+
+    border:1px solid rgba(190,150,230,.22);
+
+    border-radius:10px;
+}
+
+.listEditButtons{
+    display:flex;
+
+    gap:10px;
+
+    flex-wrap:wrap;
+
+    margin-top:8px;
+}
+
+.listEditButtons button{
+    padding:11px 18px;
+}
+
+#editListSave{
+    background:rgba(105,75,145,.8);
+}
+
+#editListDelete{
+    background:rgba(150,45,65,.65)!important;
+    color:white!important;
+}
+
+#editListCancel{
+    background:rgba(255,255,255,.08);
+}
+
+
+/* ===== MOBIL ===== */
+
+@media(max-width:600px){
+
+    #listEditModal{
+        padding:10px;
+    }
+
+    .listEditBox{
+        width:100%;
+        padding:22px;
+    }
+
+    .listEditButtons button{
+        flex:1;
+        min-width:100px;
     }
 }
