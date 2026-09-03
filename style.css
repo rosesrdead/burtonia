@@ -25,15 +25,8 @@
    BURTONIA - FEHÉR SZÖVEG
 =================================== */
 
-/*
-   Csak a szöveg színét állítjuk.
-   Méretet, margót, paddinget,
-   elrendezést NEM módosítunk.
-*/
-
-
-body{
-    color:#ffffff;
+body {
+    color: #ffffff;
 }
 
 
@@ -43,8 +36,8 @@ body{
 
 header,
 header h1,
-header button{
-    color:#ffffff;
+header button {
+    color: #ffffff;
 }
 
 
@@ -54,8 +47,8 @@ header button{
 
 #sidebar,
 #sidebar h2,
-#sidebar .sidebarItem{
-    color:#ffffff;
+#sidebar .sidebarItem {
+    color: #ffffff;
 }
 
 
@@ -70,8 +63,8 @@ main h3,
 main h4,
 main p,
 main span,
-main label{
-    color:#ffffff;
+main label {
+    color: #ffffff;
 }
 
 
@@ -85,8 +78,8 @@ main label{
 .card .itemType,
 .card .movieYear,
 .card .movieGenres,
-.card .finishedDate{
-    color:#ffffff;
+.card .finishedDate {
+    color: #ffffff;
 }
 
 
@@ -94,9 +87,10 @@ main label{
    MODAL
 =================================== */
 
-#modalBox{
-    color:#ffffff;
+#modalBox {
+    color: #ffffff;
 }
+
 
 #modalBox h1,
 #modalBox h2,
@@ -106,8 +100,8 @@ main label{
 #modalBox label,
 #modalBox span,
 #modalBox strong,
-#modalBox b{
-    color:#ffffff;
+#modalBox b {
+    color: #ffffff;
 }
 
 
@@ -117,25 +111,31 @@ main label{
 
 #modalBox input,
 #modalBox textarea,
-#modalBox select{
-    color:#ffffff;
+#modalBox select {
+    color: #ffffff;
 }
 
 
-/* PLACEHOLDER */
+/* ===================================
+   PLACEHOLDER
+=================================== */
 
 #modalBox input::placeholder,
-#modalBox textarea::placeholder{
-    color:rgba(255,255,255,.65);
-    opacity:1;
+#modalBox textarea::placeholder {
+    color: rgba(255,255,255,.65);
+
+    opacity: 1;
 }
 
 
-/* SELECT */
+/* ===================================
+   SELECT
+=================================== */
 
-#modalBox select option{
-    color:#ffffff;
-    background:#21172b;
+#modalBox select option {
+    color: #ffffff;
+
+    background: #21172b;
 }
 
 
@@ -148,8 +148,8 @@ main label{
 #modalBox .listItem span,
 #modalBox .lists,
 #modalBox .lists label,
-#modalBox .lists span{
-    color:#ffffff;
+#modalBox .lists span {
+    color: #ffffff;
 }
 
 
@@ -158,8 +158,8 @@ main label{
 =================================== */
 
 #modalButtons,
-#modalButtons button{
-    color:#ffffff;
+#modalButtons button {
+    color: #ffffff;
 }
 
 
@@ -167,9 +167,10 @@ main label{
    BEÁLLÍTÁSOK
 =================================== */
 
-#settingsBox{
-    color:#ffffff;
+#settingsBox {
+    color: #ffffff;
 }
+
 
 #settingsBox h1,
 #settingsBox h2,
@@ -180,8 +181,8 @@ main label{
 #settingsBox span,
 #settingsBox strong,
 #settingsBox b,
-#settingsBox button{
-    color:#ffffff;
+#settingsBox button {
+    color: #ffffff;
 }
 
 
@@ -191,21 +192,23 @@ main label{
 
 #settingsBox input,
 #settingsBox textarea,
-#settingsBox select{
-    color:#ffffff;
+#settingsBox select {
+    color: #ffffff;
 }
 
 
 #settingsBox input::placeholder,
-#settingsBox textarea::placeholder{
-    color:rgba(255,255,255,.65);
-    opacity:1;
+#settingsBox textarea::placeholder {
+    color: rgba(255,255,255,.65);
+
+    opacity: 1;
 }
 
 
-#settingsBox select option{
-    color:#ffffff;
-    background:#21172b;
+#settingsBox select option {
+    color: #ffffff;
+
+    background: #21172b;
 }
 
 
@@ -213,14 +216,14 @@ main label{
    FAB
 =================================== */
 
-#fab{
-    color:#ffffff;
+#fab {
+    color: #ffffff;
 }
 
 
 #fabMenu,
-#fabMenu button{
-    color:#ffffff;
+#fabMenu button {
+    color: #ffffff;
 }
 
 
@@ -228,8 +231,8 @@ main label{
    LISTA SZERKESZTŐ
 =================================== */
 
-#listEditModal{
-    color:#ffffff;
+#listEditModal {
+    color: #ffffff;
 }
 
 
@@ -239,19 +242,20 @@ main label{
 #listEditModal p,
 #listEditModal label,
 #listEditModal span,
-#listEditModal button{
-    color:#ffffff;
+#listEditModal button {
+    color: #ffffff;
 }
 
 
-#listEditModal input{
-    color:#ffffff;
+#listEditModal input {
+    color: #ffffff;
 }
 
 
-#listEditModal input::placeholder{
-    color:rgba(255,255,255,.65);
-    opacity:1;
+#listEditModal input::placeholder {
+    color: rgba(255,255,255,.65);
+
+    opacity: 1;
 }
 
 
@@ -260,8 +264,8 @@ main label{
 =================================== */
 
 a,
-a:visited{
-    color:#ffffff;
+a:visited {
+    color: #ffffff;
 }
 
 
@@ -269,8 +273,8 @@ a:visited{
    GOMBOK
 =================================== */
 
-button{
-    color:#ffffff;
+button {
+    color: #ffffff;
 }
 
 
@@ -278,53 +282,53 @@ button{
    KEZDŐLAP GYORS GOMBOK
 =================================== */
 
-.homeQuickNav{
-    display:grid;
+.homeQuickNav {
+    display: grid;
 
     grid-template-columns:
         repeat(4,minmax(140px,1fr));
 
-    gap:16px;
+    gap: 16px;
 
-    width:min(100%,900px);
+    width: min(100%,900px);
 
-    margin:0 auto 30px;
+    margin: 0 auto 30px;
 }
 
 
-.homeQuickButton{
-    color:#ffffff;
+.homeQuickButton {
+    color: #ffffff;
 
-    border:1px solid
+    border: 1px solid
         rgba(255,255,255,.15);
 
-    border-radius:18px;
+    border-radius: 18px;
 
     background:
         rgba(35,20,50,.42);
 
-    backdrop-filter:blur(14px);
+    backdrop-filter: blur(14px);
 
-    -webkit-backdrop-filter:blur(14px);
+    -webkit-backdrop-filter: blur(14px);
 
     box-shadow:
         0 8px 25px rgba(0,0,0,.25);
 }
 
 
-.homeQuickButton *{
-    color:#ffffff;
+.homeQuickButton * {
+    color: #ffffff;
 }
 
 
-.homeQuickButton:hover{
+.homeQuickButton:hover {
     background:
         rgba(80,55,105,.48);
 }
 
 
-.homeQuickIcon{
-    color:#ffffff;
+.homeQuickIcon {
+    color: #ffffff;
 }
 
 
@@ -336,8 +340,8 @@ button{
 .homeStats h2,
 .homeStat,
 .homeStat span,
-.homeStat b{
-    color:#ffffff;
+.homeStat b {
+    color: #ffffff;
 }
 
 
@@ -347,8 +351,8 @@ button{
 
 .emptyHome,
 .emptyHome h2,
-.emptyHome p{
-    color:#ffffff;
+.emptyHome p {
+    color: #ffffff;
 }
 
 
@@ -356,9 +360,9 @@ button{
    MOBIL
 =================================== */
 
-@media(max-width:800px){
+@media(max-width:800px) {
 
-    .homeQuickNav{
+    .homeQuickNav {
         grid-template-columns:
             repeat(2,1fr);
     }
@@ -366,19 +370,19 @@ button{
 }
 
 
-@media(max-width:600px){
+@media(max-width:600px) {
 
-    .homeQuickNav{
-        gap:12px;
+    .homeQuickNav {
+        gap: 12px;
     }
 
 }
 
 
-@media(max-width:420px){
+@media(max-width:420px) {
 
-    .homeQuickNav{
-        gap:10px;
+    .homeQuickNav {
+        gap: 10px;
     }
 
 }
