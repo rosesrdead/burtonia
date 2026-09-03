@@ -2,244 +2,180 @@
    BURTONIA - Layout
 =================================== */
 
-
 /* ===== FEJLÉC ===== */
 
-
-header{
-
-    position:relative;
-
-    display:flex;
-
-    justify-content:flex-end;
-
-    align-items:center;
-
-    padding:20px 30px;
-
-    margin:20px;
-
-    border-radius:18px;
-
-    background:rgba(0,0,0,.18);
-
-    backdrop-filter:blur(12px);
-
-    -webkit-backdrop-filter:blur(12px);
-
-    border:1px solid rgba(255,255,255,.08);
-
+header {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 20px 30px;
+    margin: 20px;
+    min-height: 50px;
+    border-radius: 18px;
+    background: rgba(0, 0, 0, .18);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, .08);
 }
 
-
-
-header h1{
-
-    position:absolute;
-
-    left:50%;
-
-    top:50%;
-
-    transform:translate(-50%,-50%);
-
-    margin:0;
-
-    font-family:"Cinzel",serif;
-
-    color:white;
-
-    letter-spacing:5px;
-
-    font-size:34px;
-
-    font-weight:700;
-
-    text-shadow:0 0 18px rgba(255,255,255,.15);
-
+header h1 {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    font-family: "Cinzel", serif;
+    color: white;
+    letter-spacing: 5px;
+    font-size: 34px;
+    font-weight: 700;
+    text-shadow: 0 0 18px rgba(255, 255, 255, .15);
 }
 
-
-
-#settingsButton{
-
-    width:48px;
-
-    height:48px;
-
-    border:none;
-
-    border-radius:50%;
-
-    background:rgba(255,255,255,.08);
-
-    color:white;
-
-    cursor:pointer;
-
-    font-size:22px;
-
-    transition:.25s;
-
-    backdrop-filter:blur(10px);
-
+#settingsButton {
+    width: 48px;
+    height: 48px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .08);
+    color: white;
+    cursor: pointer;
+    font-size: 22px;
+    transition: .25s;
+    backdrop-filter: blur(10px);
 }
 
-
-
-#settingsButton:hover{
-
-    background:rgba(255,255,255,.18);
-
-    transform:rotate(90deg);
-
+#settingsButton:hover {
+    background: rgba(255, 255, 255, .18);
+    transform: rotate(90deg);
 }
-
-
-
 
 
 /* ===== FŐ ELRENDEZÉS ===== */
 
-
-#layout{
-
-    display:grid;
-
-    grid-template-columns:220px 1fr;
-
-    gap:30px;
-
-    padding:25px;
-
-    align-items:start;
-
+#layout {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 30px;
+    padding: 25px;
+    align-items: start;
 }
-
-
-
 
 
 /* ===== SIDEBAR ===== */
 
+#sidebar {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 18px;
+    border-radius: 20px;
+    background: rgba(0, 0, 0, .18);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, .08);
+}
 
-#sidebar{
+#sidebar h2 {
+    margin: 0 0 15px;
+}
 
-    padding:18px;
+.sidebarItem {
+    padding: 10px 14px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: .25s;
+}
 
-    border-radius:20px;
+.sidebarItem:hover {
+    background: rgba(255, 255, 255, .12);
+    transform: translateX(6px);
+}
 
-    background:rgba(0,0,0,.18);
-
-    backdrop-filter:blur(10px);
-
-    -webkit-backdrop-filter:blur(10px);
-
-    border:1px solid rgba(255,255,255,.08);
-
+.sidebarItem.active {
+    background: rgba(255, 255, 255, .18);
+    font-weight: bold;
 }
 
 
+/* ===== FŐ TARTALOM ===== */
 
-#sidebar h2{
-
-    margin-bottom:15px;
-
+main {
+    min-width: 0;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
 
+/* ===== KEZDŐLAP ===== */
 
-.sidebarItem{
-
-    padding:10px 14px;
-
-    border-radius:12px;
-
-    cursor:pointer;
-
-    transition:.25s;
-
+#homePage {
+    display: none;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 
+/* ===== KÖNYVTÁR ===== */
 
-.sidebarItem:hover{
-
-    background:rgba(255,255,255,.12);
-
-    transform:translateX(6px);
-
+#libraryPage {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 
+/* ===== BÖNGÉSZÉS ===== */
 
-.sidebarItem.active{
-
-    background:rgba(255,255,255,.18);
-
-    font-weight:bold;
-
+#browsePage {
+    width: 100%;
+    box-sizing: border-box;
 }
 
 
+/* ===== CÍMEK ===== */
 
-
-
-/* ===== TARTALOM ===== */
-
-
-main{
-
-    padding:10px;
-
+.sectionTitle {
+    margin: 20px 0 10px;
 }
 
 
+/* ===== KÖNYVTÁR ESZKÖZTÁR ===== */
 
-.sectionTitle{
-
-    margin:20px 0 10px;
-
+.libraryToolbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
 }
 
 
+/* ===== KEZDŐLAP GYORSGOMBOK ===== */
 
-
-/* ===== OLDALAK ===== */
-
-
-#homePage{
-
-    display:none;
-
+.homeQuickNav {
+    width: 100%;
+    box-sizing: border-box;
 }
 
 
+/* ===== MOBIL ===== */
 
-#libraryPage{
+@media (max-width: 800px) {
 
-    display:block;
+    #layout {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 15px;
+    }
 
-}
+    #sidebar {
+        width: 100%;
+    }
 
-
-
-
-
-/* ===== ESZKÖZTÁR ===== */
-
-
-.libraryToolbar{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
-
-    margin-bottom:20px;
-
-    flex-wrap:wrap;
+    main {
+        padding: 0;
+    }
 
 }
