@@ -1,244 +1,393 @@
 /* ===================================
-   BURTONIA - Render Items
+   BURTONIA - Editor
 =================================== */
 
 
 /* ===================================
-   SZŰRT ELEMEK
+   ELEM SZERKESZTÉSE
 =================================== */
 
-function getFilteredItems() {
+function openEditor(item) {
 
-    if (currentList === "all") {
+    selectedItem = item;
 
-        return db.items;
+    editMode = true;
+
+    modal.style.display =
+        "flex";
+
+
+    modalTitle.textContent =
+        "Elem szerkesztése";
+
+
+    /* ===================================
+       ALAPADATOK
+    =================================== */
+
+    itemTitle.value =
+        item.title || "";
+
+
+    itemOriginalTitle.value =
+        item.originalTitle || "";
+
+
+    itemCover.value =
+        "";
+
+
+    itemCoverUrl.value =
+        item.image || "";
+
+
+    updateCoverPreview(
+        item.image || ""
+    );
+
+
+    itemType.value =
+        item.type || "movie";
+
+
+    /* ===================================
+       ÁLLAPOT
+    =================================== */
+
+    refreshStatusUI();
+
+
+    itemStatus.value =
+        item.status || "planned";
+
+
+    /* ===================================
+       BEFEJEZÉS
+    =================================== */
+
+    itemFinished.value =
+        item.finished || "";
+
+
+    /* ===================================
+       ÉV
+    =================================== */
+
+    itemYear.value =
+        item.year || "";
+
+
+    /* ===================================
+       MŰFAJOK
+    =================================== */
+
+    const genreCheckboxes =
+        document.querySelectorAll(
+            "#genreContainer input[type='checkbox']"
+        );
+
+
+    genreCheckboxes.forEach(cb => {
+
+        cb.checked = false;
+
+    });
+
+
+    if (
+        Array.isArray(
+            item.genres
+        )
+    ) {
+
+        genreCheckboxes.forEach(cb => {
+
+            cb.checked =
+                item.genres.includes(
+                    cb.value
+                );
+
+        });
 
     }
 
 
-    return db.items.filter(item =>
+    /* ===================================
+       LISTÁK
+    =================================== */
 
-        item.lists &&
-        item.lists.includes(currentList)
-
+    renderListCheckboxes(
+        Array.isArray(item.lists)
+            ? item.lists
+            : []
     );
 
 }
 
 
 /* ===================================
-   KÁRTYA
+   FILE → BASE64
 =================================== */
 
-function createCard(item) {
+function fileToBase64(file) {
 
-    const card =
-        document.createElement("div");
+    return new Promise(resolve => {
 
+        const reader =
+            new FileReader();
 
-    card.className =
-        "card";
 
+        reader.onload = e => {
 
-    const poster =
-        document.createElement("div");
+            resolve(
+                e.target.result
+            );
 
+        };
 
-    poster.className =
-        "poster";
 
+        reader.readAsDataURL(file);
 
-    if (item.image) {
-
-        const img =
-            document.createElement("img");
-
-
-        img.src =
-            item.image;
-
-
-        img.alt =
-            item.title;
-
-
-        poster.appendChild(img);
-
-    } else {
-
-        poster.textContent =
-            "Nincs borító";
-
-    }
-
-
-    const title =
-        document.createElement("div");
-
-
-    title.className =
-        "title";
-
-
-    title.textContent =
-        getStatusIcon(
-            item.status,
-            item.type
-        )
-        + " "
-        + item.title;
-
-
-    card.appendChild(poster);
-
-    card.appendChild(title);
-
-
-    /* ===== MEGJELENÉSI ÉV ===== */
-
-    if (item.year) {
-
-        const year =
-            document.createElement("div");
-
-
-        year.className =
-            "movieYear";
-
-
-        year.textContent =
-            "📅 " + item.year;
-
-
-        card.appendChild(year);
-
-    }
-
-
-    /* ===== MŰFAJOK ===== */
-
-    if (
-        item.genres &&
-        item.genres.length
-    ) {
-
-        const genres =
-            document.createElement("div");
-
-
-        genres.className =
-            "movieGenres";
-
-
-        genres.textContent =
-            "🎭 " +
-            item.genres.join(" • ");
-
-
-        card.appendChild(genres);
-
-    }
-
-
-    /* ===== EREDETI CÍM ===== */
-
-    if (item.originalTitle) {
-
-        const original =
-            document.createElement("div");
-
-
-        original.className =
-            "originalTitle";
-
-
-        original.textContent =
-            item.originalTitle;
-
-
-        card.appendChild(original);
-
-    }
-
-
-    /* ===== BEFEJEZÉS ===== */
-
-    if (item.finished) {
-
-        const finished =
-            document.createElement("div");
-
-
-        finished.className =
-            "finishedDate";
-
-
-        finished.textContent =
-            "✅ " +
-            item.finished;
-
-
-        card.appendChild(finished);
-
-    }
-
-
-    /* ===== SZERKESZTÉS ===== */
-
-    card.onclick = () => {
-
-        openEditor(item);
-
-    };
-
-
-    return card;
+    });
 
 }
 
 
 /* ===================================
-   FILMEK / SOROZATOK MEGJELENÍTÉSE
+   MENTÉS
 =================================== */
 
-function renderItems() {
+saveItem.onclick = async () => {
 
-    moviesGrid.innerHTML =
-        "";
-
-
-    seriesGrid.innerHTML =
-        "";
+    const title =
+        itemTitle.value.trim();
 
 
-    const items =
-        sortItems(
-            getFilteredItems()
+    const originalTitle =
+        itemOriginalTitle.value.trim();
+
+
+    if (title === "") {
+
+        alert(
+            "Adj meg címet!"
         );
 
+        return;
 
-    items.forEach(item => {
-
-        const card =
-            createCard(item);
+    }
 
 
-        if (
-            item.type === "movie"
-        ) {
+    /* ===================================
+       MŰFAJOK
+    =================================== */
 
-            moviesGrid.appendChild(
-                card
+    const genres = [
+
+        ...document.querySelectorAll(
+            "#genreContainer input:checked"
+        )
+
+    ].map(
+        cb => cb.value
+    );
+
+
+    /* ===================================
+       LISTÁK
+    =================================== */
+
+    const lists =
+        getSelectedLists();
+
+
+    /* ===================================
+       EGYÉB ADATOK
+    =================================== */
+
+    const finished =
+        itemFinished.value;
+
+
+    const year =
+        itemYear.value;
+
+
+    const status =
+        itemStatus.value;
+
+
+    let image =
+        itemCoverUrl.value.trim();
+
+
+    /* ===================================
+       BORÍTÓ FELTÖLTÉSE
+    =================================== */
+
+    if (
+        itemCover.files.length
+    ) {
+
+        image =
+            await fileToBase64(
+                itemCover.files[0]
             );
 
-        } else {
+    }
 
-            seriesGrid.appendChild(
-                card
-            );
+
+    /* ===================================
+       SZERKESZTÉS
+    =================================== */
+
+    if (
+        editMode &&
+        selectedItem
+    ) {
+
+        selectedItem.title =
+            title;
+
+
+        selectedItem.originalTitle =
+            originalTitle;
+
+
+        selectedItem.type =
+            itemType.value;
+
+
+        selectedItem.finished =
+            finished;
+
+
+        selectedItem.status =
+            status;
+
+
+        selectedItem.year =
+            year;
+
+
+        selectedItem.genres =
+            genres;
+
+
+        selectedItem.lists =
+            lists;
+
+
+        if (image) {
+
+            selectedItem.image =
+                image;
 
         }
 
-    });
+    }
 
-}
+
+    /* ===================================
+       ÚJ ELEM
+    =================================== */
+
+    else {
+
+        db.items.push({
+
+            id:
+                Date.now(),
+
+            title:
+                title,
+
+            originalTitle:
+                originalTitle,
+
+            type:
+                itemType.value,
+
+            image:
+                image,
+
+            status:
+                status,
+
+            year:
+                year,
+
+            genres:
+                genres,
+
+            lists:
+                lists,
+
+            finished:
+                finished || ""
+
+        });
+
+    }
+
+
+    /* ===================================
+       MENTÉS + FRISSÍTÉS
+    =================================== */
+
+    saveDB();
+
+    closeModal();
+
+    render();
+
+};
+
+
+/* ===================================
+   TÖRLÉS
+=================================== */
+
+deleteItem.onclick = () => {
+
+    if (
+        !editMode ||
+        !selectedItem
+    ) {
+
+        return;
+
+    }
+
+
+    if (
+        !confirm(
+            "Biztosan törölni szeretnéd?"
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    db.items =
+        db.items.filter(
+            item =>
+                item.id !==
+                selectedItem.id
+        );
+
+
+    selectedItem = null;
+
+    editMode = false;
+
+
+    saveDB();
+
+    closeModal();
+
+    render();
+
+};
