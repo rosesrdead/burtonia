@@ -5,29 +5,20 @@
 #settingsModal{
     position:fixed;
     inset:0;
-
-    width:100%;
-    height:100%;
-
-    background:rgba(5,2,10,.68);
-
     display:none;
-
     justify-content:center;
     align-items:center;
-
-    z-index:9999;
-
+    width:100%;
+    height:100%;
     padding:20px;
     box-sizing:border-box;
-
     overflow-y:auto;
     overflow-x:hidden;
-
+    background:rgba(5,2,10,.68);
     backdrop-filter:blur(8px);
     -webkit-backdrop-filter:blur(8px);
+    z-index:9999;
 }
-
 
 /* ===== SETTINGS BOX ===== */
 
@@ -36,41 +27,29 @@
     max-width:90vw;
     max-height:90vh;
     min-height:0;
-
     overflow-y:auto;
     overflow-x:hidden;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(55,35,75,.9),
-            rgba(15,10,22,.94)
-        );
-
-    color:white;
-
-    border:1px solid rgba(210,175,245,.18);
-    border-radius:22px;
-
+    box-sizing:border-box;
     padding:28px;
-
     display:flex;
     flex-direction:column;
     gap:14px;
 
+    background:rgba(0,0,0,.18);
+    color:white;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:22px;
+
     box-shadow:
         0 25px 70px rgba(0,0,0,.55),
-        0 0 45px rgba(90,50,130,.18);
+        0 0 55px rgba(110,65,155,.22);
 
-    box-sizing:border-box;
-
-    backdrop-filter:blur(22px);
-    -webkit-backdrop-filter:blur(22px);
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
 
     -webkit-overflow-scrolling:touch;
     overscroll-behavior:contain;
 }
-
 
 /* ===== CÍM ===== */
 
@@ -80,16 +59,12 @@
     color:white;
 }
 
-
-/* ===== ALCÍMEK ===== */
-
 #settingsBox h3{
     margin-top:10px;
     color:rgba(255,255,255,.9);
 }
 
-
-/* ===== SETTINGS GROUP ===== */
+/* ===== CSOPORTOK ===== */
 
 .settingsGroup{
     display:flex;
@@ -97,41 +72,31 @@
     gap:10px;
 }
 
-
-/* ===== INPUTOK ===== */
-
 #settingsBox input,
 #settingsBox select{
     box-sizing:border-box;
     max-width:100%;
 }
 
-
-/* ===== SZÖVEGES INPUT ===== */
+/* ===== INPUTOK ===== */
 
 #settingsBox input[type="text"],
 #settingsBox input[type="email"]{
     width:100%;
-
     padding:11px 12px;
-
-    background:rgba(10,7,15,.5);
+    box-sizing:border-box;
+    background:rgba(0,0,0,.18);
     color:white;
-
-    border:1px solid rgba(190,150,230,.22);
+    border:1px solid rgba(255,255,255,.12);
     border-radius:10px;
-
     outline:none;
 }
 
 #settingsBox input[type="text"]:focus,
 #settingsBox input[type="email"]:focus{
     border-color:rgba(210,175,245,.55);
-
-    box-shadow:
-        0 0 0 3px rgba(120,80,160,.18);
+    box-shadow:0 0 0 3px rgba(120,80,160,.18);
 }
-
 
 /* ===== RANGE ===== */
 
@@ -139,57 +104,44 @@
     accent-color:#9a70c5;
 }
 
-
-/* ===== COLOR PICKER ===== */
+/* ===== SZÍNVÁLASZTÓ ===== */
 
 #backgroundPicker{
     width:100%;
     min-height:42px;
-
     padding:4px;
-
-    background:rgba(10,7,15,.5);
-
-    border:1px solid rgba(190,150,230,.22);
+    box-sizing:border-box;
+    background:rgba(0,0,0,.18);
+    border:1px solid rgba(255,255,255,.12);
     border-radius:10px;
 }
 
-
-/* ===== SETTINGS GOMBOK ===== */
+/* ===== GOMBOK ===== */
 
 #settingsBox button{
     width:100%;
-
     padding:12px;
     margin-top:6px;
-
-    background:rgba(255,255,255,.07);
+    background:rgba(255,255,255,.08);
     color:white;
-
-    border:1px solid rgba(190,150,230,.18);
+    border:1px solid rgba(255,255,255,.1);
     border-radius:12px;
-
     cursor:pointer;
     font-size:15px;
 }
 
 #settingsBox button:hover{
-    background:rgba(100,65,130,.55);
-    border-color:rgba(210,175,245,.32);
+    background:rgba(255,255,255,.16);
+    border-color:rgba(220,190,250,.25);
 }
 
-
-/* ===== CLOUD STATUS ===== */
+/* ===== CLOUD ===== */
 
 #cloudSyncStatus{
     padding:10px 12px;
-
     border-radius:10px;
-
     background:rgba(255,255,255,.06);
-
     border:1px solid rgba(255,255,255,.06);
-
     font-size:14px;
     line-height:1.4;
 }
@@ -201,9 +153,6 @@
 #cloudSyncStatus[data-state="error"]{
     border-color:rgba(220,90,90,.4);
 }
-
-
-/* ===== CLOUD ===== */
 
 #cloudSyncActions{
     display:flex;
@@ -226,24 +175,18 @@
 #cloudUploadButton,
 #cloudDownloadButton{
     width:100%;
-    box-sizing:border-box;
     min-height:44px;
+    box-sizing:border-box;
 }
-
 
 /* ===== ELVÁLASZTÓ ===== */
 
 #settingsBox hr{
     width:100%;
-
     opacity:.2;
-
     border:none;
     border-top:1px solid rgba(255,255,255,.15);
 }
-
-
-/* ===== BEZÁRÁS ===== */
 
 #closeSettings{
     width:100%;
@@ -251,66 +194,33 @@
     flex-shrink:0;
 }
 
-
 /* ===== HÁTTÉR OVERLAY ===== */
 
 #backgroundOverlay{
     position:fixed;
     inset:0;
-
     background:rgba(0,0,0,.35);
-
     pointer-events:none;
-
     z-index:-1;
 }
-
-
-/* ===== EGYSÉGES BURTONIA ÜVEGES BEÁLLÍTÁSOK ===== */
-
-#settingsBox{
-    background:
-        linear-gradient(
-            145deg,
-            rgba(65,40,90,.82),
-            rgba(15,10,24,.78)
-        );
-
-    border-color:rgba(220,190,250,.2);
-
-    box-shadow:
-        0 25px 70px rgba(0,0,0,.55),
-        0 0 55px rgba(110,65,155,.22);
-}
-
 
 /* ===== MOBIL ===== */
 
 @media(max-width:600px){
-
     #settingsModal{
         padding:10px;
-
         align-items:flex-start;
         justify-content:center;
-
         overflow-y:auto;
     }
 
     #settingsBox{
         width:100%;
         max-width:100%;
-
         height:auto;
         max-height:90vh;
-
         padding:22px;
-
         border-radius:18px;
-        box-sizing:border-box;
-
-        -webkit-overflow-scrolling:touch;
-        overscroll-behavior:contain;
     }
 
     #settingsBox button{
@@ -322,11 +232,7 @@
     }
 }
 
-
-/* ===== NAGYON KIS MOBIL ===== */
-
 @media(max-width:420px){
-
     #settingsModal{
         padding:6px;
         align-items:flex-start;
@@ -336,9 +242,7 @@
         width:100%;
         max-width:100%;
         max-height:94vh;
-
         padding:18px;
-
         border-radius:16px;
         gap:12px;
     }
