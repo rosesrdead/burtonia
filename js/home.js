@@ -2,443 +2,179 @@
    BURTONIA - Home
 =================================== */
 
-
-/* ===================================
-   KEZDŐLAP
-=================================== */
-
 function renderHome() {
+    if (!homePage) return;
 
-    if (!homePage) {
+    homePage.innerHTML = "";
 
-        return;
-
-    }
-
-
-    homePage.innerHTML =
-        "";
-
-
-    const items =
-        Array.isArray(db.items)
-            ? db.items
-            : [];
-
+    const items = Array.isArray(db.items) ? db.items : [];
 
     /* ===================================
-       ▶️ FOLYTATÁS
+       GYORSKATEGÓRIÁK
     =================================== */
 
-    const watching =
-        items.filter(item => {
+    const quickNav = document.createElement("div");
+    quickNav.className = "homeQuickNav";
 
-            return (
-                item.status ===
-                "watching"
-            );
+    const categories = [
+        ["🎬", "Filmek", "movie"],
+        ["📺", "Sorozatok", "series"],
+        ["🌸", "Anime", "anime"],
+        ["📖", "Könyvek", "book"]
+    ];
 
-        });
+    categories.forEach(([icon, name, type]) => {
+        const button = document.createElement("button");
 
-
-    const watchingSection =
-        document.createElement("section");
-
-
-    const watchingTitle =
-        document.createElement("h2");
-
-
-    watchingTitle.className =
-        "sectionTitle";
-
-
-    watchingTitle.textContent =
-        "▶️ Folytatás";
-
-
-    watchingSection.appendChild(
-        watchingTitle
-    );
-
-
-    if (
-        watching.length === 0
-    ) {
-
-        const empty =
-            document.createElement("div");
-
-
-        empty.className =
-            "emptyHome";
-
-
-        empty.innerHTML = `
-
-            <h2>Nincs folyamatban semmi</h2>
-
-            <p>
-                Jelölj meg egy filmet,
-                sorozatot, animét vagy könyvet
-                "Most nézem" állapotúnak.
-            </p>
-
+        button.className = "homeQuickButton";
+        button.innerHTML = `
+            <span class="homeQuickIcon">${icon}</span>
+            <span>${name}</span>
         `;
 
+        button.onclick = () => {
+            currentView = "library";
+            currentList = `type:${type}`;
+            render();
+        };
 
-        watchingSection.appendChild(
-            empty
-        );
+        quickNav.appendChild(button);
+    });
 
-    }
-
-    else {
-
-        const grid =
-            document.createElement("div");
-
-
-        grid.className =
-            "grid";
+    homePage.appendChild(quickNav);
 
 
-        watching.forEach(item => {
+    /* ===================================
+       FOLYTATÁS
+    =================================== */
 
-            if (
-                typeof createCard ===
-                "function"
-            ) {
-
-                grid.appendChild(
-                    createCard(item)
-                );
-
-            }
-
-        });
-
-
-        watchingSection.appendChild(
-            grid
-        );
-
-    }
-
-
-    homePage.appendChild(
-        watchingSection
+    const watching = items.filter(
+        item => item.status === "watching"
     );
 
+    const watchingSection = document.createElement("section");
 
-    /* ===================================
-       📊 STATISZTIKA
-    =================================== */
-
-    const stats =
-        document.createElement("section");
-
-
-    stats.className =
-        "homeStats";
-
-
-    /* ===================================
-       TÍPUSOK SZÁMOLÁSA
-    =================================== */
-
-    const movieCount =
-        items.filter(item => {
-
-            if (
-                typeof normalizeItemType ===
-                "function"
-            ) {
-
-                return (
-                    normalizeItemType(item) ===
-                    "movie"
-                );
-
-            }
-
-
-            return (
-                item.type ===
-                "movie"
-            );
-
-        }).length;
-
-
-    const seriesCount =
-        items.filter(item => {
-
-            if (
-                typeof normalizeItemType ===
-                "function"
-            ) {
-
-                return (
-                    normalizeItemType(item) ===
-                    "series"
-                );
-
-            }
-
-
-            return (
-                item.type ===
-                "series"
-            );
-
-        }).length;
-
-
-    const animeCount =
-        items.filter(item => {
-
-            if (
-                typeof normalizeItemType ===
-                "function"
-            ) {
-
-                return (
-                    normalizeItemType(item) ===
-                    "anime"
-                );
-
-            }
-
-
-            return (
-                item.type ===
-                "anime"
-            );
-
-        }).length;
-
-
-    const bookCount =
-        items.filter(item => {
-
-            if (
-                typeof normalizeItemType ===
-                "function"
-            ) {
-
-                return (
-                    normalizeItemType(item) ===
-                    "book"
-                );
-
-            }
-
-
-            return (
-                item.type ===
-                "book"
-            );
-
-        }).length;
-
-
-    stats.innerHTML = `
-
-        <h2 class="sectionTitle">
-            📊 Statisztika
-        </h2>
-
-
-        <div class="homeStat">
-
-            <span>
-                🎬 Filmek
-            </span>
-
-            <b>
-                ${movieCount}
-            </b>
-
-        </div>
-
-
-        <div class="homeStat">
-
-            <span>
-                📺 Sorozatok
-            </span>
-
-            <b>
-                ${seriesCount}
-            </b>
-
-        </div>
-
-
-        <div class="homeStat">
-
-            <span>
-                🌸 Anime
-            </span>
-
-            <b>
-                ${animeCount}
-            </b>
-
-        </div>
-
-
-        <div class="homeStat">
-
-            <span>
-                📖 Könyvek
-            </span>
-
-            <b>
-                ${bookCount}
-            </b>
-
-        </div>
-
-
-        <div class="homeStat">
-
-            <span>
-                📝 Listák
-            </span>
-
-            <b>
-                ${
-                    Array.isArray(db.lists)
-                        ? db.lists.length
-                        : 0
-                }
-            </b>
-
-        </div>
-
+    watchingSection.innerHTML = `
+        <h2 class="sectionTitle">▶️ Folytatás</h2>
     `;
 
+    if (!watching.length) {
+        const empty = document.createElement("div");
 
-    homePage.appendChild(
-        stats
-    );
+        empty.className = "emptyHome";
+        empty.innerHTML = `
+            <h2>Nincs folyamatban semmi</h2>
+            <p>
+                Jelölj meg egy filmet, sorozatot, animét
+                vagy könyvet "Most nézem" állapotúnak.
+            </p>
+        `;
+
+        watchingSection.appendChild(empty);
+
+    } else {
+        const grid = document.createElement("div");
+        grid.className = "grid";
+
+        watching.forEach(item => {
+            if (typeof createCard === "function") {
+                grid.appendChild(createCard(item));
+            }
+        });
+
+        watchingSection.appendChild(grid);
+    }
+
+    homePage.appendChild(watchingSection);
 
 
     /* ===================================
-       🆕 LEGUTÓBB HOZZÁADOTT
+       STATISZTIKA
     =================================== */
 
-    const recentSection =
-        document.createElement("section");
+    const stats = document.createElement("section");
+    stats.className = "homeStats";
+
+    const countType = type =>
+        items.filter(item =>
+            typeof normalizeItemType === "function"
+                ? normalizeItemType(item) === type
+                : item.type === type
+        ).length;
+
+    stats.innerHTML = `
+        <h2 class="sectionTitle">📊 Statisztika</h2>
+
+        <div class="homeStat">
+            <span>🎬 Filmek</span>
+            <b>${countType("movie")}</b>
+        </div>
+
+        <div class="homeStat">
+            <span>📺 Sorozatok</span>
+            <b>${countType("series")}</b>
+        </div>
+
+        <div class="homeStat">
+            <span>🌸 Anime</span>
+            <b>${countType("anime")}</b>
+        </div>
+
+        <div class="homeStat">
+            <span>📖 Könyvek</span>
+            <b>${countType("book")}</b>
+        </div>
+
+        <div class="homeStat">
+            <span>📝 Listák</span>
+            <b>${Array.isArray(db.lists) ? db.lists.length : 0}</b>
+        </div>
+    `;
+
+    homePage.appendChild(stats);
 
 
-    const recentTitle =
-        document.createElement("h2");
+    /* ===================================
+       LEGUTÓBB HOZZÁADOTT
+    =================================== */
 
+    const recentSection = document.createElement("section");
 
-    recentTitle.className =
-        "sectionTitle";
+    recentSection.innerHTML = `
+        <h2 class="sectionTitle">🆕 Legutóbb hozzáadott</h2>
+    `;
 
+    const recentItems = [...items]
+        .sort((a, b) =>
+            (Number(b.id) || 0) - (Number(a.id) || 0)
+        )
+        .slice(0, 5);
 
-    recentTitle.textContent =
-        "🆕 Legutóbb hozzáadott";
+    if (!recentItems.length) {
+        const empty = document.createElement("div");
 
-
-    recentSection.appendChild(
-        recentTitle
-    );
-
-
-    const recentItems =
-        [...items]
-            .sort((a, b) => {
-
-                const aId =
-                    Number(a.id) || 0;
-
-
-                const bId =
-                    Number(b.id) || 0;
-
-
-                return (
-                    bId -
-                    aId
-                );
-
-            })
-            .slice(
-                0,
-                5
-            );
-
-
-    if (
-        recentItems.length ===
-        0
-    ) {
-
-        const empty =
-            document.createElement("div");
-
-
-        empty.className =
-            "emptyHome";
-
-
+        empty.className = "emptyHome";
         empty.innerHTML = `
-
             <p>
                 Még nincs hozzáadott filmed,
                 sorozatod, animéd vagy könyved.
             </p>
-
         `;
 
+        recentSection.appendChild(empty);
 
-        recentSection.appendChild(
-            empty
-        );
-
-    }
-
-    else {
-
-        const grid =
-            document.createElement("div");
-
-
-        grid.className =
-            "grid";
-
+    } else {
+        const grid = document.createElement("div");
+        grid.className = "grid";
 
         recentItems.forEach(item => {
-
-            if (
-                typeof createCard ===
-                "function"
-            ) {
-
-                grid.appendChild(
-                    createCard(item)
-                );
-
+            if (typeof createCard === "function") {
+                grid.appendChild(createCard(item));
             }
-
         });
 
-
-        recentSection.appendChild(
-            grid
-        );
-
+        recentSection.appendChild(grid);
     }
 
-
-    homePage.appendChild(
-        recentSection
-    );
-
+    homePage.appendChild(recentSection);
 }
