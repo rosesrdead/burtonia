@@ -15,12 +15,14 @@ let db = {
 
         {
             id: 1,
-            name: "Kedvencek"
+            name: "Kedvencek",
+            icon: "📝"
         },
 
         {
             id: 2,
-            name: "Megnézendő"
+            name: "Megnézendő",
+            icon: "📝"
         }
 
     ],
@@ -50,7 +52,7 @@ let editMode =
    ADATBÁZIS BETÖLTÉSE
 =================================== */
 
-async function loadDB(){
+async function loadDB() {
 
     const saved =
         localStorage.getItem(
@@ -58,36 +60,30 @@ async function loadDB(){
         );
 
 
-    /*
-       Először betöltjük a helyi adatokat.
-       Így offline módban is működik.
-    */
+    /* ===== HELYI ADATOK ===== */
 
-    if(saved){
+    if (saved) {
 
-        try{
+        try {
 
             const parsed =
                 JSON.parse(saved);
 
 
-            if(
+            if (
                 parsed &&
                 typeof parsed === "object"
-            ){
+            ) {
 
                 db = parsed;
 
             }
 
-        }catch(error){
+        } catch (error) {
 
             console.error(
-
                 "Hibás helyi adatbázis:",
-
                 error
-
             );
 
         }
@@ -95,23 +91,24 @@ async function loadDB(){
     }
 
 
-    /*
-       Biztosítjuk, hogy a lists tömb
-       mindig létezzen.
-    */
+    /* ===================================
+       BIZTONSÁGI ELLENŐRZÉSEK
+    =================================== */
 
-    if(!Array.isArray(db.lists)){
+    if (!Array.isArray(db.lists)) {
 
         db.lists = [
 
             {
                 id: 1,
-                name: "Kedvencek"
+                name: "Kedvencek",
+                icon: "📝"
             },
 
             {
                 id: 2,
-                name: "Megnézendő"
+                name: "Megnézendő",
+                icon: "📝"
             }
 
         ];
@@ -119,12 +116,7 @@ async function loadDB(){
     }
 
 
-    /*
-       Biztosítjuk, hogy az items tömb
-       mindig létezzen.
-    */
-
-    if(!Array.isArray(db.items)){
+    if (!Array.isArray(db.items)) {
 
         db.items = [];
 
@@ -132,8 +124,24 @@ async function loadDB(){
 
 
     /*
-       Helyi mentés.
+       Régi listák esetén biztosítjuk
+       az emoji mezőt.
     */
+
+    db.lists.forEach(list => {
+
+        if (!list.icon) {
+
+            list.icon = "📝";
+
+        }
+
+    });
+
+
+    /* ===================================
+       HELYI MENTÉS
+    =================================== */
 
     localStorage.setItem(
 
@@ -145,27 +153,18 @@ async function loadDB(){
 
 
     /*
-       Ha van bejelentkezett felhasználó,
-       akkor a felhőből próbálunk betölteni.
+       FONTOS:
 
-       Ha a felhőben még nincs adat,
-       a cloudSync.js automatikusan
-       feltölti a helyi könyvtárat.
+       A felhőből való betöltést NEM
+       itt végezzük.
+
+       A cloudSync.js kezeli majd,
+       amikor már biztosan tudjuk,
+       hogy van-e bejelentkezett user.
+
+       Így nem tud üres helyi adatbázis
+       véletlenül ráírni a felhőre.
     */
-
-    if(
-
-        typeof cloudUser !== "undefined" &&
-
-        cloudUser &&
-
-        typeof pullCloudDB === "function"
-
-    ){
-
-        await pullCloudDB(false);
-
-    }
 
 }
 
@@ -174,12 +173,9 @@ async function loadDB(){
    ADATBÁZIS MENTÉSE
 =================================== */
 
-function saveDB(){
+function saveDB() {
 
-    /*
-       Mindig mentünk localStorage-ba.
-       Ez biztosítja az offline működést.
-    */
+    /* ===== HELYI MENTÉS ===== */
 
     localStorage.setItem(
 
@@ -190,16 +186,11 @@ function saveDB(){
     );
 
 
-    /*
-       Ha van felhős bejelentkezés,
-       automatikusan mentünk a Supabase-be.
-    */
+    /* ===== FELHŐ ===== */
 
-    if(
-
+    if (
         typeof syncDBToCloud === "function"
-
-    ){
+    ) {
 
         syncDBToCloud();
 
