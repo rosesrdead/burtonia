@@ -19,50 +19,31 @@
 
 .homeQuickNav{
     display:grid;
-
-    grid-template-columns:
-        repeat(4,minmax(140px,1fr));
-
+    grid-template-columns:repeat(4,minmax(140px,1fr));
     gap:16px;
-
     width:min(100%,900px);
-
     margin:0 auto 30px;
-
     padding:4px;
 }
 
 .homeQuickButton{
     display:flex;
-
     align-items:center;
     justify-content:center;
-
     gap:10px;
-
     min-height:64px;
-
     padding:14px 20px;
-
     border:1px solid rgba(255,255,255,.15);
     border-radius:18px;
-
     background:rgba(35,20,50,.72);
-
     color:white;
-
     font:inherit;
     font-weight:600;
     font-size:17px;
-
     cursor:pointer;
-
     backdrop-filter:blur(12px);
     -webkit-backdrop-filter:blur(12px);
-
-    box-shadow:
-        0 8px 25px rgba(0,0,0,.25);
-
+    box-shadow:0 8px 25px rgba(0,0,0,.25);
     transition:
         transform .2s ease,
         background .2s ease,
@@ -71,11 +52,8 @@
 
 .homeQuickButton:hover{
     transform:translateY(-4px);
-
     background:rgba(100,70,125,.78);
-
-    box-shadow:
-        0 12px 30px rgba(0,0,0,.35);
+    box-shadow:0 12px 30px rgba(0,0,0,.35);
 }
 
 .homeQuickButton:active{
@@ -112,60 +90,10 @@
 
 .emptyHome{
     padding:25px;
-
     border-radius:18px;
-
     background:rgba(20,15,30,.55);
-
     border:1px solid rgba(255,255,255,.1);
-
     text-align:center;
-}
-
-
-/* ===================================
-   MOBIL
-=================================== */
-
-@media(max-width:800px){
-
-    .homeQuickNav{
-        grid-template-columns:
-            repeat(2,1fr);
-
-        gap:12px;
-    }
-
-    .homeQuickButton{
-        min-height:58px;
-
-        padding:12px;
-
-        font-size:15px;
-    }
-
-    .homeQuickIcon{
-        font-size:22px;
-    }
-}
-
-
-@media(max-width:480px){
-
-    .homeQuickNav{
-        grid-template-columns:
-            1fr 1fr;
-
-        gap:10px;
-    }
-
-    .homeQuickButton{
-        border-radius:15px;
-
-        min-height:54px;
-
-        font-size:14px;
-    }
 }
 
 
@@ -176,47 +104,33 @@
 #listEditModal{
     position:fixed;
     inset:0;
-
     z-index:9999;
-
     display:flex;
-
     align-items:center;
     justify-content:center;
-
     padding:20px;
-
     background:rgba(5,2,10,.62);
-
     backdrop-filter:blur(10px);
     -webkit-backdrop-filter:blur(10px);
 }
 
 .listEditBox{
     width:min(420px,90vw);
-
     padding:26px;
-
     border-radius:22px;
-
     background:
         linear-gradient(
             145deg,
             rgba(65,40,90,.84),
             rgba(15,10,24,.8)
         );
-
     color:white;
-
     border:1px solid rgba(220,190,250,.2);
-
     box-shadow:
         0 25px 70px rgba(0,0,0,.55),
         0 0 45px rgba(110,65,155,.22);
-
     backdrop-filter:blur(22px);
     -webkit-backdrop-filter:blur(22px);
-
     box-sizing:border-box;
 }
 
@@ -227,37 +141,25 @@
 
 .listEditBox label{
     display:block;
-
     margin:0 0 6px;
-
     color:white;
 }
 
 .listEditBox input{
     width:100%;
-
     padding:11px 12px;
-
     margin-bottom:15px;
-
     box-sizing:border-box;
-
     background:rgba(10,7,15,.42);
-
     color:white;
-
     border:1px solid rgba(190,150,230,.22);
-
     border-radius:10px;
 }
 
 .listEditButtons{
     display:flex;
-
     gap:10px;
-
     flex-wrap:wrap;
-
     margin-top:8px;
 }
 
@@ -279,7 +181,69 @@
 }
 
 
-/* ===== MOBIL ===== */
+/* ===================================
+   EGYSÉGES FEHÉR SZÖVEG
+=================================== */
+
+body,
+body *,
+button,
+input,
+select,
+textarea,
+option,
+::placeholder,
+label,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+b,
+strong,
+small,
+a,
+li{
+    color:#ffffff !important;
+}
+
+input::placeholder,
+textarea::placeholder{
+    color:#ffffff !important;
+    opacity:.65;
+}
+
+select option{
+    color:#ffffff !important;
+    background:#241a2d;
+}
+
+
+/* ===================================
+   MOBIL
+=================================== */
+
+@media(max-width:800px){
+
+    .homeQuickNav{
+        grid-template-columns:repeat(2,1fr);
+        gap:12px;
+    }
+
+    .homeQuickButton{
+        min-height:58px;
+        padding:12px;
+        font-size:15px;
+    }
+
+    .homeQuickIcon{
+        font-size:22px;
+    }
+}
+
 
 @media(max-width:600px){
 
@@ -295,5 +259,20 @@
     .listEditButtons button{
         flex:1;
         min-width:100px;
+    }
+}
+
+
+@media(max-width:480px){
+
+    .homeQuickNav{
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+    }
+
+    .homeQuickButton{
+        border-radius:15px;
+        min-height:54px;
+        font-size:14px;
     }
 }
