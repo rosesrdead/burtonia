@@ -17,22 +17,18 @@ button:active{
     transform:translateY(0);
 }
 
-
 /* ===== FAB ===== */
 
 #fab{
     position:fixed;
     right:30px;
     bottom:30px;
-
     width:58px;
     height:58px;
-
     border-radius:50%;
 
-    background:rgba(70,45,95,.85);
+    background:rgba(65,40,90,.78);
     color:white;
-
     font-size:30px;
 
     box-shadow:
@@ -41,15 +37,13 @@ button:active{
 
     backdrop-filter:blur(12px);
     -webkit-backdrop-filter:blur(12px);
-
     z-index:1000;
 }
 
 #fab:hover{
-    background:rgba(100,70,130,.9);
+    background:rgba(100,70,130,.85);
     transform:scale(1.06);
 }
-
 
 /* ===== FAB MENU ===== */
 
@@ -57,30 +51,35 @@ button:active{
     position:fixed;
     right:30px;
     bottom:100px;
-
     display:none;
     flex-direction:column;
     gap:10px;
-
     z-index:999;
 }
 
 #fabMenu button{
     padding:12px 18px;
-
     border-radius:12px;
 
-    background:rgba(255,255,255,.08);
+    background:rgba(0,0,0,.18);
     color:white;
 
-    border:1px solid rgba(255,255,255,.1);
+    border:1px solid rgba(255,255,255,.08);
 
-    backdrop-filter:blur(10px);
-    -webkit-backdrop-filter:blur(10px);
+    box-shadow:
+        0 12px 32px rgba(0,0,0,.38),
+        0 0 25px rgba(110,65,155,.16);
+
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
 }
 
+#fabMenu button:hover{
+    background:rgba(255,255,255,.15);
+    border-color:rgba(220,190,250,.22);
+}
 
-/* ===== EGYÉB GOMBOK ===== */
+/* ===== MODAL GOMBOK ===== */
 
 #modalButtons{
     display:flex;
@@ -102,31 +101,4 @@ button:active{
 
 #saveItem{
     background:rgba(100,70,135,.75)!important;
-}
-
-
-/* ===== EGYSÉGES ÜVEGES FAB MENÜ ===== */
-
-#fabMenu button{
-    background:
-        linear-gradient(
-            145deg,
-            rgba(65,40,90,.78),
-            rgba(18,12,28,.76)
-        );
-
-    border-color:rgba(220,190,250,.2);
-
-    box-shadow:
-        0 12px 32px rgba(0,0,0,.38),
-        0 0 25px rgba(110,65,155,.16);
-}
-
-#fabMenu button:hover{
-    background:
-        linear-gradient(
-            145deg,
-            rgba(105,70,135,.82),
-            rgba(35,20,50,.8)
-        );
 }
