@@ -19,7 +19,10 @@ function getFilteredItems() {
     return db.items.filter(item =>
 
         item.lists &&
-        item.lists.includes(currentList)
+
+        item.lists.includes(
+            currentList
+        )
 
     );
 
@@ -40,7 +43,9 @@ function createCard(item) {
         "card";
 
 
-    /* ===== BORÍTÓ ===== */
+    /* ===================================
+       BORÍTÓ
+    =================================== */
 
     const poster =
         document.createElement("div");
@@ -76,7 +81,9 @@ function createCard(item) {
     }
 
 
-    /* ===== CÍM ===== */
+    /* ===================================
+       CÍM
+    =================================== */
 
     const title =
         document.createElement("div");
@@ -87,20 +94,30 @@ function createCard(item) {
 
 
     title.textContent =
+
         getStatusIcon(
             item.status,
             item.type
         )
+
         + " "
+
         + item.title;
 
 
-    card.appendChild(poster);
+    card.appendChild(
+        poster
+    );
 
-    card.appendChild(title);
+
+    card.appendChild(
+        title
+    );
 
 
-    /* ===== MEGJELENÉSI ÉV ===== */
+    /* ===================================
+       MEGJELENÉSI ÉV
+    =================================== */
 
     if (item.year) {
 
@@ -116,12 +133,16 @@ function createCard(item) {
             "📅 " + item.year;
 
 
-        card.appendChild(year);
+        card.appendChild(
+            year
+        );
 
     }
 
 
-    /* ===== MŰFAJOK ===== */
+    /* ===================================
+       MŰFAJOK
+    =================================== */
 
     if (
         item.genres &&
@@ -141,12 +162,16 @@ function createCard(item) {
             item.genres.join(" • ");
 
 
-        card.appendChild(genres);
+        card.appendChild(
+            genres
+        );
 
     }
 
 
-    /* ===== EREDETI CÍM ===== */
+    /* ===================================
+       EREDETI CÍM
+    =================================== */
 
     if (item.originalTitle) {
 
@@ -162,12 +187,16 @@ function createCard(item) {
             item.originalTitle;
 
 
-        card.appendChild(original);
+        card.appendChild(
+            original
+        );
 
     }
 
 
-    /* ===== BEFEJEZÉS ===== */
+    /* ===================================
+       BEFEJEZÉS
+    =================================== */
 
     if (item.finished) {
 
@@ -184,12 +213,16 @@ function createCard(item) {
             item.finished;
 
 
-        card.appendChild(finished);
+        card.appendChild(
+            finished
+        );
 
     }
 
 
-    /* ===== SZERKESZTÉS ===== */
+    /* ===================================
+       SZERKESZTÉS
+    =================================== */
 
     card.onclick = () => {
 
@@ -204,7 +237,7 @@ function createCard(item) {
 
 
 /* ===================================
-   FILMEK / SOROZATOK / ANIME / KÖNYVEK
+   FILMEK / SOROZATOK MEGJELENÍTÉSE
 =================================== */
 
 function renderItems() {
@@ -215,35 +248,6 @@ function renderItems() {
 
     seriesGrid.innerHTML =
         "";
-
-
-    /*
-       Anime és könyv külön megjelenítése,
-       ha léteznek a HTML-ben.
-    */
-
-    const animeGrid =
-        document.getElementById("animeGrid");
-
-
-    const booksGrid =
-        document.getElementById("booksGrid");
-
-
-    if (animeGrid) {
-
-        animeGrid.innerHTML =
-            "";
-
-    }
-
-
-    if (booksGrid) {
-
-        booksGrid.innerHTML =
-            "";
-
-    }
 
 
     const items =
@@ -258,7 +262,9 @@ function renderItems() {
             createCard(item);
 
 
-        /* ===== FILM ===== */
+        /* ===================================
+           FILM
+        =================================== */
 
         if (
             item.type === "movie"
@@ -271,49 +277,15 @@ function renderItems() {
         }
 
 
-        /* ===== SOROZAT ===== */
+        /* ===================================
+           SOROZAT
+        =================================== */
 
-        else if (
-            item.type === "series"
-        ) {
+        else {
 
             seriesGrid.appendChild(
                 card
             );
-
-        }
-
-
-        /* ===== ANIME ===== */
-
-        else if (
-            item.type === "anime"
-        ) {
-
-            if (animeGrid) {
-
-                animeGrid.appendChild(
-                    card
-                );
-
-            }
-
-        }
-
-
-        /* ===== KÖNYV ===== */
-
-        else if (
-            item.type === "book"
-        ) {
-
-            if (booksGrid) {
-
-                booksGrid.appendChild(
-                    card
-                );
-
-            }
 
         }
 
