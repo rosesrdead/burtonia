@@ -95,9 +95,7 @@ function openEditor(item) {
 
 
     if (
-        Array.isArray(
-            item.genres
-        )
+        Array.isArray(item.genres)
     ) {
 
         genreCheckboxes.forEach(cb => {
