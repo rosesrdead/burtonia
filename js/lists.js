@@ -111,10 +111,13 @@ if (typeof addList !== "undefined") {
         const value = name.trim();
         if (!value) return;
 
-        if (db.lists.some(list =>
-            String(list.name || "").trim().toLowerCase() ===
-            value.toLowerCase()
-        )) {
+        const exists = db.lists.some(list =>
+            String(list.name || "")
+                .trim()
+                .toLowerCase() === value.toLowerCase()
+        );
+
+        if (exists) {
             alert("Ez a lista már létezik.");
             return;
         }
@@ -133,8 +136,10 @@ if (typeof addList !== "undefined") {
         });
 
         saveDB();
+
         currentView = "library";
         currentList = "all";
+
         render();
     };
 }
@@ -155,12 +160,14 @@ function editList(list) {
     if (name === null) return;
 
     const value = name.trim();
+
     if (!value) return;
 
     const duplicate = db.lists.some(item =>
         item.id !== list.id &&
-        String(item.name || "").trim().toLowerCase() ===
-        value.toLowerCase()
+        String(item.name || "")
+            .trim()
+            .toLowerCase() === value.toLowerCase()
     );
 
     if (duplicate) {
@@ -181,12 +188,17 @@ function editList(list) {
     saveDB();
     render();
 
-    /* TÖRLÉS */
-    if (confirm(
+    /* ===================================
+       TÖRLÉS KÉRDÉSE
+    =================================== */
+
+    const deleteIt = confirm(
         `A(z) "${list.name}" lista mentve.\n\n` +
         "Szeretnéd törölni ezt a listát?"
-    )) {
-        deleteList(list);
+    );
+
+    if (deleteIt) {
+        deleteList(list, true);
     }
 }
 
@@ -195,14 +207,16 @@ function editList(list) {
    LISTA TÖRLÉSE
 =================================== */
 
-function deleteList(list) {
+function deleteList(list, skipConfirm = false) {
     if (!list) return;
 
-    if (!confirm(
-        `Biztosan törlöd a(z) "${list.name}" listát?\n\n` +
-        "A filmek, sorozatok, animék és könyvek nem törlődnek."
-    )) {
-        return;
+    if (!skipConfirm) {
+        const reallyDelete = confirm(
+            `Biztosan törlöd a(z) "${list.name}" listát?\n\n` +
+            "A filmek, sorozatok, animék és könyvek nem törlődnek."
+        );
+
+        if (!reallyDelete) return;
     }
 
     db.lists = db.lists.filter(
