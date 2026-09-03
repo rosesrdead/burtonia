@@ -14,6 +14,146 @@
 
 
 /* ===================================
+   GLOBÁLIS FEHÉR SZÖVEG
+=================================== */
+
+html,
+body{
+    color:#ffffff;
+}
+
+
+/* ===================================
+   MINDEN BURTONIA ELEM SZÖVEGE
+=================================== */
+
+body,
+body *{
+    color:#ffffff !important;
+}
+
+
+/* ===================================
+   MODAL - MINDEN SZÖVEG FEHÉR
+=================================== */
+
+#modal,
+#modal *,
+#modalBox,
+#modalBox *,
+#settingsModal,
+#settingsModal *,
+#settingsBox,
+#settingsBox *{
+    color:#ffffff !important;
+}
+
+
+/* ===================================
+   INPUTOK
+=================================== */
+
+input,
+textarea,
+select{
+    color:#ffffff !important;
+}
+
+
+input::placeholder,
+textarea::placeholder{
+    color:rgba(255,255,255,.65) !important;
+    opacity:1 !important;
+}
+
+
+select,
+select option{
+    color:#ffffff !important;
+    background:#21172b !important;
+}
+
+
+/* ===================================
+   CHECKBOX / RADIO FELIRATOK
+=================================== */
+
+label,
+label *,
+.checkbox,
+.checkbox *,
+.checkboxLabel,
+.checkboxLabel *,
+.listItem,
+.listItem *,
+.listOption,
+.listOption *,
+.listOption label,
+.listOption span{
+    color:#ffffff !important;
+}
+
+
+/* ===================================
+   LISTÁK A MODALBAN
+=================================== */
+
+#modalBox .lists,
+#modalBox .lists *,
+#modalBox [class*="list"],
+#modalBox [class*="List"]{
+    color:#ffffff !important;
+}
+
+
+/* ===================================
+   GOMBOK
+=================================== */
+
+button,
+button *,
+.btn,
+.btn *,
+.button,
+.button *{
+    color:#ffffff !important;
+}
+
+
+/* ===================================
+   LINKek
+=================================== */
+
+a,
+a *,
+a:visited,
+a:hover,
+a:active{
+    color:#ffffff !important;
+}
+
+
+/* ===================================
+   CÍMEK
+=================================== */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+strong,
+b,
+small,
+label{
+    color:#ffffff !important;
+}
+
+
+/* ===================================
    KEZDŐLAP - GYORSKATEGÓRIÁK
 =================================== */
 
@@ -26,43 +166,68 @@
     padding:4px;
 }
 
+
 .homeQuickButton{
     display:flex;
     align-items:center;
     justify-content:center;
     gap:10px;
+
     min-height:64px;
+
     padding:14px 20px;
+
     border:1px solid rgba(255,255,255,.15);
     border-radius:18px;
+
     background:rgba(35,20,50,.72);
-    color:white;
+
+    color:#ffffff !important;
+
     font:inherit;
     font-weight:600;
     font-size:17px;
+
     cursor:pointer;
+
     backdrop-filter:blur(12px);
     -webkit-backdrop-filter:blur(12px);
-    box-shadow:0 8px 25px rgba(0,0,0,.25);
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.25);
+
     transition:
         transform .2s ease,
         background .2s ease,
         box-shadow .2s ease;
 }
 
+
+.homeQuickButton *{
+    color:#ffffff !important;
+}
+
+
 .homeQuickButton:hover{
     transform:translateY(-4px);
+
     background:rgba(100,70,125,.78);
-    box-shadow:0 12px 30px rgba(0,0,0,.35);
+
+    box-shadow:
+        0 12px 30px rgba(0,0,0,.35);
 }
+
 
 .homeQuickButton:active{
     transform:translateY(-1px);
 }
 
+
 .homeQuickIcon{
     font-size:25px;
     line-height:1;
+
+    color:#ffffff !important;
 }
 
 
@@ -84,16 +249,32 @@
 }
 
 
+.homeStats *,
+.homeStat,
+.homeStat *{
+    color:#ffffff !important;
+}
+
+
 /* ===================================
    ÜRES KEZDŐLAP
 =================================== */
 
 .emptyHome{
     padding:25px;
+
     border-radius:18px;
+
     background:rgba(20,15,30,.55);
+
     border:1px solid rgba(255,255,255,.1);
+
     text-align:center;
+}
+
+
+.emptyHome *{
+    color:#ffffff !important;
 }
 
 
@@ -104,121 +285,255 @@
 #listEditModal{
     position:fixed;
     inset:0;
+
     z-index:9999;
+
     display:flex;
+
     align-items:center;
     justify-content:center;
+
     padding:20px;
+
     background:rgba(5,2,10,.62);
+
     backdrop-filter:blur(10px);
     -webkit-backdrop-filter:blur(10px);
 }
 
+
+#listEditModal *{
+    color:#ffffff !important;
+}
+
+
 .listEditBox{
     width:min(420px,90vw);
+
     padding:26px;
+
     border-radius:22px;
+
     background:
         linear-gradient(
             145deg,
             rgba(65,40,90,.84),
             rgba(15,10,24,.8)
         );
-    color:white;
+
+    color:#ffffff !important;
+
     border:1px solid rgba(220,190,250,.2);
+
     box-shadow:
         0 25px 70px rgba(0,0,0,.55),
         0 0 45px rgba(110,65,155,.22);
+
     backdrop-filter:blur(22px);
     -webkit-backdrop-filter:blur(22px);
+
     box-sizing:border-box;
 }
+
+
+.listEditBox *{
+    color:#ffffff !important;
+}
+
 
 .listEditBox h2{
     margin:0 0 20px;
-    color:white;
+
+    color:#ffffff !important;
 }
+
 
 .listEditBox label{
     display:block;
+
     margin:0 0 6px;
-    color:white;
+
+    color:#ffffff !important;
 }
+
 
 .listEditBox input{
     width:100%;
+
     padding:11px 12px;
+
     margin-bottom:15px;
+
     box-sizing:border-box;
+
     background:rgba(10,7,15,.42);
-    color:white;
+
+    color:#ffffff !important;
+
     border:1px solid rgba(190,150,230,.22);
+
     border-radius:10px;
 }
 
+
+.listEditBox input::placeholder{
+    color:rgba(255,255,255,.65) !important;
+}
+
+
 .listEditButtons{
     display:flex;
+
     gap:10px;
+
     flex-wrap:wrap;
+
     margin-top:8px;
 }
 
+
 .listEditButtons button{
     padding:11px 18px;
+
+    color:#ffffff !important;
 }
+
 
 #editListSave{
     background:rgba(105,75,145,.8);
+
+    color:#ffffff !important;
 }
 
+
 #editListDelete{
-    background:rgba(150,45,65,.65)!important;
-    color:white!important;
+    background:rgba(150,45,65,.65) !important;
+
+    color:#ffffff !important;
 }
+
 
 #editListCancel{
     background:rgba(255,255,255,.08);
+
+    color:#ffffff !important;
 }
 
 
 /* ===================================
-   EGYSÉGES FEHÉR SZÖVEG
+   SIDEBAR
 =================================== */
 
-body,
-body *,
-button,
-input,
-select,
-textarea,
-option,
-::placeholder,
-label,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-span,
-b,
-strong,
-small,
-a,
-li{
+#sidebar,
+#sidebar *,
+.sidebarItem,
+.sidebarItem *{
     color:#ffffff !important;
 }
 
-input::placeholder,
-textarea::placeholder{
+
+/* ===================================
+   HEADER
+=================================== */
+
+header,
+header *,
+header h1{
     color:#ffffff !important;
-    opacity:.65;
 }
 
-select option{
+
+/* ===================================
+   MAIN
+=================================== */
+
+main,
+main *,
+.sectionTitle{
     color:#ffffff !important;
-    background:#241a2d;
+}
+
+
+/* ===================================
+   KÁRTYÁK
+=================================== */
+
+.card,
+.card *,
+.title,
+.originalTitle,
+.itemType,
+.movieYear,
+.movieGenres,
+.finishedDate{
+    color:#ffffff !important;
+}
+
+
+/* ===================================
+   TOOLBAR
+=================================== */
+
+.libraryToolbar,
+.libraryToolbar *{
+    color:#ffffff !important;
+}
+
+
+/* ===================================
+   FAB
+=================================== */
+
+#fab,
+#fab *,
+#fabMenu,
+#fabMenu *,
+#fabMenu button{
+    color:#ffffff !important;
+}
+
+
+/* ===================================
+   MODAL GOMBOK
+=================================== */
+
+#modalButtons,
+#modalButtons *,
+#modalButtons button{
+    color:#ffffff !important;
+}
+
+
+/* ===================================
+   SETTINGS
+=================================== */
+
+#settingsBox,
+#settingsBox *,
+#settingsBox h2,
+#settingsBox h3,
+#settingsBox label,
+#settingsBox button,
+#settingsBox input,
+#settingsBox select,
+#settingsBox option{
+    color:#ffffff !important;
+}
+
+
+/* ===================================
+   FELIRATOK
+=================================== */
+
+.formGroup,
+.formGroup *,
+.formField,
+.formField *,
+.field,
+.field *,
+.formLabel,
+.formLabel *{
+    color:#ffffff !important;
 }
 
 
@@ -230,18 +545,24 @@ select option{
 
     .homeQuickNav{
         grid-template-columns:repeat(2,1fr);
+
         gap:12px;
     }
 
+
     .homeQuickButton{
         min-height:58px;
+
         padding:12px;
+
         font-size:15px;
     }
+
 
     .homeQuickIcon{
         font-size:22px;
     }
+
 }
 
 
@@ -251,15 +572,20 @@ select option{
         padding:10px;
     }
 
+
     .listEditBox{
         width:100%;
+
         padding:22px;
     }
 
+
     .listEditButtons button{
         flex:1;
+
         min-width:100px;
     }
+
 }
 
 
@@ -267,12 +593,17 @@ select option{
 
     .homeQuickNav{
         grid-template-columns:1fr 1fr;
+
         gap:10px;
     }
 
+
     .homeQuickButton{
         border-radius:15px;
+
         min-height:54px;
+
         font-size:14px;
     }
+
 }
