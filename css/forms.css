@@ -2,6 +2,11 @@
    BURTONIA - Forms
 =================================== */
 
+
+/* ===================================
+   ÁLTALÁNOS
+=================================== */
+
 label {
     color: white;
     font-weight: 600;
@@ -15,14 +20,19 @@ textarea {
 }
 
 
-/* ===== ÁLTALÁNOS INPUTOK ===== */
+/* ===================================
+   ÁLTALÁNOS INPUTOK
+=================================== */
 
 input,
 select,
 textarea {
     background: rgba(20,12,30,.55);
+
     border: 1px solid rgba(190,150,230,.2);
+
     border-radius: 10px;
+
     outline: none;
 }
 
@@ -30,23 +40,38 @@ input:focus,
 select:focus,
 textarea:focus {
     border-color: rgba(210,175,245,.55);
-    box-shadow: 0 0 0 3px rgba(120,80,160,.18);
+
+    box-shadow:
+        0 0 0 3px rgba(120,80,160,.18);
 }
 
 
-/* ===== MODAL INPUTOK ===== */
+/* ===================================
+   MODAL INPUTOK
+=================================== */
 
 #modalBox input,
 #modalBox select,
 #modalBox textarea {
     width: 100%;
+
     padding: 11px 12px;
+
     box-sizing: border-box;
+
     background: rgba(10,7,15,.42);
+
     color: white;
+
     border: 1px solid rgba(190,150,230,.22);
+
     border-radius: 10px;
 }
+
+
+/* ===================================
+   PLACEHOLDER
+=================================== */
 
 #modalBox input::placeholder,
 #modalBox textarea::placeholder {
@@ -54,38 +79,95 @@ textarea:focus {
 }
 
 
-/* ===== MODAL CÍMKÉK ===== */
+/* ===================================
+   MODAL CÍMKÉK
+=================================== */
 
 #modalBox label {
     color: rgba(255,255,255,.88);
 }
 
 
-/* ===== SELECT ===== */
+/* ===================================
+   EDITOR - MEZŐK KÖZÖTTI TÉRKÖZ
+=================================== */
+
+/*
+   Ez csak a címke és a hozzá tartozó
+   mező közötti távolságot javítja.
+
+   Nem változtatja meg a mezők méretét,
+   a grid szélességét vagy az elrendezést.
+*/
+
+.editorRight > label {
+    display: block;
+
+    margin-top: 4px;
+
+    margin-bottom: 6px;
+}
+
+.editorRight > input,
+.editorRight > select {
+    margin-bottom: 8px;
+}
+
+
+/* ===================================
+   BORÍTÓ URL
+=================================== */
+
+.editorLeft > label {
+    display: block;
+
+    margin-top: 10px;
+
+    margin-bottom: 6px;
+}
+
+.editorLeft > input {
+    margin-bottom: 8px;
+}
+
+
+/* ===================================
+   SELECT
+=================================== */
 
 select {
     padding: 10px 14px;
+
     border-radius: 10px;
+
     color: white;
+
     background: rgba(20,12,30,.65);
+
     backdrop-filter: blur(8px);
 }
 
 select option {
     background: #241a2d;
+
     color: white;
 }
 
 
-/* ===== FILE INPUT ===== */
+/* ===================================
+   FILE INPUT
+=================================== */
 
 #modalBox input[type="file"] {
     padding: 8px;
+
     background: rgba(255,255,255,.05);
 }
 
 
-/* ===== DÁTUM / SZÁM ===== */
+/* ===================================
+   DÁTUM / SZÁM
+=================================== */
 
 #modalBox input[type="date"],
 #modalBox input[type="number"] {
@@ -93,74 +175,156 @@ select option {
 }
 
 
-/* ===== MŰFAJ CHECKBOXOK ===== */
+/* ===================================
+   MŰFAJ CHECKBOXOK
+=================================== */
 
 #genreContainer {
     display: grid;
-    grid-template-columns: repeat(2,1fr);
+
+    grid-template-columns:
+        repeat(2,1fr);
+
     gap: 8px;
+
     padding: 10px;
+
     border-radius: 12px;
+
     background: rgba(0,0,0,.16);
+
     border: 1px solid rgba(255,255,255,.06);
 }
 
+
 #genreContainer label {
     display: flex;
+
     align-items: center;
+
     gap: 8px;
+
+    margin: 0;
+
     color: rgba(255,255,255,.85);
+
     font-weight: normal;
 }
 
+
 #genreContainer input {
     width: auto;
+
+    margin: 0;
+
     accent-color: #9a70c5;
 }
 
 
-/* ===== LISTA CHECKBOXOK ===== */
+/* ===================================
+   LISTA CHECKBOXOK
+=================================== */
 
 #listCheckboxContainer {
     display: flex;
+
     flex-direction: column;
+
     gap: 7px;
 }
 
+
 #listCheckboxContainer label {
     display: flex;
+
     align-items: center;
+
     gap: 8px;
+
+    margin: 0;
+
     color: rgba(255,255,255,.85);
 }
 
+
 #listCheckboxContainer input {
     width: auto;
+
+    margin: 0;
+
     accent-color: #9a70c5;
 }
 
 
-/* ===== RENDEZÉS ===== */
+/* ===================================
+   RENDEZÉS
+=================================== */
 
 .libraryToolbar label {
     color: white;
 }
 
 
-/* ===== LISTA SZERKESZTŐ INPUTOK ===== */
+/* ===================================
+   LISTA SZERKESZTŐ INPUTOK
+=================================== */
 
 #listEditModal input {
     width: 100%;
+
     padding: 11px 12px !important;
+
     box-sizing: border-box;
+
     background: rgba(10,7,15,.5) !important;
+
     color: white !important;
+
     border: 1px solid rgba(190,150,230,.22) !important;
+
     border-radius: 10px !important;
+
     outline: none;
 }
 
+
 #listEditModal input:focus {
-    border-color: rgba(210,175,245,.55) !important;
-    box-shadow: 0 0 0 3px rgba(120,80,160,.18);
+    border-color:
+        rgba(210,175,245,.55) !important;
+
+    box-shadow:
+        0 0 0 3px rgba(120,80,160,.18);
+}
+
+
+/* ===================================
+   LISTA SZERKESZTŐ CÍMKÉK
+=================================== */
+
+#listEditModal label {
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: white;
+}
+
+
+/* ===================================
+   MOBIL
+=================================== */
+
+@media(max-width:700px) {
+
+    .editorRight > label {
+        margin-top: 3px;
+
+        margin-bottom: 6px;
+    }
+
+    .editorRight > input,
+    .editorRight > select {
+        margin-bottom: 7px;
+    }
+
 }
