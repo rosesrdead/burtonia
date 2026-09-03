@@ -1,212 +1,202 @@
 /* ===================================
-   BURTONIA
-   Buttons
+   BURTONIA - Buttons
 =================================== */
 
-/* ===== Általános gomb ===== */
-
-button{
-
-    font-family:"Cinzel", serif;
-
-    border:none;
-
-    border-radius:12px;
-
-    cursor:pointer;
-
-    transition:.25s;
-
+button {
+    font-family: Arial, Helvetica, sans-serif;
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: .25s;
+    color: white;
 }
 
-button:hover{
-
-    transform:translateY(-2px);
-
+button:hover {
+    transform: translateY(-2px);
 }
+
 
 /* ===== FEJLÉC ===== */
 
-#settingsButton{
-
-    width:48px;
-
-    height:48px;
-
-    border-radius:50%;
-
-    background:rgba(255,255,255,.08);
-
-    color:white;
-
-    font-size:22px;
-
-    backdrop-filter:blur(10px);
-
+#settingsButton {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.08);
+    background: rgba(255,255,255,.08);
+    color: white;
+    font-size: 22px;
+    backdrop-filter: blur(10px);
 }
 
-#settingsButton:hover{
-
-    background:rgba(255,255,255,.18);
-
-    transform:rotate(90deg);
-
+#settingsButton:hover {
+    background: rgba(255,255,255,.18);
+    transform: rotate(90deg);
 }
+
 
 /* ===== FAB ===== */
 
-#fab{
-
-    position:fixed;
-
-    right:24px;
-
-    bottom:24px;
-
-    width:64px;
-
-    height:64px;
-
-    border-radius:50%;
-
-    background:#4a6cf7;
-
-    color:white;
-
-    font-size:34px;
-
-    box-shadow:0 12px 30px rgba(0,0,0,.35);
-
-    z-index:500;
-
+#fab {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.15);
+    background: rgba(91,60,130,.75);
+    color: white;
+    font-size: 34px;
+    box-shadow: 0 12px 30px rgba(0,0,0,.45);
+    backdrop-filter: blur(12px);
+    z-index: 500;
 }
 
-#fab:hover{
-
-    transform:scale(1.08);
-
+#fab:hover {
+    background: rgba(120,80,170,.9);
+    transform: scale(1.08);
 }
+
 
 /* ===== FAB MENÜ ===== */
 
-#fabMenu{
-
-    position:fixed;
-
-    right:24px;
-
-    bottom:100px;
-
-    display:none;
-
-    flex-direction:column;
-
-    gap:10px;
-
-    z-index:500;
-
+#fabMenu {
+    position: fixed;
+    right: 24px;
+    bottom: 100px;
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 500;
 }
 
-#fabMenu button{
-
-    min-width:180px;
-
-    padding:12px 16px;
-
-    text-align:left;
-
-    color:white;
-
-    background:rgba(20,20,20,.92);
-
-    backdrop-filter:blur(12px);
-
-    border:1px solid rgba(255,255,255,.08);
-
+#fabMenu button {
+    min-width: 190px;
+    padding: 13px 17px;
+    text-align: left;
+    color: white;
+    background: rgba(35,20,50,.72);
+    border: 1px solid rgba(190,150,230,.2);
+    border-radius: 14px;
+    box-shadow: 0 8px 25px rgba(0,0,0,.3);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
 }
 
-#fabMenu button:hover{
-
-    background:rgba(60,60,60,.95);
-
+#fabMenu button:hover {
+    background: rgba(85,55,110,.8);
+    border-color: rgba(210,175,245,.35);
+    box-shadow: 0 8px 28px rgba(80,40,120,.35);
 }
+
 
 /* ===== MODAL GOMBOK ===== */
 
-#modalButtons button{
-
-    min-width:120px;
-
-    padding:11px 18px;
-
+#modalButtons {
+    display: flex;
+    gap: 10px;
 }
 
-#saveItem{
-
-    background:#4caf50;
-
-    color:white;
-
+#modalButtons button {
+    min-width: 120px;
+    padding: 11px 18px;
 }
 
-#saveItem:hover{
 
-    background:#43a047;
+/* ===== MENTÉS ===== */
 
+#saveItem {
+    background: rgba(105,75,145,.8);
+    color: white;
+    border-color: rgba(210,180,245,.25);
 }
 
-#cancelItem{
-
-    background:#757575;
-
-    color:white;
-
+#saveItem:hover {
+    background: rgba(130,90,175,.9);
 }
 
-#cancelItem:hover{
 
-    background:#616161;
+/* ===== MÉGSE ===== */
 
+#cancelItem {
+    background: rgba(255,255,255,.08);
+    color: white;
 }
 
-#deleteItem{
-
-    background:#d32f2f;
-
-    color:white;
-
+#cancelItem:hover {
+    background: rgba(255,255,255,.15);
 }
 
-#deleteItem:hover{
 
-    background:#b71c1c;
+/* ===== TÖRLÉS ===== */
 
+#deleteItem {
+    background: rgba(150,45,65,.65);
+    color: white;
+    border-color: rgba(255,120,140,.25);
 }
+
+#deleteItem:hover {
+    background: rgba(190,55,75,.8);
+}
+
 
 /* ===== BEÁLLÍTÁSOK ===== */
 
-#settingsBox button{
-
-    width:100%;
-
-    padding:12px;
-
-    margin-top:6px;
-
+#settingsBox button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 6px;
+    background: rgba(255,255,255,.07);
+    color: white;
+    border-color: rgba(190,150,230,.18);
 }
+
+#settingsBox button:hover {
+    background: rgba(100,65,130,.55);
+}
+
 
 /* ===== TÉMA GOMBOK ===== */
 
-.themePreset{
-
-    background:#2c2c2c;
-
-    color:white;
-
+.themePreset {
+    background: rgba(255,255,255,.07);
+    color: white;
 }
 
-.themePreset:hover{
+.themePreset:hover {
+    background: rgba(100,65,130,.55);
+}
 
-    background:#3b3b3b;
 
+/* ===== LISTA SZERKESZTŐ ===== */
+
+#listEditModal button {
+    font-family: Arial, Helvetica, sans-serif;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.12);
+}
+
+#editListSave {
+    background: rgba(105,75,145,.8);
+    color: white;
+}
+
+#editListSave:hover {
+    background: rgba(130,90,175,.9);
+}
+
+#editListDelete {
+    background: rgba(150,45,65,.65) !important;
+    color: white !important;
+}
+
+#editListDelete:hover {
+    background: rgba(190,55,75,.8) !important;
+}
+
+#editListCancel {
+    background: rgba(255,255,255,.08);
+    color: white;
 }
