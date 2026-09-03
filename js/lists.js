@@ -1,65 +1,59 @@
-/* ===================================
-   BURTONIA - Lists / Navigation
-=================================== */
+/* BURTONIA - Lists / Navigation */
 
-function renderLists() {
-    if (!sidebarItems) return;
+function renderLists(){
+    if(!sidebarItems) return;
 
-    sidebarItems.innerHTML = "";
+    sidebarItems.innerHTML="";
 
-    const addItem = (text, view, list = "all") => {
-        const row = document.createElement("div");
+    const addItem=(text,view="library",list="all")=>{
+        const row=document.createElement("div");
 
-        row.className =
-            currentView === view &&
-            String(currentList) === String(list)
+        row.className=
+            currentView===view&&
+            String(currentList)===String(list)
                 ? "sidebarItem active"
                 : "sidebarItem";
 
-        row.textContent = text;
+        row.textContent=text;
 
-        row.onclick = () => {
-            currentView = view;
-            currentList = list;
+        row.onclick=()=>{
+            currentView=view;
+            currentList=list;
             render();
         };
 
         sidebarItems.appendChild(row);
     };
 
-    addItem("🏠 Kezdőlap", "home");
-    addItem("🎭 Böngészés", "browse");
-    addItem("📚 Könyvtár", "library");
+    addItem("🏠 Kezdőlap","home","all");
+    addItem("🎭 Böngészés","browse","all");
+    addItem("📚 Könyvtár","library","all");
 
-    addItem("🎬 Filmek", "library", "type:movie");
-    addItem("📺 Sorozatok", "library", "type:series");
-    addItem("🌸 Anime", "library", "type:anime");
-    addItem("📖 Könyvek", "library", "type:book");
+    (Array.isArray(db.lists)?db.lists:[]).forEach(list=>{
+        const row=document.createElement("div");
 
-    (Array.isArray(db.lists) ? db.lists : []).forEach(list => {
-        const row = document.createElement("div");
-
-        row.className =
-            currentView === "library" &&
-            String(currentList) === String(list.id)
+        row.className=
+            currentView==="library"&&
+            String(currentList)===String(list.id)
                 ? "sidebarItem active"
                 : "sidebarItem";
 
-        row.textContent =
-            `${list.icon || "📝"} ${list.name || "Névtelen lista"}`;
+        row.textContent=
+            `${list.icon||"📝"} ${list.name||"Névtelen lista"}`;
 
         let timer;
 
-        row.onclick = () => {
+        row.onclick=()=>{
             clearTimeout(timer);
-            timer = setTimeout(() => {
-                currentView = "library";
-                currentList = list.id;
+
+            timer=setTimeout(()=>{
+                currentView="library";
+                currentList=list.id;
                 render();
-            }, 250);
+            },220);
         };
 
-        row.ondblclick = e => {
+        row.ondblclick=e=>{
             e.preventDefault();
             e.stopPropagation();
             clearTimeout(timer);
@@ -71,235 +65,156 @@ function renderLists() {
 }
 
 
-/* ===================================
-   FŐ RENDER
-=================================== */
+/* FŐ RENDER */
 
-function render() {
-    if (typeof db === "undefined") return;
+function render(){
+    if(typeof db==="undefined") return;
 
-    db.items = Array.isArray(db.items) ? db.items : [];
-    db.lists = Array.isArray(db.lists) ? db.lists : [];
+    db.items=Array.isArray(db.items)?db.items:[];
+    db.lists=Array.isArray(db.lists)?db.lists:[];
 
     renderLists();
 
-    if (homePage) homePage.style.display = "none";
-    if (browsePage) browsePage.style.display = "none";
-    if (libraryPage) libraryPage.style.display = "none";
+    if(homePage) homePage.style.display="none";
+    if(browsePage) browsePage.style.display="none";
+    if(libraryPage) libraryPage.style.display="none";
 
-    if (currentView === "home") {
-        if (homePage) homePage.style.display = "block";
-        if (typeof renderHome === "function") renderHome();
-        return;
+    if(currentView==="home"){
+        if(homePage) homePage.style.display="block";
+        if(typeof renderHome==="function") renderHome();
+
+    }else if(currentView==="browse"){
+        if(browsePage) browsePage.style.display="block";
+        if(typeof renderBrowse==="function") renderBrowse();
+
+    }else{
+        if(libraryPage) libraryPage.style.display="block";
+        if(typeof renderItems==="function") renderItems();
     }
-
-    if (currentView === "browse") {
-        if (browsePage) browsePage.style.display = "block";
-        if (typeof renderBrowse === "function") renderBrowse();
-        return;
-    }
-
-    if (libraryPage) libraryPage.style.display = "block";
-    if (typeof renderItems === "function") renderItems();
 }
 
 
-/* ===================================
-   ÚJ LISTA
-=================================== */
+/* ÚJ LISTA */
 
-if (typeof addList !== "undefined") {
-    addList.onclick = () => {
-        if (typeof closeFab === "function") closeFab();
+if(typeof addList!=="undefined"){
+    addList.onclick=()=>{
+        if(typeof closeFab==="function") closeFab();
 
-        const name = prompt("Új lista neve:");
-        if (name === null) return;
+        const name=prompt("Új lista neve:");
+        if(name===null) return;
 
-        const value = name.trim();
-        if (!value) return;
+        const value=name.trim();
+        if(!value) return;
 
-        const exists = db.lists.some(list =>
-            String(list.name || "").trim().toLowerCase() ===
-            value.toLowerCase()
-        );
-
-        if (exists) {
+        if(db.lists.some(list=>
+            String(list.name||"")
+                .trim()
+                .toLowerCase()===value.toLowerCase()
+        )){
             alert("Ez a lista már létezik.");
             return;
         }
 
-        const icon = prompt("Lista emoji:", "📝");
-        if (icon === null) return;
+        const icon=prompt("Lista emoji:","📝");
+        if(icon===null) return;
 
         db.lists.push({
-            id: Date.now(),
-            name: value,
-            icon: icon.trim() || "📝"
+            id:Date.now(),
+            name:value,
+            icon:icon.trim()||"📝"
         });
 
         saveDB();
 
-        currentView = "library";
-        currentList = "all";
+        currentView="library";
+        currentList="all";
 
         render();
     };
 }
 
 
-/* ===================================
-   LISTA SZERKESZTÉSE
-=================================== */
+/* LISTA SZERKESZTÉSE */
 
-function editList(list) {
-    if (!list) return;
+function editList(list){
+    if(!list) return;
 
-    const old = document.getElementById("listEditModal");
-    if (old) old.remove();
+    document.getElementById("listEditModal")?.remove();
 
-    const overlay = document.createElement("div");
-    overlay.id = "listEditModal";
+    const overlay=document.createElement("div");
+    overlay.id="listEditModal";
 
-    Object.assign(overlay.style, {
-        position: "fixed",
-        inset: "0",
-        zIndex: "9999",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        background: "rgba(0,0,0,.65)",
-        backdropFilter: "blur(8px)"
-    });
+    const box=document.createElement("div");
+    box.className="listEditBox";
 
-    const box = document.createElement("div");
+    box.innerHTML=`
+        <h2>📝 Lista szerkesztése</h2>
 
-    Object.assign(box.style, {
-        width: "min(420px,90vw)",
-        padding: "25px",
-        borderRadius: "20px",
-        background: "rgba(25,25,25,.97)",
-        color: "white",
-        border: "1px solid rgba(255,255,255,.12)",
-        boxShadow: "0 20px 60px rgba(0,0,0,.5)",
-        boxSizing: "border-box"
-    });
-
-    box.innerHTML = `
-        <h2 style="margin:0 0 20px">
-            📝 Lista szerkesztése
-        </h2>
-
-        <label style="display:block;margin-bottom:6px">
-            Lista neve
-        </label>
+        <label>Lista neve</label>
 
         <input
             id="editListName"
             type="text"
-            value="${escapeHtml(list.name || "")}"
-            style="
-                width:100%;
-                box-sizing:border-box;
-                padding:10px;
-                margin-bottom:15px;
-            "
+            value="${escapeHtml(list.name||"")}"
         >
 
-        <label style="display:block;margin-bottom:6px">
-            Emoji
-        </label>
+        <label>Emoji</label>
 
         <input
             id="editListIcon"
             type="text"
-            value="${escapeHtml(list.icon || "📝")}"
-            style="
-                width:100%;
-                box-sizing:border-box;
-                padding:10px;
-            "
+            value="${escapeHtml(list.icon||"📝")}"
         >
 
-        <div
-            style="
-                display:flex;
-                gap:10px;
-                margin-top:25px;
-                flex-wrap:wrap;
-            "
-        >
+        <div class="listEditButtons">
+
             <button id="editListSave">
                 💾 Mentés
             </button>
 
-            <button
-                id="editListDelete"
-                style="
-                    background:#d32f2f;
-                    color:white;
-                    padding:11px 18px;
-                "
-            >
+            <button id="editListDelete">
                 🗑 Törlés
             </button>
 
-            <button
-                id="editListCancel"
-                style="
-                    background:#757575;
-                    color:white;
-                    padding:11px 18px;
-                "
-            >
+            <button id="editListCancel">
                 Mégse
             </button>
+
         </div>
     `;
 
     overlay.appendChild(box);
     document.body.appendChild(overlay);
 
-    const nameInput =
+    const nameInput=
         document.getElementById("editListName");
 
-    const iconInput =
+    const iconInput=
         document.getElementById("editListIcon");
 
-    const saveButton =
-        document.getElementById("editListSave");
 
-    const deleteButton =
-        document.getElementById("editListDelete");
+    /* MENTÉS */
 
-    const cancelButton =
-        document.getElementById("editListCancel");
+    document.getElementById("editListSave").onclick=()=>{
+        const name=nameInput.value.trim();
 
-
-    /* ===================================
-       MENTÉS
-    =================================== */
-
-    saveButton.onclick = () => {
-        const name = nameInput.value.trim();
-
-        if (!name) {
+        if(!name){
             alert("A lista neve nem lehet üres.");
             return;
         }
 
-        const duplicate = db.lists.some(item =>
-            item.id !== list.id &&
-            String(item.name || "").trim().toLowerCase() ===
-            name.toLowerCase()
-        );
-
-        if (duplicate) {
+        if(db.lists.some(item=>
+            item.id!==list.id&&
+            String(item.name||"")
+                .trim()
+                .toLowerCase()===name.toLowerCase()
+        )){
             alert("Ez a lista már létezik.");
             return;
         }
 
-        list.name = name;
-        list.icon = iconInput.value.trim() || "📝";
+        list.name=name;
+        list.icon=iconInput.value.trim()||"📝";
 
         saveDB();
 
@@ -308,26 +223,22 @@ function editList(list) {
     };
 
 
-    /* ===================================
-       TÖRLÉS
-    =================================== */
+    /* TÖRLÉS */
 
-    deleteButton.onclick = () => {
-        const ok = confirm(
-            `Biztosan törlöd a(z) "${list.name}" listát?\n\n` +
+    document.getElementById("editListDelete").onclick=()=>{
+        if(!confirm(
+            `Biztosan törlöd a(z) "${list.name}" listát?\n\n`+
             "A listában lévő filmek, sorozatok, animék és könyvek nem törlődnek."
+        )) return;
+
+        db.lists=db.lists.filter(
+            item=>String(item.id)!==String(list.id)
         );
 
-        if (!ok) return;
-
-        db.lists = db.lists.filter(
-            item => String(item.id) !== String(list.id)
-        );
-
-        db.items.forEach(item => {
-            if (Array.isArray(item.lists)) {
-                item.lists = item.lists.filter(
-                    id => String(id) !== String(list.id)
+        db.items.forEach(item=>{
+            if(Array.isArray(item.lists)){
+                item.lists=item.lists.filter(
+                    id=>String(id)!==String(list.id)
                 );
             }
         });
@@ -336,90 +247,70 @@ function editList(list) {
 
         overlay.remove();
 
-        currentView = "library";
-        currentList = "all";
+        currentView="library";
+        currentList="all";
 
         render();
     };
 
 
-    /* ===================================
-       MÉGSE
-    =================================== */
+    /* MÉGSE */
 
-    cancelButton.onclick = () => {
+    document.getElementById("editListCancel").onclick=()=>{
         overlay.remove();
     };
 
 
-    /* ===================================
-       ESC
-    =================================== */
+    /* KATTINTÁS A HÁTTÉRRE */
 
-    overlay.onclick = e => {
-        if (e.target === overlay) {
-            overlay.remove();
-        }
+    overlay.onclick=e=>{
+        if(e.target===overlay) overlay.remove();
     };
 
-    document.onkeydown = e => {
-        if (e.key === "Escape") {
-            const modal = document.getElementById("listEditModal");
-
-            if (modal) {
-                modal.remove();
-                document.onkeydown = null;
-            }
-        }
-    };
 
     nameInput.focus();
     nameInput.select();
 }
 
 
-/* ===================================
-   HTML BIZTONSÁG
-=================================== */
+/* HTML BIZTONSÁG */
 
-function escapeHtml(value) {
+function escapeHtml(value){
     return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
 }
 
 
-/* ===================================
-   KOMPATIBILITÁS
-=================================== */
+/* KOMPATIBILITÁS */
 
-function deleteList(list) {
-    if (!list) return;
+function deleteList(list){
+    if(!list) return;
 
-    if (!confirm(
-        `Biztosan törlöd a(z) "${list.name}" listát?\n\n` +
-        "A filmek, sorozatok, animék és könyvek nem törlődnek."
+    if(!confirm(
+        `Biztosan törlöd a(z) "${list.name}" listát?\n\n`+
+        "A listában lévő filmek, sorozatok, animék és könyvek nem törlődnek."
     )) return;
 
-    db.lists = db.lists.filter(
-        item => String(item.id) !== String(list.id)
+    db.lists=db.lists.filter(
+        item=>String(item.id)!==String(list.id)
     );
 
-    db.items.forEach(item => {
-        if (Array.isArray(item.lists)) {
-            item.lists = item.lists.filter(
-                id => String(id) !== String(list.id)
+    db.items.forEach(item=>{
+        if(Array.isArray(item.lists)){
+            item.lists=item.lists.filter(
+                id=>String(id)!==String(list.id)
             );
         }
     });
 
     saveDB();
 
-    currentView = "library";
-    currentList = "all";
+    currentView="library";
+    currentList="all";
 
     render();
 }
