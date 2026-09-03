@@ -1,393 +1,322 @@
 /* ===================================
-   BURTONIA - Editor
+   BURTONIA - Render Items
 =================================== */
 
 
 /* ===================================
-   ELEM SZERKESZTÉSE
+   SZŰRT ELEMEK
 =================================== */
 
-function openEditor(item) {
+function getFilteredItems() {
 
-    selectedItem = item;
+    if (currentList === "all") {
 
-    editMode = true;
-
-    modal.style.display =
-        "flex";
-
-
-    modalTitle.textContent =
-        "Elem szerkesztése";
-
-
-    /* ===================================
-       ALAPADATOK
-    =================================== */
-
-    itemTitle.value =
-        item.title || "";
-
-
-    itemOriginalTitle.value =
-        item.originalTitle || "";
-
-
-    itemCover.value =
-        "";
-
-
-    itemCoverUrl.value =
-        item.image || "";
-
-
-    updateCoverPreview(
-        item.image || ""
-    );
-
-
-    itemType.value =
-        item.type || "movie";
-
-
-    /* ===================================
-       ÁLLAPOT
-    =================================== */
-
-    refreshStatusUI();
-
-
-    itemStatus.value =
-        item.status || "planned";
-
-
-    /* ===================================
-       BEFEJEZÉS
-    =================================== */
-
-    itemFinished.value =
-        item.finished || "";
-
-
-    /* ===================================
-       ÉV
-    =================================== */
-
-    itemYear.value =
-        item.year || "";
-
-
-    /* ===================================
-       MŰFAJOK
-    =================================== */
-
-    const genreCheckboxes =
-        document.querySelectorAll(
-            "#genreContainer input[type='checkbox']"
-        );
-
-
-    genreCheckboxes.forEach(cb => {
-
-        cb.checked = false;
-
-    });
-
-
-    if (
-        Array.isArray(
-            item.genres
-        )
-    ) {
-
-        genreCheckboxes.forEach(cb => {
-
-            cb.checked =
-                item.genres.includes(
-                    cb.value
-                );
-
-        });
+        return db.items;
 
     }
 
 
-    /* ===================================
-       LISTÁK
-    =================================== */
+    return db.items.filter(item =>
 
-    renderListCheckboxes(
-        Array.isArray(item.lists)
-            ? item.lists
-            : []
+        item.lists &&
+        item.lists.includes(currentList)
+
     );
 
 }
 
 
 /* ===================================
-   FILE → BASE64
+   KÁRTYA
 =================================== */
 
-function fileToBase64(file) {
+function createCard(item) {
 
-    return new Promise(resolve => {
-
-        const reader =
-            new FileReader();
+    const card =
+        document.createElement("div");
 
 
-        reader.onload = e => {
-
-            resolve(
-                e.target.result
-            );
-
-        };
+    card.className =
+        "card";
 
 
-        reader.readAsDataURL(file);
+    /* ===== BORÍTÓ ===== */
 
-    });
-
-}
-
-
-/* ===================================
-   MENTÉS
-=================================== */
-
-saveItem.onclick = async () => {
-
-    const title =
-        itemTitle.value.trim();
+    const poster =
+        document.createElement("div");
 
 
-    const originalTitle =
-        itemOriginalTitle.value.trim();
+    poster.className =
+        "poster";
 
 
-    if (title === "") {
+    if (item.image) {
 
-        alert(
-            "Adj meg címet!"
-        );
+        const img =
+            document.createElement("img");
 
-        return;
+
+        img.src =
+            item.image;
+
+
+        img.alt =
+            item.title;
+
+
+        poster.appendChild(img);
 
     }
-
-
-    /* ===================================
-       MŰFAJOK
-    =================================== */
-
-    const genres = [
-
-        ...document.querySelectorAll(
-            "#genreContainer input:checked"
-        )
-
-    ].map(
-        cb => cb.value
-    );
-
-
-    /* ===================================
-       LISTÁK
-    =================================== */
-
-    const lists =
-        getSelectedLists();
-
-
-    /* ===================================
-       EGYÉB ADATOK
-    =================================== */
-
-    const finished =
-        itemFinished.value;
-
-
-    const year =
-        itemYear.value;
-
-
-    const status =
-        itemStatus.value;
-
-
-    let image =
-        itemCoverUrl.value.trim();
-
-
-    /* ===================================
-       BORÍTÓ FELTÖLTÉSE
-    =================================== */
-
-    if (
-        itemCover.files.length
-    ) {
-
-        image =
-            await fileToBase64(
-                itemCover.files[0]
-            );
-
-    }
-
-
-    /* ===================================
-       SZERKESZTÉS
-    =================================== */
-
-    if (
-        editMode &&
-        selectedItem
-    ) {
-
-        selectedItem.title =
-            title;
-
-
-        selectedItem.originalTitle =
-            originalTitle;
-
-
-        selectedItem.type =
-            itemType.value;
-
-
-        selectedItem.finished =
-            finished;
-
-
-        selectedItem.status =
-            status;
-
-
-        selectedItem.year =
-            year;
-
-
-        selectedItem.genres =
-            genres;
-
-
-        selectedItem.lists =
-            lists;
-
-
-        if (image) {
-
-            selectedItem.image =
-                image;
-
-        }
-
-    }
-
-
-    /* ===================================
-       ÚJ ELEM
-    =================================== */
 
     else {
 
-        db.items.push({
-
-            id:
-                Date.now(),
-
-            title:
-                title,
-
-            originalTitle:
-                originalTitle,
-
-            type:
-                itemType.value,
-
-            image:
-                image,
-
-            status:
-                status,
-
-            year:
-                year,
-
-            genres:
-                genres,
-
-            lists:
-                lists,
-
-            finished:
-                finished || ""
-
-        });
+        poster.textContent =
+            "Nincs borító";
 
     }
 
 
-    /* ===================================
-       MENTÉS + FRISSÍTÉS
-    =================================== */
+    /* ===== CÍM ===== */
 
-    saveDB();
+    const title =
+        document.createElement("div");
 
-    closeModal();
 
-    render();
+    title.className =
+        "title";
 
-};
+
+    title.textContent =
+        getStatusIcon(
+            item.status,
+            item.type
+        )
+        + " "
+        + item.title;
+
+
+    card.appendChild(poster);
+
+    card.appendChild(title);
+
+
+    /* ===== MEGJELENÉSI ÉV ===== */
+
+    if (item.year) {
+
+        const year =
+            document.createElement("div");
+
+
+        year.className =
+            "movieYear";
+
+
+        year.textContent =
+            "📅 " + item.year;
+
+
+        card.appendChild(year);
+
+    }
+
+
+    /* ===== MŰFAJOK ===== */
+
+    if (
+        item.genres &&
+        item.genres.length
+    ) {
+
+        const genres =
+            document.createElement("div");
+
+
+        genres.className =
+            "movieGenres";
+
+
+        genres.textContent =
+            "🎭 " +
+            item.genres.join(" • ");
+
+
+        card.appendChild(genres);
+
+    }
+
+
+    /* ===== EREDETI CÍM ===== */
+
+    if (item.originalTitle) {
+
+        const original =
+            document.createElement("div");
+
+
+        original.className =
+            "originalTitle";
+
+
+        original.textContent =
+            item.originalTitle;
+
+
+        card.appendChild(original);
+
+    }
+
+
+    /* ===== BEFEJEZÉS ===== */
+
+    if (item.finished) {
+
+        const finished =
+            document.createElement("div");
+
+
+        finished.className =
+            "finishedDate";
+
+
+        finished.textContent =
+            "✅ " +
+            item.finished;
+
+
+        card.appendChild(finished);
+
+    }
+
+
+    /* ===== SZERKESZTÉS ===== */
+
+    card.onclick = () => {
+
+        openEditor(item);
+
+    };
+
+
+    return card;
+
+}
 
 
 /* ===================================
-   TÖRLÉS
+   FILMEK / SOROZATOK / ANIME / KÖNYVEK
 =================================== */
 
-deleteItem.onclick = () => {
+function renderItems() {
 
-    if (
-        !editMode ||
-        !selectedItem
-    ) {
+    moviesGrid.innerHTML =
+        "";
 
-        return;
+
+    seriesGrid.innerHTML =
+        "";
+
+
+    /*
+       Anime és könyv külön megjelenítése,
+       ha léteznek a HTML-ben.
+    */
+
+    const animeGrid =
+        document.getElementById("animeGrid");
+
+
+    const booksGrid =
+        document.getElementById("booksGrid");
+
+
+    if (animeGrid) {
+
+        animeGrid.innerHTML =
+            "";
 
     }
 
 
-    if (
-        !confirm(
-            "Biztosan törölni szeretnéd?"
-        )
-    ) {
+    if (booksGrid) {
 
-        return;
+        booksGrid.innerHTML =
+            "";
 
     }
 
 
-    db.items =
-        db.items.filter(
-            item =>
-                item.id !==
-                selectedItem.id
+    const items =
+        sortItems(
+            getFilteredItems()
         );
 
 
-    selectedItem = null;
+    items.forEach(item => {
 
-    editMode = false;
+        const card =
+            createCard(item);
 
 
-    saveDB();
+        /* ===== FILM ===== */
 
-    closeModal();
+        if (
+            item.type === "movie"
+        ) {
 
-    render();
+            moviesGrid.appendChild(
+                card
+            );
 
-};
+        }
+
+
+        /* ===== SOROZAT ===== */
+
+        else if (
+            item.type === "series"
+        ) {
+
+            seriesGrid.appendChild(
+                card
+            );
+
+        }
+
+
+        /* ===== ANIME ===== */
+
+        else if (
+            item.type === "anime"
+        ) {
+
+            if (animeGrid) {
+
+                animeGrid.appendChild(
+                    card
+                );
+
+            }
+
+        }
+
+
+        /* ===== KÖNYV ===== */
+
+        else if (
+            item.type === "book"
+        ) {
+
+            if (booksGrid) {
+
+                booksGrid.appendChild(
+                    card
+                );
+
+            }
+
+        }
+
+    });
+
+}
