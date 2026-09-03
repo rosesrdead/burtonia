@@ -3,432 +3,37 @@
 =================================== */
 
 @import url("css/base.css");
+
 @import url("css/layout.css");
+
 @import url("css/cards.css");
+
 @import url("css/modal.css");
+
 @import url("css/forms.css");
+
 @import url("css/buttons.css");
+
 @import url("css/settings.css");
+
 @import url("css/responsive.css");
+
 @import url("css/item-lists.css");
 
 
 /* ===================================
-   GLOBÁLIS FEHÉR SZÖVEG
+   BURTONIA - FEHÉR SZÖVEG
 =================================== */
 
-html,
+/*
+   Csak a szöveg színét állítjuk.
+   Méretet, margót, paddinget,
+   elrendezést NEM módosítunk.
+*/
+
+
 body{
     color:#ffffff;
-}
-
-
-/* ===================================
-   MINDEN BURTONIA ELEM SZÖVEGE
-=================================== */
-
-body,
-body *{
-    color:#ffffff !important;
-}
-
-
-/* ===================================
-   MODAL - MINDEN SZÖVEG FEHÉR
-=================================== */
-
-#modal,
-#modal *,
-#modalBox,
-#modalBox *,
-#settingsModal,
-#settingsModal *,
-#settingsBox,
-#settingsBox *{
-    color:#ffffff !important;
-}
-
-
-/* ===================================
-   INPUTOK
-=================================== */
-
-input,
-textarea,
-select{
-    color:#ffffff !important;
-}
-
-
-input::placeholder,
-textarea::placeholder{
-    color:rgba(255,255,255,.65) !important;
-    opacity:1 !important;
-}
-
-
-select,
-select option{
-    color:#ffffff !important;
-    background:#21172b !important;
-}
-
-
-/* ===================================
-   CHECKBOX / RADIO FELIRATOK
-=================================== */
-
-label,
-label *,
-.checkbox,
-.checkbox *,
-.checkboxLabel,
-.checkboxLabel *,
-.listItem,
-.listItem *,
-.listOption,
-.listOption *,
-.listOption label,
-.listOption span{
-    color:#ffffff !important;
-}
-
-
-/* ===================================
-   LISTÁK A MODALBAN
-=================================== */
-
-#modalBox .lists,
-#modalBox .lists *,
-#modalBox [class*="list"],
-#modalBox [class*="List"]{
-    color:#ffffff !important;
-}
-
-
-/* ===================================
-   GOMBOK
-=================================== */
-
-button,
-button *,
-.btn,
-.btn *,
-.button,
-.button *{
-    color:#ffffff !important;
-}
-
-
-/* ===================================
-   LINKek
-=================================== */
-
-a,
-a *,
-a:visited,
-a:hover,
-a:active{
-    color:#ffffff !important;
-}
-
-
-/* ===================================
-   CÍMEK
-=================================== */
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-span,
-strong,
-b,
-small,
-label{
-    color:#ffffff !important;
-}
-
-
-/* ===================================
-   KEZDŐLAP - GYORSKATEGÓRIÁK
-=================================== */
-
-.homeQuickNav{
-    display:grid;
-    grid-template-columns:repeat(4,minmax(140px,1fr));
-    gap:16px;
-    width:min(100%,900px);
-    margin:0 auto 30px;
-    padding:4px;
-}
-
-
-.homeQuickButton{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:10px;
-
-    min-height:64px;
-
-    padding:14px 20px;
-
-    border:1px solid rgba(255,255,255,.15);
-    border-radius:18px;
-
-    background:rgba(35,20,50,.72);
-
-    color:#ffffff !important;
-
-    font:inherit;
-    font-weight:600;
-    font-size:17px;
-
-    cursor:pointer;
-
-    backdrop-filter:blur(12px);
-    -webkit-backdrop-filter:blur(12px);
-
-    box-shadow:
-        0 8px 25px rgba(0,0,0,.25);
-
-    transition:
-        transform .2s ease,
-        background .2s ease,
-        box-shadow .2s ease;
-}
-
-
-.homeQuickButton *{
-    color:#ffffff !important;
-}
-
-
-.homeQuickButton:hover{
-    transform:translateY(-4px);
-
-    background:rgba(100,70,125,.78);
-
-    box-shadow:
-        0 12px 30px rgba(0,0,0,.35);
-}
-
-
-.homeQuickButton:active{
-    transform:translateY(-1px);
-}
-
-
-.homeQuickIcon{
-    font-size:25px;
-    line-height:1;
-
-    color:#ffffff !important;
-}
-
-
-/* ===================================
-   KEZDŐLAP SZEKCIÓK
-=================================== */
-
-#homePage>section{
-    margin-bottom:32px;
-}
-
-
-/* ===================================
-   STATISZTIKA
-=================================== */
-
-.homeStats{
-    width:min(100%,900px);
-}
-
-
-.homeStats *,
-.homeStat,
-.homeStat *{
-    color:#ffffff !important;
-}
-
-
-/* ===================================
-   ÜRES KEZDŐLAP
-=================================== */
-
-.emptyHome{
-    padding:25px;
-
-    border-radius:18px;
-
-    background:rgba(20,15,30,.55);
-
-    border:1px solid rgba(255,255,255,.1);
-
-    text-align:center;
-}
-
-
-.emptyHome *{
-    color:#ffffff !important;
-}
-
-
-/* ===================================
-   LISTA SZERKESZTŐ
-=================================== */
-
-#listEditModal{
-    position:fixed;
-    inset:0;
-
-    z-index:9999;
-
-    display:flex;
-
-    align-items:center;
-    justify-content:center;
-
-    padding:20px;
-
-    background:rgba(5,2,10,.62);
-
-    backdrop-filter:blur(10px);
-    -webkit-backdrop-filter:blur(10px);
-}
-
-
-#listEditModal *{
-    color:#ffffff !important;
-}
-
-
-.listEditBox{
-    width:min(420px,90vw);
-
-    padding:26px;
-
-    border-radius:22px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(65,40,90,.84),
-            rgba(15,10,24,.8)
-        );
-
-    color:#ffffff !important;
-
-    border:1px solid rgba(220,190,250,.2);
-
-    box-shadow:
-        0 25px 70px rgba(0,0,0,.55),
-        0 0 45px rgba(110,65,155,.22);
-
-    backdrop-filter:blur(22px);
-    -webkit-backdrop-filter:blur(22px);
-
-    box-sizing:border-box;
-}
-
-
-.listEditBox *{
-    color:#ffffff !important;
-}
-
-
-.listEditBox h2{
-    margin:0 0 20px;
-
-    color:#ffffff !important;
-}
-
-
-.listEditBox label{
-    display:block;
-
-    margin:0 0 6px;
-
-    color:#ffffff !important;
-}
-
-
-.listEditBox input{
-    width:100%;
-
-    padding:11px 12px;
-
-    margin-bottom:15px;
-
-    box-sizing:border-box;
-
-    background:rgba(10,7,15,.42);
-
-    color:#ffffff !important;
-
-    border:1px solid rgba(190,150,230,.22);
-
-    border-radius:10px;
-}
-
-
-.listEditBox input::placeholder{
-    color:rgba(255,255,255,.65) !important;
-}
-
-
-.listEditButtons{
-    display:flex;
-
-    gap:10px;
-
-    flex-wrap:wrap;
-
-    margin-top:8px;
-}
-
-
-.listEditButtons button{
-    padding:11px 18px;
-
-    color:#ffffff !important;
-}
-
-
-#editListSave{
-    background:rgba(105,75,145,.8);
-
-    color:#ffffff !important;
-}
-
-
-#editListDelete{
-    background:rgba(150,45,65,.65) !important;
-
-    color:#ffffff !important;
-}
-
-
-#editListCancel{
-    background:rgba(255,255,255,.08);
-
-    color:#ffffff !important;
-}
-
-
-/* ===================================
-   SIDEBAR
-=================================== */
-
-#sidebar,
-#sidebar *,
-.sidebarItem,
-.sidebarItem *{
-    color:#ffffff !important;
 }
 
 
@@ -437,20 +42,36 @@ label{
 =================================== */
 
 header,
-header *,
-header h1{
-    color:#ffffff !important;
+header h1,
+header button{
+    color:#ffffff;
 }
 
 
 /* ===================================
-   MAIN
+   SIDEBAR
+=================================== */
+
+#sidebar,
+#sidebar h2,
+#sidebar .sidebarItem{
+    color:#ffffff;
+}
+
+
+/* ===================================
+   FŐ TARTALOM
 =================================== */
 
 main,
-main *,
-.sectionTitle{
-    color:#ffffff !important;
+main h1,
+main h2,
+main h3,
+main h4,
+main p,
+main span,
+main label{
+    color:#ffffff;
 }
 
 
@@ -459,37 +80,76 @@ main *,
 =================================== */
 
 .card,
-.card *,
-.title,
-.originalTitle,
-.itemType,
-.movieYear,
-.movieGenres,
-.finishedDate{
-    color:#ffffff !important;
+.card .title,
+.card .originalTitle,
+.card .itemType,
+.card .movieYear,
+.card .movieGenres,
+.card .finishedDate{
+    color:#ffffff;
 }
 
 
 /* ===================================
-   TOOLBAR
+   MODAL
 =================================== */
 
-.libraryToolbar,
-.libraryToolbar *{
-    color:#ffffff !important;
+#modalBox{
+    color:#ffffff;
+}
+
+#modalBox h1,
+#modalBox h2,
+#modalBox h3,
+#modalBox h4,
+#modalBox p,
+#modalBox label,
+#modalBox span,
+#modalBox strong,
+#modalBox b{
+    color:#ffffff;
 }
 
 
 /* ===================================
-   FAB
+   MODAL INPUTOK
 =================================== */
 
-#fab,
-#fab *,
-#fabMenu,
-#fabMenu *,
-#fabMenu button{
-    color:#ffffff !important;
+#modalBox input,
+#modalBox textarea,
+#modalBox select{
+    color:#ffffff;
+}
+
+
+/* PLACEHOLDER */
+
+#modalBox input::placeholder,
+#modalBox textarea::placeholder{
+    color:rgba(255,255,255,.65);
+    opacity:1;
+}
+
+
+/* SELECT */
+
+#modalBox select option{
+    color:#ffffff;
+    background:#21172b;
+}
+
+
+/* ===================================
+   LISTÁK A MODALBAN
+=================================== */
+
+#modalBox .listItem,
+#modalBox .listItem label,
+#modalBox .listItem span,
+#modalBox .lists,
+#modalBox .lists label,
+#modalBox .lists span{
+    color:#ffffff;
 }
 
 
@@ -498,42 +158,197 @@ main *,
 =================================== */
 
 #modalButtons,
-#modalButtons *,
 #modalButtons button{
-    color:#ffffff !important;
+    color:#ffffff;
 }
 
 
 /* ===================================
-   SETTINGS
+   BEÁLLÍTÁSOK
 =================================== */
 
-#settingsBox,
-#settingsBox *,
+#settingsBox{
+    color:#ffffff;
+}
+
+#settingsBox h1,
 #settingsBox h2,
 #settingsBox h3,
+#settingsBox h4,
+#settingsBox p,
 #settingsBox label,
-#settingsBox button,
-#settingsBox input,
-#settingsBox select,
-#settingsBox option{
-    color:#ffffff !important;
+#settingsBox span,
+#settingsBox strong,
+#settingsBox b,
+#settingsBox button{
+    color:#ffffff;
 }
 
 
 /* ===================================
-   FELIRATOK
+   BEÁLLÍTÁS INPUTOK
 =================================== */
 
-.formGroup,
-.formGroup *,
-.formField,
-.formField *,
-.field,
-.field *,
-.formLabel,
-.formLabel *{
-    color:#ffffff !important;
+#settingsBox input,
+#settingsBox textarea,
+#settingsBox select{
+    color:#ffffff;
+}
+
+
+#settingsBox input::placeholder,
+#settingsBox textarea::placeholder{
+    color:rgba(255,255,255,.65);
+    opacity:1;
+}
+
+
+#settingsBox select option{
+    color:#ffffff;
+    background:#21172b;
+}
+
+
+/* ===================================
+   FAB
+=================================== */
+
+#fab{
+    color:#ffffff;
+}
+
+
+#fabMenu,
+#fabMenu button{
+    color:#ffffff;
+}
+
+
+/* ===================================
+   LISTA SZERKESZTŐ
+=================================== */
+
+#listEditModal{
+    color:#ffffff;
+}
+
+
+#listEditModal h1,
+#listEditModal h2,
+#listEditModal h3,
+#listEditModal p,
+#listEditModal label,
+#listEditModal span,
+#listEditModal button{
+    color:#ffffff;
+}
+
+
+#listEditModal input{
+    color:#ffffff;
+}
+
+
+#listEditModal input::placeholder{
+    color:rgba(255,255,255,.65);
+    opacity:1;
+}
+
+
+/* ===================================
+   LINKek
+=================================== */
+
+a,
+a:visited{
+    color:#ffffff;
+}
+
+
+/* ===================================
+   GOMBOK
+=================================== */
+
+button{
+    color:#ffffff;
+}
+
+
+/* ===================================
+   KEZDŐLAP GYORS GOMBOK
+=================================== */
+
+.homeQuickNav{
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,minmax(140px,1fr));
+
+    gap:16px;
+
+    width:min(100%,900px);
+
+    margin:0 auto 30px;
+}
+
+
+.homeQuickButton{
+    color:#ffffff;
+
+    border:1px solid
+        rgba(255,255,255,.15);
+
+    border-radius:18px;
+
+    background:
+        rgba(35,20,50,.42);
+
+    backdrop-filter:blur(14px);
+
+    -webkit-backdrop-filter:blur(14px);
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.25);
+}
+
+
+.homeQuickButton *{
+    color:#ffffff;
+}
+
+
+.homeQuickButton:hover{
+    background:
+        rgba(80,55,105,.48);
+}
+
+
+.homeQuickIcon{
+    color:#ffffff;
+}
+
+
+/* ===================================
+   KEZDŐLAP STATISZTIKA
+=================================== */
+
+.homeStats,
+.homeStats h2,
+.homeStat,
+.homeStat span,
+.homeStat b{
+    color:#ffffff;
+}
+
+
+/* ===================================
+   ÜRES KEZDŐLAP
+=================================== */
+
+.emptyHome,
+.emptyHome h2,
+.emptyHome p{
+    color:#ffffff;
 }
 
 
@@ -544,23 +359,8 @@ main *,
 @media(max-width:800px){
 
     .homeQuickNav{
-        grid-template-columns:repeat(2,1fr);
-
-        gap:12px;
-    }
-
-
-    .homeQuickButton{
-        min-height:58px;
-
-        padding:12px;
-
-        font-size:15px;
-    }
-
-
-    .homeQuickIcon{
-        font-size:22px;
+        grid-template-columns:
+            repeat(2,1fr);
     }
 
 }
@@ -568,42 +368,17 @@ main *,
 
 @media(max-width:600px){
 
-    #listEditModal{
-        padding:10px;
-    }
-
-
-    .listEditBox{
-        width:100%;
-
-        padding:22px;
-    }
-
-
-    .listEditButtons button{
-        flex:1;
-
-        min-width:100px;
+    .homeQuickNav{
+        gap:12px;
     }
 
 }
 
 
-@media(max-width:480px){
+@media(max-width:420px){
 
     .homeQuickNav{
-        grid-template-columns:1fr 1fr;
-
         gap:10px;
-    }
-
-
-    .homeQuickButton{
-        border-radius:15px;
-
-        min-height:54px;
-
-        font-size:14px;
     }
 
 }
