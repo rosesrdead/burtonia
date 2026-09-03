@@ -27,22 +27,15 @@ function renderLists() {
         sidebarItems.appendChild(row);
     };
 
-    /* KEZDŐLAP */
     addItem("🏠 Kezdőlap", "home", "all");
-
-    /* BÖNGÉSZÉS */
     addItem("🎭 Böngészés", "browse", "all");
-
-    /* KÖNYVTÁR */
     addItem("📚 Könyvtár", "library", "all");
 
-    /* TÍPUSOK */
     addItem("🎬 Filmek", "library", "type:movie");
     addItem("📺 Sorozatok", "library", "type:series");
     addItem("🌸 Anime", "library", "type:anime");
     addItem("📖 Könyvek", "library", "type:book");
 
-    /* SAJÁT LISTÁK */
     (Array.isArray(db.lists) ? db.lists : []).forEach(list => {
         const row = document.createElement("div");
 
@@ -63,10 +56,7 @@ function renderLists() {
 
         row.ondblclick = e => {
             e.stopPropagation();
-
-            if (typeof editList === "function") {
-                editList(list);
-            }
+            editList(list);
         };
 
         sidebarItems.appendChild(row);
@@ -121,35 +111,30 @@ if (typeof addList !== "undefined") {
         const value = name.trim();
         if (!value) return;
 
-        const exists = db.lists.some(list =>
-            String(list.name || "")
-                .trim()
-                .toLowerCase() === value.toLowerCase()
-        );
-
-        if (exists) {
+        if (db.lists.some(list =>
+            String(list.name || "").trim().toLowerCase() ===
+            value.toLowerCase()
+        )) {
             alert("Ez a lista már létezik.");
             return;
         }
 
-        const iconInput = prompt(
+        const icon = prompt(
             "Lista emoji (opcionális):",
             "📝"
         );
 
-        if (iconInput === null) return;
+        if (icon === null) return;
 
         db.lists.push({
             id: Date.now(),
             name: value,
-            icon: iconInput.trim() || "📝"
+            icon: icon.trim() || "📝"
         });
 
         saveDB();
-
         currentView = "library";
         currentList = "all";
-
         render();
     };
 }
@@ -162,7 +147,6 @@ if (typeof addList !== "undefined") {
 function editList(list) {
     if (!list) return;
 
-    /* NÉV */
     const name = prompt(
         "Lista neve:",
         list.name || ""
@@ -171,15 +155,12 @@ function editList(list) {
     if (name === null) return;
 
     const value = name.trim();
-
     if (!value) return;
 
-    /* DUPLIKÁCIÓ */
     const duplicate = db.lists.some(item =>
         item.id !== list.id &&
-        String(item.name || "")
-            .trim()
-            .toLowerCase() === value.toLowerCase()
+        String(item.name || "").trim().toLowerCase() ===
+        value.toLowerCase()
     );
 
     if (duplicate) {
@@ -187,30 +168,24 @@ function editList(list) {
         return;
     }
 
-    /* EMOJI */
-    const iconInput = prompt(
+    const icon = prompt(
         "Lista emoji:",
         list.icon || "📝"
     );
 
-    if (iconInput === null) return;
+    if (icon === null) return;
 
-    /* MENTÉS */
     list.name = value;
-    list.icon = iconInput.trim() || "📝";
+    list.icon = icon.trim() || "📝";
 
     saveDB();
     render();
 
-    /* TÖRLÉS LEHETŐSÉGE */
-    const deleteIt = confirm(
+    /* TÖRLÉS */
+    if (confirm(
         `A(z) "${list.name}" lista mentve.\n\n` +
-        `Szeretnéd törölni ezt a listát?\n\n` +
-        `OK = törlés\n` +
-        `Mégse = megtartás`
-    );
-
-    if (deleteIt) {
+        "Szeretnéd törölni ezt a listát?"
+    )) {
         deleteList(list);
     }
 }
@@ -223,25 +198,21 @@ function editList(list) {
 function deleteList(list) {
     if (!list) return;
 
-    const reallyDelete = confirm(
+    if (!confirm(
         `Biztosan törlöd a(z) "${list.name}" listát?\n\n` +
         "A filmek, sorozatok, animék és könyvek nem törlődnek."
-    );
+    )) {
+        return;
+    }
 
-    if (!reallyDelete) return;
-
-    /* LISTA TÖRLÉSE */
     db.lists = db.lists.filter(
-        item =>
-            String(item.id) !== String(list.id)
+        item => String(item.id) !== String(list.id)
     );
 
-    /* LISTA LEVÉTELE AZ ELEMEKRŐL */
     db.items.forEach(item => {
         if (Array.isArray(item.lists)) {
             item.lists = item.lists.filter(
-                id =>
-                    String(id) !== String(list.id)
+                id => String(id) !== String(list.id)
             );
         }
     });
