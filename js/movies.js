@@ -1,5 +1,5 @@
 /* ===================================
-   BURTONIA - Render Items
+   BURTONIA - Movies / Library
 =================================== */
 
 
@@ -9,28 +9,49 @@
 
 function getFilteredItems() {
 
+    /*
+       "all" = teljes könyvtár
+    */
+
     if (currentList === "all") {
 
-        return db.items;
+        return Array.isArray(db.items)
+            ? db.items
+            : [];
 
     }
 
 
-    return db.items.filter(item =>
+    /*
+       Saját lista esetén csak azok az
+       elemek jelenjenek meg, amelyek
+       benne vannak a listában.
+    */
 
-        item.lists &&
+    return db.items.filter(item => {
 
-        item.lists.includes(
-            currentList
-        )
+        if (!Array.isArray(item.lists)) {
 
-    );
+            return false;
+
+        }
+
+
+        return item.lists.some(
+
+            id =>
+                Number(id) ===
+                Number(currentList)
+
+        );
+
+    });
 
 }
 
 
 /* ===================================
-   KÁRTYA
+   KÁRTYA LÉTREHOZÁSA
 =================================== */
 
 function createCard(item) {
@@ -66,7 +87,11 @@ function createCard(item) {
 
 
         img.alt =
-            item.title;
+            item.title || "";
+
+
+        img.loading =
+            "lazy";
 
 
         poster.appendChild(img);
@@ -79,6 +104,11 @@ function createCard(item) {
             "Nincs borító";
 
     }
+
+
+    card.appendChild(
+        poster
+    );
 
 
     /* ===================================
@@ -94,79 +124,13 @@ function createCard(item) {
 
 
     title.textContent =
-
-        getStatusIcon(
-            item.status,
-            item.type
-        )
-
-        + " "
-
-        + item.title;
-
-
-    card.appendChild(
-        poster
-    );
+        item.title ||
+        "Névtelen elem";
 
 
     card.appendChild(
         title
     );
-
-
-    /* ===================================
-       MEGJELENÉSI ÉV
-    =================================== */
-
-    if (item.year) {
-
-        const year =
-            document.createElement("div");
-
-
-        year.className =
-            "movieYear";
-
-
-        year.textContent =
-            "📅 " + item.year;
-
-
-        card.appendChild(
-            year
-        );
-
-    }
-
-
-    /* ===================================
-       MŰFAJOK
-    =================================== */
-
-    if (
-        item.genres &&
-        item.genres.length
-    ) {
-
-        const genres =
-            document.createElement("div");
-
-
-        genres.className =
-            "movieGenres";
-
-
-        genres.textContent =
-            "🎭 " +
-            item.genres.join(" • ");
-
-
-        card.appendChild(
-            genres
-        );
-
-    }
 
 
     /* ===================================
@@ -189,6 +153,61 @@ function createCard(item) {
 
         card.appendChild(
             original
+        );
+
+    }
+
+
+    /* ===================================
+       ÉV
+    =================================== */
+
+    if (item.year) {
+
+        const year =
+            document.createElement("div");
+
+
+        year.className =
+            "movieYear";
+
+
+        year.textContent =
+            "📅 " +
+            item.year;
+
+
+        card.appendChild(
+            year
+        );
+
+    }
+
+
+    /* ===================================
+       MŰFAJOK
+    =================================== */
+
+    if (
+        Array.isArray(item.genres) &&
+        item.genres.length
+    ) {
+
+        const genres =
+            document.createElement("div");
+
+
+        genres.className =
+            "movieGenres";
+
+
+        genres.textContent =
+            "🎭 " +
+            item.genres.join(" • ");
+
+
+        card.appendChild(
+            genres
         );
 
     }
@@ -221,12 +240,19 @@ function createCard(item) {
 
 
     /* ===================================
-       SZERKESZTÉS
+       KATTINTÁS
     =================================== */
 
     card.onclick = () => {
 
-        openEditor(item);
+        if (
+            typeof openEditor ===
+            "function"
+        ) {
+
+            openEditor(item);
+
+        }
 
     };
 
@@ -237,24 +263,121 @@ function createCard(item) {
 
 
 /* ===================================
-   FILMEK / SOROZATOK MEGJELENÍTÉSE
+   RENDEZÉS
+=================================== */
+
+function getSortedItems(items) {
+
+    if (
+        typeof sortItems ===
+        "function"
+    ) {
+
+        return sortItems(items);
+
+    }
+
+
+    /*
+       Ha nincs sortItems,
+       akkor ABC szerint rendezünk.
+    */
+
+    return [...items].sort(
+        (a, b) =>
+            (a.title || "").localeCompare(
+                b.title || "",
+                "hu"
+            )
+    );
+
+}
+
+
+/* ===================================
+   KÖNYVTÁR MEGJELENÍTÉSE
 =================================== */
 
 function renderItems() {
 
-    moviesGrid.innerHTML =
-        "";
+    const moviesGrid =
+        document.getElementById(
+            "moviesGrid"
+        );
 
 
-    seriesGrid.innerHTML =
-        "";
+    const seriesGrid =
+        document.getElementById(
+            "seriesGrid"
+        );
+
+
+    const animeGrid =
+        document.getElementById(
+            "animeGrid"
+        );
+
+
+    const booksGrid =
+        document.getElementById(
+            "booksGrid"
+        );
+
+
+    /*
+       Minden szekció ürítése.
+    */
+
+    if (moviesGrid) {
+
+        moviesGrid.innerHTML =
+            "";
+
+    }
+
+
+    if (seriesGrid) {
+
+        seriesGrid.innerHTML =
+            "";
+
+    }
+
+
+    if (animeGrid) {
+
+        animeGrid.innerHTML =
+            "";
+
+    }
+
+
+    if (booksGrid) {
+
+        booksGrid.innerHTML =
+            "";
+
+    }
+
+
+    /*
+       Adatok lekérése.
+    */
+
+    const filteredItems =
+        getFilteredItems();
 
 
     const items =
-        sortItems(
-            getFilteredItems()
+        getSortedItems(
+            filteredItems
         );
 
+
+    /*
+       Minden elem a saját
+       típusának megfelelő helyre kerül.
+    */
 
     items.forEach(item => {
 
@@ -262,33 +385,121 @@ function renderItems() {
             createCard(item);
 
 
-        /* ===================================
+        /*
            FILM
-        =================================== */
+        */
 
         if (
-            item.type === "movie"
+            item.type ===
+            "movie"
         ) {
 
-            moviesGrid.appendChild(
-                card
-            );
+            if (moviesGrid) {
+
+                moviesGrid.appendChild(
+                    card
+                );
+
+            }
+
+            return;
 
         }
 
 
-        /* ===================================
+        /*
            SOROZAT
-        =================================== */
+        */
 
-        else {
+        if (
+            item.type ===
+            "series"
+        ) {
 
-            seriesGrid.appendChild(
-                card
-            );
+            if (seriesGrid) {
+
+                seriesGrid.appendChild(
+                    card
+                );
+
+            }
+
+            return;
+
+        }
+
+
+        /*
+           ANIME
+        */
+
+        if (
+            item.type ===
+            "anime"
+        ) {
+
+            if (animeGrid) {
+
+                animeGrid.appendChild(
+                    card
+                );
+
+            }
+
+            return;
+
+        }
+
+
+        /*
+           KÖNYV
+        */
+
+        if (
+            item.type ===
+            "book"
+        ) {
+
+            if (booksGrid) {
+
+                booksGrid.appendChild(
+                    card
+                );
+
+            }
+
+            return;
 
         }
 
     });
+
+}
+
+
+/* ===================================
+   KOMPATIBILITÁS
+=================================== */
+
+/*
+   Régebbi kódból érkező renderMovies()
+   hívások esetére.
+*/
+
+function renderMovies() {
+
+    renderItems();
+
+}
+
+
+/*
+   Régebbi kódból érkező
+   renderLibrary() hívások esetére.
+*/
+
+function renderLibrary() {
+
+    renderItems();
 
 }
