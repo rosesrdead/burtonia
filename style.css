@@ -260,7 +260,7 @@ main label {
 
 
 /* ===================================
-   LINKek
+   LINKEK
 =================================== */
 
 a,
@@ -286,33 +286,68 @@ button {
     display: grid;
 
     grid-template-columns:
-        repeat(4,minmax(140px,1fr));
+        repeat(4, minmax(0, 1fr));
 
-    gap: 16px;
+    gap: 20px;
 
-    width: min(100%,900px);
+    width: 100%;
 
-    margin: 0 auto 30px;
+    max-width: none;
+
+    margin: 0 0 30px;
+
+    box-sizing: border-box;
 }
 
 
 .homeQuickButton {
+    width: 100%;
+
+    min-width: 0;
+
+    min-height: 84px;
+
+    padding: 20px 24px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    box-sizing: border-box;
+
     color: #ffffff;
 
-    border: 1px solid
-        rgba(255,255,255,.15);
+    font-size: 18px;
 
-    border-radius: 18px;
+    font-weight: 700;
+
+    border: 1px solid
+        rgba(220,190,250,.22);
+
+    border-radius: 20px;
 
     background:
-        rgba(35,20,50,.42);
+        linear-gradient(
+            145deg,
+            rgba(65,40,90,.42),
+            rgba(15,10,24,.38)
+        );
 
     backdrop-filter: blur(14px);
 
     -webkit-backdrop-filter: blur(14px);
 
     box-shadow:
-        0 8px 25px rgba(0,0,0,.25);
+        0 10px 30px rgba(0,0,0,.28),
+        0 0 30px rgba(110,65,155,.12);
+
+    cursor: pointer;
+
+    white-space: nowrap;
 }
 
 
@@ -323,12 +358,34 @@ button {
 
 .homeQuickButton:hover {
     background:
-        rgba(80,55,105,.48);
+        linear-gradient(
+            145deg,
+            rgba(90,60,120,.52),
+            rgba(25,15,35,.45)
+        );
+
+    border-color:
+        rgba(220,190,250,.32);
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 14px 35px rgba(0,0,0,.35),
+        0 0 35px rgba(110,65,155,.18);
+}
+
+
+.homeQuickButton:active {
+    transform: translateY(0);
 }
 
 
 .homeQuickIcon {
     color: #ffffff;
+
+    font-size: 24px;
+
+    flex-shrink: 0;
 }
 
 
@@ -360,11 +417,21 @@ button {
    MOBIL
 =================================== */
 
-@media(max-width:800px) {
+@media(max-width:900px) {
 
     .homeQuickNav {
         grid-template-columns:
-            repeat(2,1fr);
+            repeat(2, minmax(0, 1fr));
+
+        gap: 16px;
+    }
+
+    .homeQuickButton {
+        min-height: 78px;
+
+        padding: 18px 20px;
+
+        font-size: 17px;
     }
 
 }
@@ -373,7 +440,24 @@ button {
 @media(max-width:600px) {
 
     .homeQuickNav {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
         gap: 12px;
+    }
+
+    .homeQuickButton {
+        min-height: 70px;
+
+        padding: 16px 12px;
+
+        font-size: 16px;
+
+        border-radius: 16px;
+    }
+
+    .homeQuickIcon {
+        font-size: 21px;
     }
 
 }
@@ -382,7 +466,18 @@ button {
 @media(max-width:420px) {
 
     .homeQuickNav {
+        grid-template-columns:
+            1fr;
+
         gap: 10px;
+    }
+
+    .homeQuickButton {
+        min-height: 64px;
+
+        padding: 14px 18px;
+
+        font-size: 16px;
     }
 
 }
