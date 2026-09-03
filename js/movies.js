@@ -2,643 +2,232 @@
    BURTONIA - Movies / Library
 =================================== */
 
-
-/* ===================================
-   TÍPUS NORMALIZÁLÁSA
-=================================== */
-
+/* TÍPUS NORMALIZÁLÁSA */
 function normalizeItemType(item) {
+    if (!item) return "";
 
-    if (!item) {
+    const type = String(item.type || "")
+        .trim()
+        .toLowerCase();
 
-        return "";
-
-    }
-
-
-    const type =
-        String(item.type || "")
-            .trim()
-            .toLowerCase();
-
-
-    /* ===================================
-       FILM
-    =================================== */
-
-    if (
-        type === "movie" ||
-        type === "film" ||
-        type === "movies"
-    ) {
-
-        return "movie";
-
-    }
-
-
-    /* ===================================
-       SOROZAT
-    =================================== */
-
-    if (
-        type === "series" ||
-        type === "sorozat" ||
-        type === "tv" ||
-        type === "show"
-    ) {
-
-        return "series";
-
-    }
-
-
-    /* ===================================
-       ANIME
-    =================================== */
-
-    if (
-        type === "anime"
-    ) {
-
-        return "anime";
-
-    }
-
-
-    /* ===================================
-       KÖNYV
-    =================================== */
-
-    if (
-        type === "book" ||
-        type === "books" ||
-        type === "könyv" ||
-        type === "konyv"
-    ) {
-
-        return "book";
-
-    }
-
+    if (["movie", "film", "movies"].includes(type)) return "movie";
+    if (["series", "sorozat", "tv", "show"].includes(type)) return "series";
+    if (type === "anime") return "anime";
+    if (["book", "books", "könyv", "konyv"].includes(type)) return "book";
 
     return type;
-
 }
 
 
-/* ===================================
-   SZŰRT ELEMEK
-=================================== */
-
+/* SZŰRT ELEMEK */
 function getFilteredItems() {
+    const items = Array.isArray(db.items) ? db.items : [];
 
-    const items =
-        Array.isArray(db.items)
-            ? db.items
-            : [];
-
-
-    /*
-       Teljes könyvtár
-    */
-
+    /* TELJES KÖNYVTÁR */
     if (
         currentList === "all" ||
         currentList === null ||
         currentList === undefined ||
         currentList === ""
     ) {
-
         return items;
-
     }
 
+    /* TÍPUS SZŰRÉS */
+    if (
+        typeof currentList === "string" &&
+        currentList.startsWith("type:")
+    ) {
+        const wantedType = currentList
+            .replace("type:", "")
+            .trim()
+            .toLowerCase();
 
-    /*
-       Saját lista.
+        return items.filter(item =>
+            normalizeItemType(item) === wantedType
+        );
+    }
 
-       Az ID lehet szám vagy string,
-       ezért mindkettőt String-é alakítjuk.
-    */
+    /* SAJÁT LISTA SZŰRÉS */
+    const wantedListId = String(currentList);
 
-    const wantedListId =
-        String(currentList);
-
-
-    return items.filter(item => {
-
-        if (
-            !Array.isArray(item.lists)
-        ) {
-
-            return false;
-
-        }
-
-
-        return item.lists.some(listId => {
-
-            return (
-                String(listId) ===
-                wantedListId
-            );
-
-        });
-
-    });
-
+    return items.filter(item =>
+        Array.isArray(item.lists) &&
+        item.lists.some(id =>
+            String(id) === wantedListId
+        )
+    );
 }
 
 
-/* ===================================
-   KÁRTYA LÉTREHOZÁSA
-=================================== */
-
+/* KÁRTYA */
 function createCard(item) {
+    const card = document.createElement("div");
+    card.className = "card";
 
-    const card =
-        document.createElement("div");
-
-
-    card.className =
-        "card";
-
-
-    /* ===================================
-       BORÍTÓ
-    =================================== */
-
-    const poster =
-        document.createElement("div");
-
-
-    poster.className =
-        "poster";
-
+    /* BORÍTÓ */
+    const poster = document.createElement("div");
+    poster.className = "poster";
 
     if (item.image) {
+        const img = document.createElement("img");
 
-        const img =
-            document.createElement("img");
-
-
-        img.src =
-            item.image;
-
-
-        img.alt =
-            item.title || "";
-
-
-        img.loading =
-            "lazy";
-
+        img.src = item.image;
+        img.alt = item.title || "";
+        img.loading = "lazy";
 
         img.onerror = () => {
-
-            img.style.display =
-                "none";
-
-
-            poster.textContent =
-                "Nincs borító";
-
+            img.style.display = "none";
+            poster.textContent = "Nincs borító";
         };
 
-
         poster.appendChild(img);
-
+    } else {
+        poster.textContent = "Nincs borító";
     }
 
-    else {
+    card.appendChild(poster);
 
-        poster.textContent =
-            "Nincs borító";
+    /* CÍM */
+    const title = document.createElement("div");
+    title.className = "title";
+    title.textContent = item.title || "Névtelen elem";
+    card.appendChild(title);
 
-    }
-
-
-    card.appendChild(
-        poster
-    );
-
-
-    /* ===================================
-       CÍM
-    =================================== */
-
-    const title =
-        document.createElement("div");
-
-
-    title.className =
-        "title";
-
-
-    title.textContent =
-        item.title ||
-        "Névtelen elem";
-
-
-    card.appendChild(
-        title
-    );
-
-
-    /* ===================================
-       EREDETI CÍM
-    =================================== */
-
+    /* EREDETI CÍM */
     if (item.originalTitle) {
+        const original = document.createElement("div");
 
-        const original =
-            document.createElement("div");
+        original.className = "originalTitle";
+        original.textContent = item.originalTitle;
 
-
-        original.className =
-            "originalTitle";
-
-
-        original.textContent =
-            item.originalTitle;
-
-
-        card.appendChild(
-            original
-        );
-
+        card.appendChild(original);
     }
 
+    /* TÍPUS */
+    const type = normalizeItemType(item);
 
-    /* ===================================
-       TÍPUS
-    =================================== */
+    if (type === "book") {
+        const typeLabel = document.createElement("div");
 
-    const type =
-        normalizeItemType(item);
+        typeLabel.className = "itemType";
+        typeLabel.textContent = "📖 Könyv";
 
-
-    /*
-       Csak könyvnél írjuk ki külön,
-       hogy ne változtassuk meg nagyon
-       a régi kártyák kinézetét.
-    */
-
-    if (
-        type === "book"
-    ) {
-
-        const typeLabel =
-            document.createElement("div");
-
-
-        typeLabel.className =
-            "itemType";
-
-
-        typeLabel.textContent =
-            "📖 Könyv";
-
-
-        card.appendChild(
-            typeLabel
-        );
-
+        card.appendChild(typeLabel);
     }
 
-
-    /* ===================================
-       ÉV
-    =================================== */
-
+    /* ÉV */
     if (item.year) {
+        const year = document.createElement("div");
 
-        const year =
-            document.createElement("div");
+        year.className = "movieYear";
+        year.textContent = "📅 " + item.year;
 
-
-        year.className =
-            "movieYear";
-
-
-        year.textContent =
-            "📅 " +
-            item.year;
-
-
-        card.appendChild(
-            year
-        );
-
+        card.appendChild(year);
     }
 
-
-    /* ===================================
-       MŰFAJOK
-    =================================== */
-
+    /* MŰFAJOK */
     if (
         Array.isArray(item.genres) &&
-        item.genres.length > 0
+        item.genres.length
     ) {
+        const genres = document.createElement("div");
 
-        const genres =
-            document.createElement("div");
-
-
-        genres.className =
-            "movieGenres";
-
-
+        genres.className = "movieGenres";
         genres.textContent =
-            "🎭 " +
-            item.genres.join(" • ");
+            "🎭 " + item.genres.join(" • ");
 
-
-        card.appendChild(
-            genres
-        );
-
+        card.appendChild(genres);
     }
 
-
-    /* ===================================
-       BEFEJEZÉS
-    =================================== */
-
+    /* BEFEJEZÉS */
     if (item.finished) {
+        const finished = document.createElement("div");
 
-        const finished =
-            document.createElement("div");
+        finished.className = "finishedDate";
+        finished.textContent = "✅ " + item.finished;
 
-
-        finished.className =
-            "finishedDate";
-
-
-        finished.textContent =
-            "✅ " +
-            item.finished;
-
-
-        card.appendChild(
-            finished
-        );
-
+        card.appendChild(finished);
     }
 
-
-    /* ===================================
-       KATTINTÁS
-    =================================== */
-
+    /* SZERKESZTÉS */
     card.onclick = () => {
-
-        if (
-            typeof openEditor ===
-            "function"
-        ) {
-
+        if (typeof openEditor === "function") {
             openEditor(item);
-
         }
-
     };
 
-
     return card;
-
 }
 
 
-/* ===================================
-   RENDEZÉS
-=================================== */
-
+/* RENDEZÉS */
 function getSortedItems(items) {
-
-    if (
-        typeof sortItems ===
-        "function"
-    ) {
-
+    if (typeof sortItems === "function") {
         return sortItems(items);
-
     }
 
-
-    return [...items].sort(
-        (a, b) => {
-
-            return (
-                a.title || ""
-            ).localeCompare(
-                b.title || "",
-                "hu"
-            );
-
-        }
+    return [...items].sort((a, b) =>
+        (a.title || "").localeCompare(
+            b.title || "",
+            "hu"
+        )
     );
-
 }
 
 
-/* ===================================
-   KÖNYVTÁR MEGJELENÍTÉSE
-=================================== */
-
+/* KÖNYVTÁR MEGJELENÍTÉSE */
 function renderItems() {
-
-    const moviesGrid =
-        document.getElementById(
-            "moviesGrid"
-        );
-
-
-    const seriesGrid =
-        document.getElementById(
-            "seriesGrid"
-        );
-
-
-    const animeGrid =
-        document.getElementById(
-            "animeGrid"
-        );
-
-
-    const booksGrid =
-        document.getElementById(
-            "booksGrid"
-        );
-
-
-    /* ===================================
-       GRIDEK ÜRÍTÉSE
-    =================================== */
-
-    if (moviesGrid) {
-
-        moviesGrid.innerHTML =
-            "";
-
-    }
-
-
-    if (seriesGrid) {
-
-        seriesGrid.innerHTML =
-            "";
-
-    }
-
-
-    if (animeGrid) {
-
-        animeGrid.innerHTML =
-            "";
-
-    }
-
-
-    if (booksGrid) {
-
-        booksGrid.innerHTML =
-            "";
-
-    }
-
-
-    /* ===================================
-       ADATOK
-    =================================== */
-
-    const filteredItems =
-        getFilteredItems();
-
-
-    const items =
-        getSortedItems(
-            filteredItems
-        );
-
-
-    /* ===================================
-       ELEMEK SZÉTVÁLOGATÁSA
-    =================================== */
-
-    items.forEach(item => {
-
-        const type =
-            normalizeItemType(item);
-
-
-        const card =
-            createCard(item);
-
-
-        /* ===============================
-           🎬 FILM
-        =============================== */
-
-        if (
-            type === "movie"
-        ) {
-
-            if (moviesGrid) {
-
-                moviesGrid.appendChild(
-                    card
-                );
-
-            }
-
-            return;
-
-        }
-
-
-        /* ===============================
-           📺 SOROZAT
-        =============================== */
-
-        if (
-            type === "series"
-        ) {
-
-            if (seriesGrid) {
-
-                seriesGrid.appendChild(
-                    card
-                );
-
-            }
-
-            return;
-
-        }
-
-
-        /* ===============================
-           🌸 ANIME
-        =============================== */
-
-        if (
-            type === "anime"
-        ) {
-
-            if (animeGrid) {
-
-                animeGrid.appendChild(
-                    card
-                );
-
-            }
-
-            return;
-
-        }
-
-
-        /* ===============================
-           📖 KÖNYV
-        =============================== */
-
-        if (
-            type === "book"
-        ) {
-
-            if (booksGrid) {
-
-                booksGrid.appendChild(
-                    card
-                );
-
-            }
-
-            return;
-
-        }
-
+    const grids = {
+        movie: document.getElementById("moviesGrid"),
+        series: document.getElementById("seriesGrid"),
+        anime: document.getElementById("animeGrid"),
+        book: document.getElementById("booksGrid")
+    };
+
+    /* GRIDEK ÜRÍTÉSE */
+    Object.values(grids).forEach(grid => {
+        if (grid) grid.innerHTML = "";
     });
 
+    /* ADATOK */
+    const items = getSortedItems(
+        getFilteredItems()
+    );
+
+    /* ELEMEK KIRAJZOLÁSA */
+    items.forEach(item => {
+        const type = normalizeItemType(item);
+        const grid = grids[type];
+
+        if (grid) {
+            grid.appendChild(
+                createCard(item)
+            );
+        }
+    });
+
+    /* ÜRES SZEKCIÓK ELREJTÉSE */
+    Object.entries(grids).forEach(([type, grid]) => {
+        if (!grid) return;
+
+        const section = grid.previousElementSibling;
+
+        if (section) {
+            section.style.display =
+                grid.children.length
+                    ? ""
+                    : "none";
+        }
+    });
 }
 
 
-/* ===================================
-   RÉGI FÜGGVÉNYEK KOMPATIBILITÁSA
-=================================== */
-
+/* RÉGI FÜGGVÉNYEK KOMPATIBILITÁSA */
 function renderMovies() {
-
     renderItems();
-
 }
-
 
 function renderLibrary() {
-
     renderItems();
-
 }
