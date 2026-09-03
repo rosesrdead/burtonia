@@ -3,19 +3,145 @@
 =================================== */
 
 @import url("css/base.css");
-
 @import url("css/layout.css");
-
 @import url("css/cards.css");
-
 @import url("css/modal.css");
-
 @import url("css/forms.css");
-
 @import url("css/buttons.css");
-
 @import url("css/settings.css");
-
 @import url("css/responsive.css");
-
 @import url("css/item-lists.css");
+
+
+/* ===================================
+   KEZDŐLAP - GYORSKATEGÓRIÁK
+=================================== */
+
+.homeQuickNav {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(140px, 1fr));
+    gap: 16px;
+    width: min(100%, 900px);
+    margin: 0 auto 30px;
+    padding: 4px;
+}
+
+.homeQuickButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    min-height: 64px;
+    padding: 14px 20px;
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 18px;
+
+    background: rgba(35, 20, 50, 0.72);
+    color: white;
+
+    font: inherit;
+    font-weight: 600;
+    font-size: 17px;
+
+    cursor: pointer;
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.25);
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.homeQuickButton:hover {
+    transform: translateY(-4px);
+
+    background: rgba(100, 70, 125, 0.78);
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.homeQuickButton:active {
+    transform: translateY(-1px);
+}
+
+.homeQuickIcon {
+    font-size: 25px;
+    line-height: 1;
+}
+
+
+/* ===================================
+   KEZDŐLAP SZEKCIÓK
+=================================== */
+
+#homePage > section {
+    margin-bottom: 32px;
+}
+
+
+/* ===================================
+   STATISZTIKA
+=================================== */
+
+.homeStats {
+    width: min(100%, 900px);
+}
+
+
+/* ===================================
+   ÜRES KEZDŐLAP
+=================================== */
+
+.emptyHome {
+    padding: 25px;
+    border-radius: 18px;
+
+    background: rgba(20, 15, 30, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    text-align: center;
+}
+
+
+/* ===================================
+   MOBIL
+=================================== */
+
+@media (max-width: 800px) {
+    .homeQuickNav {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .homeQuickButton {
+        min-height: 58px;
+        padding: 12px;
+        font-size: 15px;
+    }
+
+    .homeQuickIcon {
+        font-size: 22px;
+    }
+}
+
+
+@media (max-width: 480px) {
+    .homeQuickNav {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .homeQuickButton {
+        border-radius: 15px;
+        min-height: 54px;
+        font-size: 14px;
+    }
+}
