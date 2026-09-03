@@ -1,79 +1,255 @@
+/* ===================================
+   BURTONIA - Status
+=================================== */
+
+
 const STATUS = {
+
+
+    /* ===================================
+       FILM
+    =================================== */
 
     movie: [
 
         {
-            value: "planned",
-            text: "📋 Megnézendő",
-            icon: "📋"
+            value:
+                "planned",
+
+            text:
+                "📋 Megnézendő",
+
+            icon:
+                "📋"
         },
 
         {
-            value: "watching",
-            text: "▶️ Nézés alatt",
-            icon: "▶️"
+            value:
+                "watching",
+
+            text:
+                "▶️ Nézés alatt",
+
+            icon:
+                "▶️"
         },
 
         {
-            value: "finished",
-            text: "✅ Megnézve",
-            icon: "✅"
+            value:
+                "finished",
+
+            text:
+                "✅ Megnézve",
+
+            icon:
+                "✅"
         }
 
     ],
 
+
+    /* ===================================
+       SOROZAT
+    =================================== */
+
     series: [
 
         {
-            value: "planned",
-            text: "📋 Megnézendő",
-            icon: "📋"
+            value:
+                "planned",
+
+            text:
+                "📋 Megnézendő",
+
+            icon:
+                "📋"
         },
 
         {
-            value: "watching",
-            text: "📺 Nézés alatt",
-            icon: "📺"
+            value:
+                "watching",
+
+            text:
+                "📺 Nézés alatt",
+
+            icon:
+                "📺"
         },
 
         {
-            value: "finished",
-            text: "✅ Befejezve",
-            icon: "✅"
+            value:
+                "finished",
+
+            text:
+                "✅ Befejezve",
+
+            icon:
+                "✅"
+        }
+
+    ],
+
+
+    /* ===================================
+       ANIME
+    =================================== */
+
+    anime: [
+
+        {
+            value:
+                "planned",
+
+            text:
+                "📋 Megnézendő",
+
+            icon:
+                "📋"
+        },
+
+        {
+            value:
+                "watching",
+
+            text:
+                "🍥 Nézés alatt",
+
+            icon:
+                "🍥"
+        },
+
+        {
+            value:
+                "finished",
+
+            text:
+                "✅ Befejezve",
+
+            icon:
+                "✅"
+        }
+
+    ],
+
+
+    /* ===================================
+       KÖNYV
+    =================================== */
+
+    book: [
+
+        {
+            value:
+                "planned",
+
+            text:
+                "📋 Elolvasandó",
+
+            icon:
+                "📋"
+        },
+
+        {
+            value:
+                "watching",
+
+            text:
+                "📖 Olvasás alatt",
+
+            icon:
+                "📖"
+        },
+
+        {
+            value:
+                "finished",
+
+            text:
+                "✅ Elolvasva",
+
+            icon:
+                "✅"
         }
 
     ]
 
 };
 
-function refreshStatusUI(){
 
-    itemStatus.innerHTML = "";
+/* ===================================
+   ÁLLAPOTOK FRISSÍTÉSE
+=================================== */
 
-    const statuses = STATUS[itemType.value];
+function refreshStatusUI() {
 
-    statuses.forEach(status=>{
+    itemStatus.innerHTML =
+        "";
 
-        const option = document.createElement("option");
 
-        option.value = status.value;
+    const statuses =
+        STATUS[
+            itemType.value
+        ] || [];
 
-        option.textContent = status.text;
 
-        itemStatus.appendChild(option);
+    statuses.forEach(
+        status => {
 
-    });
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+
+            option.value =
+                status.value;
+
+
+            option.textContent =
+                status.text;
+
+
+            itemStatus.appendChild(
+                option
+            );
+
+        }
+    );
 
 }
 
-function getStatusIcon(status, type){
 
-    const statuses = STATUS[type] || [];
+/* ===================================
+   ÁLLAPOT IKON
+=================================== */
 
-    const found = statuses.find(s => s.value === status);
+function getStatusIcon(
+    status,
+    type
+) {
 
-    return found ? found.icon : "";
+    const statuses =
+        STATUS[type] || [];
+
+
+    const found =
+        statuses.find(
+            s =>
+                s.value ===
+                status
+        );
+
+
+    return found
+        ? found.icon
+        : "";
 
 }
 
-itemType.onchange = refreshStatusUI;
+
+/* ===================================
+   TÍPUS VÁLTOZÁS
+=================================== */
+
+itemType.onchange =
+    refreshStatusUI;
