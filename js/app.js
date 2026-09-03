@@ -4,134 +4,49 @@
 
 
 /* ===================================
-   ADATBÁZIS + FELHŐ INDÍTÁSA
+   ADATBÁZIS BETÖLTÉSE
 =================================== */
 
 async function startApp() {
 
-    console.log("BURTONIA: alkalmazás indítása...");
+    /*
+       Először mindig a helyi adatbázist
+       töltjük be.
+    */
+
+    await loadDB();
 
 
-    /* ===================================
-       1. HELYI ADATOK
-    =================================== */
+    /*
+       A helyi könyvtár azonnal megjelenik.
+    */
 
-    try {
-
-        await loadDB();
-
-        console.log(
-            "BURTONIA: helyi adatbázis betöltve."
-        );
-
-    } catch (error) {
-
-        console.error(
-            "BURTONIA: helyi adatbázis betöltési hiba:",
-            error
-        );
-
-    }
+    render();
 
 
-    /* ===================================
-       2. AZONNALI MEGJELENÍTÉS
-    =================================== */
-
-    try {
-
-        render();
-
-        console.log(
-            "BURTONIA: helyi adatok megjelenítve."
-        );
-
-    } catch (error) {
-
-        console.error(
-            "BURTONIA: render hiba:",
-            error
-        );
-
-    }
-
-
-    /* ===================================
-       3. FELHŐ INDÍTÁSA
-    =================================== */
+    /*
+       Ezután inicializáljuk a felhőt.
+    */
 
     if (
         typeof initCloudSync === "function"
     ) {
 
-        try {
+        await initCloudSync();
 
-            console.log(
-                "BURTONIA: felhő inicializálása..."
-            );
+    }
 
 
-            await initCloudSync();
+    /*
+       Ha a felhőből új adatok érkeztek,
+       újrarajzoljuk az oldalt.
+    */
 
+    if (
+        typeof render === "function"
+    ) {
 
-            console.log(
-                "BURTONIA: felhő inicializálva."
-            );
-
-
-            /* ===================================
-               4. HA BE VAN JELENTKEZVE,
-                  FELHŐBŐL BETÖLTÉS
-            =================================== */
-
-            if (
-                typeof cloudUser !== "undefined" &&
-                cloudUser &&
-                typeof pullCloudDB === "function"
-            ) {
-
-                console.log(
-                    "BURTONIA: felhős adatok betöltése..."
-                );
-
-
-                const loaded =
-                    await pullCloudDB(false);
-
-
-                if (loaded) {
-
-                    console.log(
-                        "BURTONIA: felhős adatok betöltve."
-                    );
-
-
-                    if (
-                        typeof render === "function"
-                    ) {
-
-                        render();
-
-                    }
-
-                }
-
-            }
-
-        } catch (error) {
-
-            console.error(
-                "BURTONIA: felhő indítási hiba:",
-                error
-            );
-
-        }
-
-    } else {
-
-        console.warn(
-            "BURTONIA: initCloudSync() nem található."
-        );
+        render();
 
     }
 
@@ -142,17 +57,4 @@ async function startApp() {
    INDÍTÁS
 =================================== */
 
-if (
-    document.readyState === "loading"
-) {
-
-    document.addEventListener(
-        "DOMContentLoaded",
-        startApp
-    );
-
-} else {
-
-    startApp();
-
-}
+startApp();
