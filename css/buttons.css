@@ -2,103 +2,420 @@
    BURTONIA - Buttons
 =================================== */
 
+
+/* ===================================
+   ALAP GOMBOK
+=================================== */
+
 button{
+
     font-family:inherit;
+
     border:none;
+
     cursor:pointer;
+
     transition:.2s;
+
 }
+
 
 button:hover{
-    transform:translateY(-2px);
+
+    transform:
+        translateY(-2px);
+
 }
+
 
 button:active{
-    transform:translateY(0);
+
+    transform:
+        translateY(0);
+
 }
 
-/* ===== FAB ===== */
+
+/* ===================================
+   FAB
+=================================== */
 
 #fab{
+
     position:fixed;
+
     right:30px;
+
     bottom:30px;
+
     width:58px;
+
     height:58px;
+
     border-radius:50%;
 
-    background:rgba(65,40,90,.78);
+    background:
+        rgba(0,0,0,.18);
+
     color:white;
+
     font-size:30px;
 
-    box-shadow:
-        0 10px 30px rgba(0,0,0,.35),
-        0 0 25px rgba(110,65,155,.2);
+    border:
+        1px solid
+        rgba(255,255,255,.08);
 
-    backdrop-filter:blur(12px);
-    -webkit-backdrop-filter:blur(12px);
+    box-shadow:
+        0 10px 30px
+        rgba(0,0,0,.35);
+
+    backdrop-filter:
+        blur(12px);
+
+    -webkit-backdrop-filter:
+        blur(12px);
+
     z-index:1000;
+
 }
+
 
 #fab:hover{
-    background:rgba(100,70,130,.85);
-    transform:scale(1.06);
+
+    background:
+        rgba(255,255,255,.12);
+
+    transform:
+        scale(1.06);
+
 }
 
-/* ===== FAB MENU ===== */
+
+/* ===================================
+   FAB MENÜ
+=================================== */
 
 #fabMenu{
+
     position:fixed;
+
     right:30px;
+
     bottom:100px;
+
     display:none;
+
     flex-direction:column;
+
     gap:10px;
+
     z-index:999;
+
 }
+
 
 #fabMenu button{
-    padding:12px 18px;
+
+    padding:
+        12px 18px;
+
     border-radius:12px;
 
-    background:rgba(0,0,0,.18);
+    background:
+        rgba(0,0,0,.18);
+
     color:white;
 
-    border:1px solid rgba(255,255,255,.08);
+    border:
+        1px solid
+        rgba(255,255,255,.08);
 
     box-shadow:
-        0 12px 32px rgba(0,0,0,.38),
-        0 0 25px rgba(110,65,155,.16);
+        0 10px 30px
+        rgba(0,0,0,.25);
 
-    backdrop-filter:blur(12px);
-    -webkit-backdrop-filter:blur(12px);
+    backdrop-filter:
+        blur(12px);
+
+    -webkit-backdrop-filter:
+        blur(12px);
+
 }
+
 
 #fabMenu button:hover{
-    background:rgba(255,255,255,.15);
-    border-color:rgba(220,190,250,.22);
+
+    background:
+        rgba(255,255,255,.12);
+
 }
 
-/* ===== MODAL GOMBOK ===== */
+
+/* ===================================
+   KEZDŐLAP - TÍPUS GOMBOK
+=================================== */
+
+.homeTypeButtons{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0,1fr));
+
+    gap:20px;
+
+    margin:
+        20px 0 30px;
+
+}
+
+
+/* ===================================
+   FILM / SOROZAT / ANIME / KÖNYV
+=================================== */
+
+.homeTypeButton{
+
+    min-height:84px;
+
+    padding:
+        18px 20px;
+
+    border-radius:18px;
+
+    background:
+        rgba(0,0,0,.18);
+
+    color:white;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    box-shadow:
+        0 10px 30px
+        rgba(0,0,0,.25);
+
+    backdrop-filter:
+        blur(12px);
+
+    -webkit-backdrop-filter:
+        blur(12px);
+
+    font-size:18px;
+
+    font-weight:700;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:10px;
+
+}
+
+
+.homeTypeButton:hover{
+
+    background:
+        rgba(255,255,255,.12);
+
+    border-color:
+        rgba(255,255,255,.14);
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 14px 35px
+        rgba(0,0,0,.32);
+
+}
+
+
+/* ===================================
+   MODAL GOMBOK
+=================================== */
 
 #modalButtons{
+
     display:flex;
+
     justify-content:flex-end;
+
     gap:10px;
+
     margin-top:20px;
+
 }
+
 
 #modalButtons button{
-    padding:11px 18px;
+
+    padding:
+        11px 18px;
+
     border-radius:10px;
-    background:rgba(255,255,255,.1);
+
+    background:
+        rgba(0,0,0,.18);
+
     color:white;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    backdrop-filter:
+        blur(10px);
+
+    -webkit-backdrop-filter:
+        blur(10px);
+
 }
+
+
+#modalButtons button:hover{
+
+    background:
+        rgba(255,255,255,.12);
+
+}
+
+
+/* ===================================
+   TÖRLÉS
+=================================== */
 
 #deleteItem{
-    background:rgba(160,40,55,.65)!important;
+
+    background:
+        rgba(160,40,55,.55)!important;
+
 }
 
+
+#deleteItem:hover{
+
+    background:
+        rgba(180,50,65,.68)!important;
+
+}
+
+
+/* ===================================
+   MENTÉS
+=================================== */
+
 #saveItem{
-    background:rgba(100,70,135,.75)!important;
+
+    background:
+        rgba(0,0,0,.18)!important;
+
+}
+
+
+#saveItem:hover{
+
+    background:
+        rgba(255,255,255,.12)!important;
+
+}
+
+
+/* ===================================
+   ÁLTALÁNOS ÜVEGES GOMBOK
+=================================== */
+
+.glassButton{
+
+    background:
+        rgba(0,0,0,.18);
+
+    color:white;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    border-radius:12px;
+
+    backdrop-filter:
+        blur(12px);
+
+    -webkit-backdrop-filter:
+        blur(12px);
+
+    box-shadow:
+        0 10px 30px
+        rgba(0,0,0,.25);
+
+}
+
+
+.glassButton:hover{
+
+    background:
+        rgba(255,255,255,.12);
+
+}
+
+
+/* ===================================
+   MOBIL
+=================================== */
+
+@media(max-width:700px){
+
+    .homeTypeButtons{
+
+        grid-template-columns:
+            repeat(2, minmax(0,1fr));
+
+        gap:12px;
+
+    }
+
+
+    .homeTypeButton{
+
+        min-height:70px;
+
+        padding:14px;
+
+        font-size:16px;
+
+    }
+
+}
+
+
+/* ===================================
+   NAGYON KIS MOBIL
+=================================== */
+
+@media(max-width:420px){
+
+    .homeTypeButtons{
+
+        grid-template-columns:
+            1fr 1fr;
+
+        gap:10px;
+
+    }
+
+
+    .homeTypeButton{
+
+        min-height:64px;
+
+        padding:12px;
+
+        font-size:15px;
+
+    }
+
 }
