@@ -11,6 +11,10 @@ const libraryPage =
     document.getElementById("libraryPage");
 
 
+const browsePage =
+    document.getElementById("browsePage");
+
+
 const sidebarItems =
     document.getElementById("sidebarItems");
 
@@ -51,6 +55,14 @@ const addSeries =
     document.getElementById("addSeries");
 
 
+const addAnime =
+    document.getElementById("addAnime");
+
+
+const addBook =
+    document.getElementById("addBook");
+
+
 const addList =
     document.getElementById("addList");
 
@@ -85,6 +97,10 @@ const itemType =
 
 const itemFinished =
     document.getElementById("itemFinished");
+
+
+const itemYear =
+    document.getElementById("itemYear");
 
 
 const itemStatus =
