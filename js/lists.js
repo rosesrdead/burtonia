@@ -48,26 +48,25 @@ function renderLists() {
         row.textContent =
             `${list.icon || "📝"} ${list.name || "Névtelen lista"}`;
 
-        let clickTimer;
+        let timer = null;
 
         /* EGYSZERES KATTINTÁS */
         row.onclick = () => {
-            clearTimeout(clickTimer);
+            clearTimeout(timer);
 
-            clickTimer = setTimeout(() => {
+            timer = setTimeout(() => {
                 currentView = "library";
                 currentList = list.id;
                 render();
             }, 250);
         };
 
-        /* DUPLA KATTINTÁS = SZERKESZTÉS */
+        /* DUPLA KATTINTÁS */
         row.ondblclick = e => {
             e.preventDefault();
             e.stopPropagation();
 
-            clearTimeout(clickTimer);
-
+            clearTimeout(timer);
             editList(list);
         };
 
@@ -158,85 +157,239 @@ if (typeof addList !== "undefined") {
 
 
 /* ===================================
-   LISTA SZERKESZTÉSE
+   LISTA SZERKESZTŐ ABLAK
 =================================== */
 
 function editList(list) {
     if (!list) return;
 
-    /* LISTA NEVE */
-    const name = prompt(
-        "Lista neve:",
-        list.name || ""
-    );
+    /* Régi ablak eltávolítása */
+    const old = document.getElementById("listEditModal");
 
-    if (name === null) return;
-
-    const value = name.trim();
-
-    if (!value) return;
-
-    /* DUPLIKÁCIÓ */
-    const duplicate = db.lists.some(item =>
-        item.id !== list.id &&
-        String(item.name || "")
-            .trim()
-            .toLowerCase() === value.toLowerCase()
-    );
-
-    if (duplicate) {
-        alert("Ez a lista már létezik.");
-        return;
+    if (old) {
+        old.remove();
     }
+
+    /* HÁTTÉR */
+    const overlay = document.createElement("div");
+
+    overlay.id = "listEditModal";
+
+    Object.assign(overlay.style, {
+        position: "fixed",
+        inset: "0",
+        zIndex: "9999",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: "rgba(0,0,0,.65)",
+        backdropFilter: "blur(8px)"
+    });
+
+
+    /* ABLAK */
+    const box = document.createElement("div");
+
+    Object.assign(box.style, {
+        width: "min(420px,90vw)",
+        padding: "25px",
+        borderRadius: "20px",
+        background: "rgba(25,25,25,.96)",
+        border: "1px solid rgba(255,255,255,.12)",
+        boxShadow: "0 20px 60px rgba(0,0,0,.5)"
+    });
+
+
+    /* CÍM */
+    const title = document.createElement("h2");
+
+    title.textContent = "📝 Lista szerkesztése";
+
+    title.style.marginTop = "0";
+
+
+    /* NÉV */
+    const nameLabel = document.createElement("label");
+
+    nameLabel.textContent = "Lista neve";
+
+    nameLabel.style.display = "block";
+    nameLabel.style.marginTop = "15px";
+
+
+    const nameInput = document.createElement("input");
+
+    nameInput.type = "text";
+    nameInput.value = list.name || "";
+    nameInput.style.width = "100%";
+    nameInput.style.boxSizing = "border-box";
+    nameInput.style.marginTop = "6px";
+
 
     /* EMOJI */
-    const iconInput = prompt(
-        "Lista emoji:",
-        list.icon || "📝"
-    );
+    const iconLabel = document.createElement("label");
 
-    if (iconInput === null) return;
+    iconLabel.textContent = "Emoji";
 
-    /* ADATOK MENTÉSE */
-    list.name = value;
-    list.icon = iconInput.trim() || "📝";
+    iconLabel.style.display = "block";
+    iconLabel.style.marginTop = "15px";
 
-    saveDB();
-    render();
 
-    /* TÖRLÉS KÉRDÉSE */
-    const deleteIt = confirm(
-        `A(z) "${list.name}" lista módosítva.\n\n` +
-        "Szeretnéd törölni ezt a listát?"
-    );
+    const iconInput = document.createElement("input");
 
-    if (deleteIt) {
-        deleteList(list);
-    }
+    iconInput.type = "text";
+    iconInput.value = list.icon || "📝";
+    iconInput.style.width = "100%";
+    iconInput.style.boxSizing = "border-box";
+    iconInput.style.marginTop = "6px";
+
+
+    /* GOMBOK */
+    const buttons = document.createElement("div");
+
+    Object.assign(buttons.style, {
+        display: "flex",
+        gap: "10px",
+        marginTop: "25px",
+        flexWrap: "wrap"
+    });
+
+
+    const saveButton = document.createElement("button");
+
+    saveButton.textContent = "💾 Mentés";
+
+
+    const deleteButton = document.createElement("button");
+
+    deleteButton.textContent = "🗑 Törlés";
+
+
+    const cancelButton = document.createElement("button");
+
+    cancelButton.textContent = "Mégse";
+
+
+    /* MENTÉS */
+    saveButton.onclick = () => {
+        const value = nameInput.value.trim();
+
+        if (!value) {
+            alert("A lista neve nem lehet üres.");
+            return;
+        }
+
+        const duplicate = db.lists.some(item =>
+            item.id !== list.id &&
+            String(item.name || "")
+                .trim()
+                .toLowerCase() === value.toLowerCase()
+        );
+
+        if (duplicate) {
+            alert("Ez a lista már létezik.");
+            return;
+        }
+
+        list.name = value;
+        list.icon = iconInput.value.trim() || "📝";
+
+        saveDB();
+
+        overlay.remove();
+
+        render();
+    };
+
+
+    /* TÖRLÉS */
+    deleteButton.onclick = () => {
+        if (!confirm(
+            `Biztosan törlöd a(z) "${list.name}" listát?\n\n` +
+            "A filmek, sorozatok, animék és könyvek nem törlődnek."
+        )) {
+            return;
+        }
+
+        db.lists = db.lists.filter(
+            item =>
+                String(item.id) !== String(list.id)
+        );
+
+        db.items.forEach(item => {
+            if (Array.isArray(item.lists)) {
+                item.lists = item.lists.filter(
+                    id =>
+                        String(id) !== String(list.id)
+                );
+            }
+        });
+
+        saveDB();
+
+        overlay.remove();
+
+        currentView = "library";
+        currentList = "all";
+
+        render();
+    };
+
+
+    /* MÉGSE */
+    cancelButton.onclick = () => {
+        overlay.remove();
+    };
+
+
+    /* ESC */
+    overlay.onkeydown = e => {
+        if (e.key === "Escape") {
+            overlay.remove();
+        }
+    };
+
+
+    /* ÖSSZEÁLLÍTÁS */
+    buttons.appendChild(saveButton);
+    buttons.appendChild(deleteButton);
+    buttons.appendChild(cancelButton);
+
+    box.appendChild(title);
+    box.appendChild(nameLabel);
+    box.appendChild(nameInput);
+    box.appendChild(iconLabel);
+    box.appendChild(iconInput);
+    box.appendChild(buttons);
+
+    overlay.appendChild(box);
+
+    document.body.appendChild(overlay);
+
+    nameInput.focus();
+    nameInput.select();
 }
 
 
 /* ===================================
-   LISTA TÖRLÉSE
+   KOMPATIBILITÁS
 =================================== */
 
 function deleteList(list) {
     if (!list) return;
 
-    const reallyDelete = confirm(
+    if (!confirm(
         `Biztosan törlöd a(z) "${list.name}" listát?\n\n` +
         "A filmek, sorozatok, animék és könyvek nem törlődnek."
-    );
+    )) {
+        return;
+    }
 
-    if (!reallyDelete) return;
-
-    /* LISTA TÖRLÉSE */
     db.lists = db.lists.filter(
         item =>
             String(item.id) !== String(list.id)
     );
 
-    /* LISTA LEVÉTELE AZ ELEMEKRŐL */
     db.items.forEach(item => {
         if (Array.isArray(item.lists)) {
             item.lists = item.lists.filter(
