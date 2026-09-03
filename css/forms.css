@@ -76,6 +76,8 @@ textarea:focus {
 #modalBox input::placeholder,
 #modalBox textarea::placeholder {
     color: rgba(255,255,255,.45);
+
+    opacity: 1;
 }
 
 
@@ -84,50 +86,81 @@ textarea:focus {
 =================================== */
 
 #modalBox label {
-    color: rgba(255,255,255,.88);
+    color: white;
 }
 
 
 /* ===================================
-   EDITOR - MEZŐK KÖZÖTTI TÉRKÖZ
+   EDITOR MEZŐK
 =================================== */
 
 /*
-   Ez csak a címke és a hozzá tartozó
-   mező közötti távolságot javítja.
-
-   Nem változtatja meg a mezők méretét,
-   a grid szélességét vagy az elrendezést.
+   A címkék külön blokkot kapnak,
+   így a címke és a hozzá tartozó
+   input/select között biztosan
+   lesz megfelelő térköz.
 */
 
 .editorRight > label {
     display: block;
 
-    margin-top: 4px;
+    margin-top: 12px;
 
-    margin-bottom: 6px;
+    margin-bottom: 8px;
+
+    line-height: 1.2;
+
+    color: white;
 }
+
+
+/*
+   Az első címke ne kapjon extra
+   felső margót.
+*/
+
+.editorRight > label:first-child {
+    margin-top: 0;
+}
+
+
+/*
+   Az inputok és selectek blokk elemként
+   viselkednek, így nem tudnak
+   összeérni a címkével.
+*/
 
 .editorRight > input,
 .editorRight > select {
-    margin-bottom: 8px;
+    display: block;
+
+    margin-top: 0;
+
+    margin-bottom: 4px;
 }
 
 
 /* ===================================
-   BORÍTÓ URL
+   BAL OLDALI BORÍTÓ MEZŐK
 =================================== */
 
 .editorLeft > label {
     display: block;
 
-    margin-top: 10px;
+    margin-top: 12px;
 
-    margin-bottom: 6px;
+    margin-bottom: 8px;
+
+    line-height: 1.2;
+
+    color: white;
 }
 
+
 .editorLeft > input {
-    margin-bottom: 8px;
+    display: block;
+
+    margin-top: 0;
 }
 
 
@@ -145,6 +178,8 @@ select {
     background: rgba(20,12,30,.65);
 
     backdrop-filter: blur(8px);
+
+    -webkit-backdrop-filter: blur(8px);
 }
 
 select option {
@@ -162,6 +197,8 @@ select option {
     padding: 8px;
 
     background: rgba(255,255,255,.05);
+
+    color: white;
 }
 
 
@@ -176,18 +213,20 @@ select option {
 
 
 /* ===================================
-   MŰFAJ CHECKBOXOK
+   MŰFAJOK
 =================================== */
 
 #genreContainer {
     display: grid;
 
     grid-template-columns:
-        repeat(2,1fr);
+        repeat(2, 1fr);
 
     gap: 8px;
 
     padding: 10px;
+
+    margin-top: 0;
 
     border-radius: 12px;
 
@@ -206,9 +245,11 @@ select option {
 
     margin: 0;
 
-    color: rgba(255,255,255,.85);
+    color: white;
 
     font-weight: normal;
+
+    line-height: 1.2;
 }
 
 
@@ -231,6 +272,8 @@ select option {
     flex-direction: column;
 
     gap: 7px;
+
+    margin-top: 0;
 }
 
 
@@ -243,7 +286,9 @@ select option {
 
     margin: 0;
 
-    color: rgba(255,255,255,.85);
+    color: white;
+
+    line-height: 1.2;
 }
 
 
@@ -304,7 +349,7 @@ select option {
 #listEditModal label {
     display: block;
 
-    margin-bottom: 6px;
+    margin-bottom: 8px;
 
     color: white;
 }
@@ -317,14 +362,19 @@ select option {
 @media(max-width:700px) {
 
     .editorRight > label {
-        margin-top: 3px;
+        margin-top: 11px;
 
-        margin-bottom: 6px;
+        margin-bottom: 8px;
     }
 
-    .editorRight > input,
-    .editorRight > select {
-        margin-bottom: 7px;
+    .editorRight > label:first-child {
+        margin-top: 0;
+    }
+
+    .editorLeft > label {
+        margin-top: 11px;
+
+        margin-bottom: 8px;
     }
 
 }
