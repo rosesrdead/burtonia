@@ -13,7 +13,8 @@ function openModal(type) {
 
     selectedItem = null;
 
-    modal.style.display = "flex";
+    modal.style.display =
+        "flex";
 
 
     /* ===================================
@@ -79,6 +80,7 @@ function openModal(type) {
     =================================== */
 
     refreshStatusUI();
+
 
     itemStatus.value =
         "planned";
