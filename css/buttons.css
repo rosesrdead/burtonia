@@ -155,6 +155,116 @@ button:active{
    KEZDŐLAP - TÍPUS GOMBOK
 =================================== */
 
+/*
+   Ezek a ténylegesen használt
+   kezdőlap gombok:
+
+   .homeQuickNav
+   .homeQuickButton
+*/
+
+.homeQuickNav{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0,1fr));
+
+    gap:20px;
+
+    width:100%;
+
+    margin:
+        0 auto 30px;
+
+}
+
+
+.homeQuickButton{
+
+    width:100%;
+
+    min-height:84px;
+
+    padding:
+        18px 20px;
+
+    box-sizing:border-box;
+
+    border-radius:18px;
+
+    background:
+        rgba(0,0,0,.18);
+
+    color:white;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    box-shadow:
+        0 10px 30px
+        rgba(0,0,0,.25);
+
+    backdrop-filter:
+        blur(12px);
+
+    -webkit-backdrop-filter:
+        blur(12px);
+
+    font-size:18px;
+
+    font-weight:700;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:10px;
+
+}
+
+
+.homeQuickButton:hover{
+
+    background:
+        rgba(255,255,255,.12);
+
+    border-color:
+        rgba(255,255,255,.14);
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 14px 35px
+        rgba(0,0,0,.32);
+
+}
+
+
+.homeQuickButton *{
+
+    color:white;
+
+}
+
+
+.homeQuickIcon{
+
+    color:white;
+
+    font-size:24px;
+
+}
+
+
+/* ===================================
+   RÉGI / ALTERNATÍV TÍPUS GOMBOK
+=================================== */
+
 .homeTypeButtons{
 
     display:grid;
@@ -170,16 +280,16 @@ button:active{
 }
 
 
-/* ===================================
-   FILM / SOROZAT / ANIME / KÖNYV
-=================================== */
-
 .homeTypeButton{
+
+    width:100%;
 
     min-height:84px;
 
     padding:
         18px 20px;
+
+    box-sizing:border-box;
 
     border-radius:18px;
 
@@ -367,7 +477,29 @@ button:active{
    MOBIL
 =================================== */
 
-@media(max-width:700px){
+@media(max-width:800px){
+
+    .homeQuickNav{
+
+        grid-template-columns:
+            repeat(2, minmax(0,1fr));
+
+        gap:14px;
+
+    }
+
+
+    .homeQuickButton{
+
+        min-height:74px;
+
+        padding:
+            14px;
+
+        font-size:16px;
+
+    }
+
 
     .homeTypeButtons{
 
@@ -383,7 +515,35 @@ button:active{
 
         min-height:70px;
 
-        padding:14px;
+        padding:
+            14px;
+
+        font-size:16px;
+
+    }
+
+}
+
+
+/* ===================================
+   KIS MOBIL
+=================================== */
+
+@media(max-width:600px){
+
+    .homeQuickNav{
+
+        gap:12px;
+
+    }
+
+
+    .homeQuickButton{
+
+        min-height:70px;
+
+        padding:
+            12px;
 
         font-size:16px;
 
@@ -397,6 +557,28 @@ button:active{
 =================================== */
 
 @media(max-width:420px){
+
+    .homeQuickNav{
+
+        grid-template-columns:
+            1fr 1fr;
+
+        gap:10px;
+
+    }
+
+
+    .homeQuickButton{
+
+        min-height:64px;
+
+        padding:
+            12px 8px;
+
+        font-size:15px;
+
+    }
+
 
     .homeTypeButtons{
 
@@ -412,7 +594,8 @@ button:active{
 
         min-height:64px;
 
-        padding:12px;
+        padding:
+            12px;
 
         font-size:15px;
 
