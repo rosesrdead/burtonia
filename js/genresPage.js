@@ -1,62 +1,36 @@
 /* ===================================
    BURTONIA - APP INDÍTÁS
-   Javítás:
-   Az index.html jelenlegi verziója
-   nem tölti be külön az app.js fájlt,
-   ezért innen indítjuk el az alkalmazást.
 =================================== */
 
-
-/* ===================================
-   INDÍTÁSI ÁLLAPOT
-=================================== */
-
-let burtoniaAppStarted = false;
+let burtoniaStarted = false;
 
 
-/* ===================================
-   ALKALMAZÁS INDÍTÁSA
-=================================== */
+async function startBurtonia() {
 
-async function startBurtoniaApp() {
-
-    /* Ne induljon el kétszer. */
-
-    if (burtoniaAppStarted) {
-
+    if (burtoniaStarted) {
         return;
-
     }
 
-
-    burtoniaAppStarted = true;
+    burtoniaStarted = true;
 
 
     try {
 
         /* ===================================
-           HELYI ADATBÁZIS
+           HELYI ADATOK
         =================================== */
 
-        if (
-            typeof loadDB === "function"
-        ) {
-
+        if (typeof loadDB === "function") {
             await loadDB();
-
         }
 
 
         /* ===================================
-           BAL OLDALI PANEL + OLDALAK
+           OLDAL MEGJELENÍTÉSE
         =================================== */
 
-        if (
-            typeof render === "function"
-        ) {
-
+        if (typeof render === "function") {
             render();
-
         }
 
 
@@ -64,34 +38,34 @@ async function startBurtoniaApp() {
            FELHŐ
         =================================== */
 
-        if (
-            typeof initCloudSync === "function"
-        ) {
+        if (typeof initCloudSync === "function") {
 
-            await initCloudSync();
+            try {
+
+                await initCloudSync();
+
+            } catch (error) {
+
+                console.warn(
+                    "BURTONIA: felhő inicializálási hiba:",
+                    error
+                );
+
+            }
 
         }
 
 
         /* ===================================
-           FELHŐ UTÁNI ÚJRARENDERELÉS
+           ÚJRARENDERELÉS
         =================================== */
 
-        if (
-            typeof render === "function"
-        ) {
-
+        if (typeof render === "function") {
             render();
-
         }
 
 
     } catch (error) {
-
-        /*
-           Ha valami történik induláskor,
-           ne maradjon teljesen üres az alkalmazás.
-        */
 
         console.error(
             "BURTONIA indítási hiba:",
@@ -100,18 +74,15 @@ async function startBurtoniaApp() {
 
 
         /*
-           Megpróbáljuk legalább a helyi
-           navigációt megjeleníteni.
+           Ha a felhő vagy valamelyik
+           opcionális rész hibázik, a
+           helyi könyvtár akkor is működjön.
         */
 
         try {
 
-            if (
-                typeof render === "function"
-            ) {
-
+            if (typeof render === "function") {
                 render();
-
             }
 
         } catch (renderError) {
@@ -132,20 +103,11 @@ async function startBurtoniaApp() {
    INDÍTÁS
 =================================== */
 
-/*
-   Mivel ez a fájl az index.html végén,
-   a HTML elemek után töltődik be,
-   ezért azonnal biztonságosan
-   elindítható.
-*/
-
-if (
-    document.readyState === "loading"
-) {
+if (document.readyState === "loading") {
 
     document.addEventListener(
         "DOMContentLoaded",
-        startBurtoniaApp,
+        startBurtonia,
         {
             once: true
         }
@@ -153,6 +115,6 @@ if (
 
 } else {
 
-    startBurtoniaApp();
+    startBurtonia();
 
 }
