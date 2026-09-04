@@ -1,3 +1,4 @@
+```javascript
 /* ===================================
    BURTONIA - Modal
 =================================== */
@@ -104,38 +105,34 @@ function renderGenreOptions(
 
     /* ===================================
        MEGFELELŐ MŰFAJLISTA
+       
+       .slice() azért kell, hogy az
+       eredeti tömböt ne módosítsuk.
     =================================== */
 
-   const genres = (
-    type === "book"
-        ? bookGenres
-        : mediaGenres
-).slice().sort(
-    (a, b) =>
-        a.localeCompare(
-            b,
-            "hu",
-            {
-                sensitivity: "base"
-            }
-        )
-);
+    const genres = (
+        type === "book"
+            ? bookGenres
+            : mediaGenres
+    ).slice();
+
 
     /* ===================================
-       ABC SORREND
+       MAGYAR ABC SZERINTI RENDEZÉS
        
-       Magyar ékezetes betűket is
-       megfelelően kezel.
+       Az ékezetes betűket is megfelelően
+       kezeli: Á, É, Í, Ó, Ö, Ő, Ú, Ü, Ű.
     =================================== */
 
     genres.sort(
-        function(a, b) {
+        (a, b) => {
 
             return a.localeCompare(
                 b,
-                "hu",
+                "hu-HU",
                 {
-                    sensitivity: "base"
+                    sensitivity: "base",
+                    numeric: false
                 }
             );
 
@@ -169,6 +166,12 @@ function renderGenreOptions(
             checkbox.value =
                 genre;
 
+
+            /*
+               Szerkesztéskor a már kiválasztott
+               műfajok továbbra is bepipálva
+               maradnak.
+            */
 
             checkbox.checked =
                 selectedGenres.includes(
@@ -314,200 +317,16 @@ function openModal(
        LISTÁK
     =================================== */
 
-    if (
-        typeof renderListCheckboxes ===
-        "function"
-    ) {
-
-        renderListCheckboxes(
-            []
-        );
-
-    }
-
-
-    /* ===================================
-       MODAL
-    =================================== */
-
-    if (
-        typeof updateModalForType ===
-        "function"
-    ) {
-
-        updateModalForType(
-            type
-        );
-
-    }
-
-}
-
-
-/* ===================================
-   TÍPUS VÁLTOZÁS
-=================================== */
-
-function handleTypeChange() {
-
-    if (!itemType) {
-
-        return;
-
-    }
-
-
-    renderGenreOptions(
-        itemType.value,
+    renderListCheckboxes(
         []
     );
 
 
-    if (
-        typeof updateModalForType ===
-        "function"
-    ) {
+    /* ===================================
+       FAB BEZÁRÁSA
+    =================================== */
 
-        updateModalForType(
-            itemType.value
-        );
-
-    }
-
-}
-
-
-/* ===================================
-   EDIT MODAL
-=================================== */
-
-function openEditModal(
-    item
-) {
-
-    if (!item) {
-
-        return;
-
-    }
-
-
-    editMode =
-        true;
-
-
-    selectedItem =
-        item;
-
-
-    modal.style.display =
-        "flex";
-
-
-    const typeTitles = {
-
-        movie:
-            "Film szerkesztése",
-
-        series:
-            "Sorozat szerkesztése",
-
-        anime:
-            "Anime szerkesztése",
-
-        book:
-            "Könyv szerkesztése"
-
-    };
-
-
-    modalTitle.textContent =
-        typeTitles[item.type] ||
-        "Elem szerkesztése";
-
-
-    itemTitle.value =
-        item.title ||
-        "";
-
-
-    itemOriginalTitle.value =
-        item.originalTitle ||
-        "";
-
-
-    itemCover.value =
-        item.cover ||
-        "";
-
-
-    itemCoverUrl.value =
-        item.coverUrl ||
-        "";
-
-
-    itemFinished.value =
-        item.finished ||
-        "";
-
-
-    itemYear.value =
-        item.year ||
-        "";
-
-
-    itemType.value =
-        item.type ||
-        "movie";
-
-
-    itemStatus.value =
-        item.status ||
-        "planned";
-
-
-    updateCoverPreview(
-        item.coverUrl ||
-        item.cover ||
-        ""
-    );
-
-
-    refreshStatusUI();
-
-
-    renderGenreOptions(
-        item.type,
-        Array.isArray(item.genres)
-            ? item.genres
-            : []
-    );
-
-
-    if (
-        typeof renderListCheckboxes ===
-        "function"
-    ) {
-
-        renderListCheckboxes(
-            Array.isArray(item.lists)
-                ? item.lists
-                : []
-        );
-
-    }
-
-
-    if (
-        typeof updateModalForType ===
-        "function"
-    ) {
-
-        updateModalForType(
-            item.type
-        );
-
-    }
+    closeFab();
 
 }
 
@@ -517,13 +336,6 @@ function openEditModal(
 =================================== */
 
 function closeModal() {
-
-    if (!modal) {
-
-        return;
-
-    }
-
 
     modal.style.display =
         "none";
@@ -540,30 +352,29 @@ function closeModal() {
 
 
 /* ===================================
-   KATTINTÁS A HÁTTÉRRE
+   MÉGSE
 =================================== */
 
-if (
-    typeof modal !== "undefined" &&
-    modal
-) {
+cancelItem.onclick =
+    closeModal;
 
-    modal.addEventListener(
-        "click",
-        function(event) {
 
-            if (
-                event.target === modal
-            ) {
+/* ===================================
+   HÁTTÉRRE KATTINTÁS
+=================================== */
 
-                closeModal();
+modal.onclick =
+    e => {
 
-            }
+        if (
+            e.target === modal
+        ) {
+
+            closeModal();
 
         }
-    );
 
-}
+    };
 
 
 /* ===================================
@@ -572,17 +383,18 @@ if (
 
 document.addEventListener(
     "keydown",
-    function(event) {
+    e => {
 
         if (
-            event.key === "Escape" &&
-            modal &&
-            modal.style.display === "flex"
+            e.key === "Escape"
         ) {
 
             closeModal();
+
+            closeFab();
 
         }
 
     }
 );
+```
