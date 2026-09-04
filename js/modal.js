@@ -4,14 +4,176 @@
 
 
 /* ===================================
+   MŰFAJOK
+=================================== */
+
+function renderGenreOptions(
+    type,
+    selectedGenres = []
+) {
+
+    const container =
+        document.getElementById(
+            "genreContainer"
+        );
+
+
+    if (!container) {
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        "";
+
+
+    /* ===================================
+       FILM / SOROZAT / ANIME
+    =================================== */
+
+    const mediaGenres = [
+
+        "Akció",
+        "Animáció",
+        "Anime",
+        "Családi",
+        "Dokumentum",
+        "Dráma",
+        "Fantasy",
+        "Filmdráma",
+        "Független film",
+        "Gyerek",
+        "Háborús",
+        "Horror",
+        "Kaland",
+        "Katasztrófa",
+        "Krimi",
+        "Misztikus",
+        "Musical",
+        "Paródia",
+        "Romantikus",
+        "Rövidfilm",
+        "Sci-Fi",
+        "Stop motion",
+        "Szitkom",
+        "Thriller",
+        "Történelmi",
+        "Western",
+        "Vígjáték",
+        "Életrajzi"
+
+    ];
+
+
+    /* ===================================
+       KÖNYVEK
+    =================================== */
+
+    const bookGenres = [
+
+        "Fantasy",
+        "Krimi",
+        "Thriller",
+        "Romantikus",
+        "Sci-Fi",
+        "Történelmi",
+        "Életrajz",
+        "Ismeretterjesztő",
+        "Horror",
+        "Ifjúsági",
+        "Gyermek",
+        "Pszichológia",
+        "Kaland",
+        "Dráma",
+        "Művészet",
+        "Életmód",
+        "Önéletrajz",
+        "Irodalom",
+        "Novella",
+        "Vers",
+        "Mesekönyv",
+        "Életrajzi",
+        "Vallás",
+        "Filozófia",
+        "Tudomány"
+
+    ];
+
+
+    const genres =
+        type === "book"
+            ? bookGenres
+            : mediaGenres;
+
+
+    genres.forEach(
+        genre => {
+
+            const label =
+                document.createElement(
+                    "label"
+                );
+
+
+            const checkbox =
+                document.createElement(
+                    "input"
+                );
+
+
+            checkbox.type =
+                "checkbox";
+
+
+            checkbox.value =
+                genre;
+
+
+            checkbox.checked =
+                selectedGenres.includes(
+                    genre
+                );
+
+
+            label.appendChild(
+                checkbox
+            );
+
+
+            label.appendChild(
+                document.createTextNode(
+                    " " + genre
+                )
+            );
+
+
+            container.appendChild(
+                label
+            );
+
+        }
+    );
+
+}
+
+
+/* ===================================
    MODAL MEGNYITÁSA
 =================================== */
 
-function openModal(type) {
+function openModal(
+    type = "movie"
+) {
 
-    editMode = false;
+    editMode =
+        false;
 
-    selectedItem = null;
+
+    selectedItem =
+        null;
+
 
     modal.style.display =
         "flex";
@@ -47,24 +209,37 @@ function openModal(type) {
        ALAPADATOK TÖRLÉSE
     =================================== */
 
-    itemTitle.value = "";
+    itemTitle.value =
+        "";
 
-    itemOriginalTitle.value = "";
 
-    itemCover.value = "";
+    itemOriginalTitle.value =
+        "";
 
-    itemCoverUrl.value = "";
 
-    itemFinished.value = "";
+    itemCover.value =
+        "";
 
-    itemYear.value = "";
+
+    itemCoverUrl.value =
+        "";
+
+
+    itemFinished.value =
+        "";
+
+
+    itemYear.value =
+        "";
 
 
     /* ===================================
        BORÍTÓ
     =================================== */
 
-    updateCoverPreview("");
+    updateCoverPreview(
+        ""
+    );
 
 
     /* ===================================
@@ -90,24 +265,19 @@ function openModal(type) {
        MŰFAJOK
     =================================== */
 
-    const genreCheckboxes =
-        document.querySelectorAll(
-            "#genreContainer input[type='checkbox']"
-        );
-
-
-    genreCheckboxes.forEach(cb => {
-
-        cb.checked = false;
-
-    });
+    renderGenreOptions(
+        type,
+        []
+    );
 
 
     /* ===================================
        LISTÁK
     =================================== */
 
-    renderListCheckboxes([]);
+    renderListCheckboxes(
+        []
+    );
 
 
     /* ===================================
@@ -129,9 +299,12 @@ function closeModal() {
         "none";
 
 
-    selectedItem = null;
+    selectedItem =
+        null;
 
-    editMode = false;
+
+    editMode =
+        false;
 
 }
 
@@ -148,59 +321,18 @@ cancelItem.onclick =
    HÁTTÉRRE KATTINTÁS
 =================================== */
 
-modal.onclick = (e) => {
+modal.onclick =
+    e => {
 
-    if (e.target === modal) {
+        if (
+            e.target === modal
+        ) {
 
-        closeModal();
+            closeModal();
 
-    }
+        }
 
-};
-
-
-/* ===================================
-   ÚJ FILM
-=================================== */
-
-addMovie.onclick = () => {
-
-    openModal("movie");
-
-};
-
-
-/* ===================================
-   ÚJ SOROZAT
-=================================== */
-
-addSeries.onclick = () => {
-
-    openModal("series");
-
-};
-
-
-/* ===================================
-   ÚJ ANIME
-=================================== */
-
-addAnime.onclick = () => {
-
-    openModal("anime");
-
-};
-
-
-/* ===================================
-   ÚJ KÖNYV
-=================================== */
-
-addBook.onclick = () => {
-
-    openModal("book");
-
-};
+    };
 
 
 /* ===================================
@@ -211,7 +343,9 @@ document.addEventListener(
     "keydown",
     e => {
 
-        if (e.key === "Escape") {
+        if (
+            e.key === "Escape"
+        ) {
 
             closeModal();
 
