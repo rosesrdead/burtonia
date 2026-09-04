@@ -4,13 +4,15 @@
 
 
 /* ===================================
-   FAB MENÜ MEGNYITÁSA / BEZÁRÁSA
+   MENÜ MEGNYITÁSA / BEZÁRÁSA
 =================================== */
 
-function toggleFab() {
+function toggleFabMenu() {
 
     if (!fab || !fabMenu) {
+
         return;
+
     }
 
 
@@ -20,11 +22,13 @@ function toggleFab() {
 
     if (isOpen) {
 
-        fabMenu.style.display = "none";
+        fabMenu.style.display =
+            "none";
 
     } else {
 
-        fabMenu.style.display = "flex";
+        fabMenu.style.display =
+            "flex";
 
     }
 
@@ -32,16 +36,20 @@ function toggleFab() {
 
 
 /* ===================================
-   FAB BEZÁRÁSA
+   MENÜ BEZÁRÁSA
 =================================== */
 
 function closeFab() {
 
     if (!fabMenu) {
+
         return;
+
     }
 
-    fabMenu.style.display = "none";
+
+    fabMenu.style.display =
+        "none";
 
 }
 
@@ -50,17 +58,20 @@ function closeFab() {
    ÚJ ELEM
 =================================== */
 
-function handleAddNewItem() {
+function addNewBurtoniaItem() {
 
     closeFab();
 
 
     /*
-       Alapértelmezett típus:
-       film
+       A modal.js-ben található
+       openModal() nyitja meg az
+       új elem ablakot.
     */
 
-    if (typeof openModal === "function") {
+    if (
+        typeof openModal === "function"
+    ) {
 
         openModal("movie");
 
@@ -69,69 +80,87 @@ function handleAddNewItem() {
     }
 
 
-    /*
-       Biztonsági tartalék:
-       ha a modal.js valamiért később
-       töltődne be.
-    */
-
-    console.warn(
-        "BURTONIA: openModal() nem érhető el."
+    console.error(
+        "BURTONIA: az openModal() nem érhető el."
     );
 
 }
 
 
 /* ===================================
-   FAB ÉS MENÜ BEKÖTÉSE
+   FAB GOMB
 =================================== */
 
 function setupFab() {
 
     if (fab) {
 
-        fab.onclick = function(event) {
+        fab.onclick =
+            function(event) {
 
-            event.preventDefault();
-            event.stopPropagation();
+                event.preventDefault();
 
-            toggleFab();
+                event.stopPropagation();
 
-        };
+                toggleFabMenu();
+
+            };
 
     }
 
+
+    /* ===================================
+       ÚJ HOZZÁADÁSA
+    =================================== */
 
     if (addNewItem) {
 
-        addNewItem.onclick = function(event) {
+        addNewItem.onclick =
+            function(event) {
 
-            event.preventDefault();
-            event.stopPropagation();
+                event.preventDefault();
 
-            handleAddNewItem();
+                event.stopPropagation();
 
-        };
+                addNewBurtoniaItem();
+
+            };
 
     }
 
 
-    /*
-       A „+” menü bezárása,
-       ha máshova kattintunk.
-    */
+    /* ===================================
+       ÚJ LISTA
+    =================================== */
+
+    if (addList) {
+
+        /*
+           A lista kezelést a lists.js
+           már kezeli.
+
+           Itt nem írjuk felül.
+        */
+
+    }
+
+
+    /* ===================================
+       KATTINTÁS KÍVÜL
+    =================================== */
 
     document.addEventListener(
         "click",
         function(event) {
 
             if (!fab || !fabMenu) {
+
                 return;
+
             }
 
 
             if (
-                event.target === fab ||
                 fab.contains(event.target) ||
                 fabMenu.contains(event.target)
             ) {
@@ -146,14 +175,36 @@ function setupFab() {
         }
     );
 
+
+    /* ===================================
+       ESCAPE
+    =================================== */
+
+    document.addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key === "Escape"
+            ) {
+
+                closeFab();
+
+            }
+
+        }
+    );
+
 }
 
 
 /* ===================================
-   DOM BETÖLTÉS UTÁN
+   INDÍTÁS
 =================================== */
 
-if (document.readyState === "loading") {
+if (
+    document.readyState === "loading"
+) {
 
     document.addEventListener(
         "DOMContentLoaded",
