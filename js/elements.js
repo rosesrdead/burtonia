@@ -4,120 +4,174 @@
 
 
 const homePage =
-    document.getElementById("homePage");
+    document.getElementById(
+        "homePage"
+    );
 
 
 const libraryPage =
-    document.getElementById("libraryPage");
+    document.getElementById(
+        "libraryPage"
+    );
 
 
 const browsePage =
-    document.getElementById("browsePage");
+    document.getElementById(
+        "browsePage"
+    );
 
 
 const sidebarItems =
-    document.getElementById("sidebarItems");
+    document.getElementById(
+        "sidebarItems"
+    );
 
 
 const moviesGrid =
-    document.getElementById("moviesGrid");
+    document.getElementById(
+        "moviesGrid"
+    );
 
 
 const seriesGrid =
-    document.getElementById("seriesGrid");
+    document.getElementById(
+        "seriesGrid"
+    );
 
 
 const movieCount =
-    document.getElementById("movieCount");
+    document.getElementById(
+        "movieCount"
+    );
 
 
 const seriesCount =
-    document.getElementById("seriesCount");
+    document.getElementById(
+        "seriesCount"
+    );
 
 
 const listStats =
-    document.getElementById("listStats");
+    document.getElementById(
+        "listStats"
+    );
 
 
 const fab =
-    document.getElementById("fab");
+    document.getElementById(
+        "fab"
+    );
 
 
 const fabMenu =
-    document.getElementById("fabMenu");
+    document.getElementById(
+        "fabMenu"
+    );
 
 
-const addMovie =
-    document.getElementById("addMovie");
+/* ===================================
+   ÚJ HOZZÁADÁSA
+=================================== */
+
+const addNewItem =
+    document.getElementById(
+        "addNewItem"
+    );
 
 
-const addSeries =
-    document.getElementById("addSeries");
-
-
-const addAnime =
-    document.getElementById("addAnime");
-
-
-const addBook =
-    document.getElementById("addBook");
-
+/* ===================================
+   ÚJ LISTA
+=================================== */
 
 const addList =
-    document.getElementById("addList");
+    document.getElementById(
+        "addList"
+    );
 
+
+/* ===================================
+   MODAL
+=================================== */
 
 const modal =
-    document.getElementById("modal");
+    document.getElementById(
+        "modal"
+    );
 
 
 const modalTitle =
-    document.getElementById("modalTitle");
+    document.getElementById(
+        "modalTitle"
+    );
 
 
 const itemTitle =
-    document.getElementById("itemTitle");
+    document.getElementById(
+        "itemTitle"
+    );
 
 
 const itemOriginalTitle =
-    document.getElementById("itemOriginalTitle");
+    document.getElementById(
+        "itemOriginalTitle"
+    );
 
 
 const itemCover =
-    document.getElementById("itemCover");
+    document.getElementById(
+        "itemCover"
+    );
 
 
 const itemCoverUrl =
-    document.getElementById("itemCoverUrl");
+    document.getElementById(
+        "itemCoverUrl"
+    );
 
 
 const itemType =
-    document.getElementById("itemType");
+    document.getElementById(
+        "itemType"
+    );
 
 
 const itemFinished =
-    document.getElementById("itemFinished");
+    document.getElementById(
+        "itemFinished"
+    );
 
 
 const itemYear =
-    document.getElementById("itemYear");
+    document.getElementById(
+        "itemYear"
+    );
 
 
 const itemStatus =
-    document.getElementById("itemStatus");
+    document.getElementById(
+        "itemStatus"
+    );
 
 
 const cancelItem =
-    document.getElementById("cancelItem");
+    document.getElementById(
+        "cancelItem"
+    );
 
 
 const deleteItem =
-    document.getElementById("deleteItem");
+    document.getElementById(
+        "deleteItem"
+    );
 
 
 const saveItem =
-    document.getElementById("saveItem");
+    document.getElementById(
+        "saveItem"
+    );
 
 
 const coverPreview =
-    document.getElementById("coverPreview");
+    document.getElementById(
+        "coverPreview"
+    );
