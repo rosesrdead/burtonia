@@ -1,153 +1,497 @@
-/* BURTONIA - Lists / Navigation */
+/* ===================================
+   BURTONIA - LISTS / NAVIGATION
+=================================== */
 
-function renderLists(){
-    if(!sidebarItems) return;
 
-    sidebarItems.innerHTML="";
+/* ===================================
+   BAL OLDALI PANEL
+=================================== */
 
-    const addItem=(text,view="library",list="all")=>{
-        const row=document.createElement("div");
+function renderLists() {
 
-        row.className=
-            currentView===view&&
-            String(currentList)===String(list)
-                ? "sidebarItem active"
-                : "sidebarItem";
+    if (!sidebarItems) {
+        return;
+    }
 
-        row.textContent=text;
 
-        row.onclick=()=>{
-            currentView=view;
-            currentList=list;
-            render();
+    sidebarItems.innerHTML = "";
+
+
+    /* ===================================
+       ALAP NAVIGÁCIÓ
+    =================================== */
+
+    const addNavigationItem =
+        function(
+            text,
+            view,
+            list
+        ) {
+
+            const row =
+                document.createElement("div");
+
+
+            row.className =
+                (
+                    currentView === view &&
+                    String(currentList) === String(list)
+                )
+                    ? "sidebarItem active"
+                    : "sidebarItem";
+
+
+            row.textContent = text;
+
+
+            row.onclick =
+                function() {
+
+                    currentView = view;
+                    currentList = list;
+
+                    render();
+
+                };
+
+
+            sidebarItems.appendChild(row);
+
         };
 
-        sidebarItems.appendChild(row);
-    };
 
-    addItem("🏠 Kezdőlap","home","all");
-    addItem("🎭 Böngészés","browse","all");
-    addItem("📚 Könyvtár","library","all");
+    addNavigationItem(
+        "🏠 Kezdőlap",
+        "home",
+        "all"
+    );
 
-    (Array.isArray(db.lists)?db.lists:[]).forEach(list=>{
-        const row=document.createElement("div");
 
-        row.className=
-            currentView==="library"&&
-            String(currentList)===String(list.id)
-                ? "sidebarItem active"
-                : "sidebarItem";
+    addNavigationItem(
+        "🎭 Böngészés",
+        "browse",
+        "all"
+    );
 
-        row.textContent=
-            `${list.icon||"📝"} ${list.name||"Névtelen lista"}`;
 
-        let timer;
+    addNavigationItem(
+        "📚 Könyvtár",
+        "library",
+        "all"
+    );
 
-        row.onclick=()=>{
-            clearTimeout(timer);
 
-            timer=setTimeout(()=>{
-                currentView="library";
-                currentList=list.id;
-                render();
-            },220);
-        };
+    /* ===================================
+       SAJÁT LISTÁK
+    =================================== */
 
-        row.ondblclick=e=>{
-            e.preventDefault();
-            e.stopPropagation();
-            clearTimeout(timer);
-            editList(list);
-        };
+    const lists =
+        Array.isArray(db.lists)
+            ? db.lists
+            : [];
 
-        sidebarItems.appendChild(row);
-    });
+
+    lists.forEach(
+        function(list) {
+
+            const row =
+                document.createElement("div");
+
+
+            row.className =
+                (
+                    currentView === "library" &&
+                    String(currentList) === String(list.id)
+                )
+                    ? "sidebarItem active"
+                    : "sidebarItem";
+
+
+            row.textContent =
+                (
+                    list.icon || "📝"
+                ) +
+                " " +
+                (
+                    list.name || "Névtelen lista"
+                );
+
+
+            let clickTimer = null;
+
+
+            /*
+               Egy kattintás:
+               lista megnyitása
+            */
+
+            row.onclick =
+                function(event) {
+
+                    event.preventDefault();
+
+
+                    clearTimeout(
+                        clickTimer
+                    );
+
+
+                    clickTimer =
+                        setTimeout(
+                            function() {
+
+                                currentView =
+                                    "library";
+
+                                currentList =
+                                    list.id;
+
+                                render();
+
+                            },
+                            220
+                        );
+
+                };
+
+
+            /*
+               Dupla kattintás:
+               lista szerkesztése
+            */
+
+            row.ondblclick =
+                function(event) {
+
+                    event.preventDefault();
+                    event.stopPropagation();
+
+
+                    clearTimeout(
+                        clickTimer
+                    );
+
+
+                    if (
+                        typeof editList === "function"
+                    ) {
+
+                        editList(list);
+
+                    }
+
+                };
+
+
+            sidebarItems.appendChild(row);
+
+        }
+    );
+
 }
 
 
-/* FŐ RENDER */
+/* ===================================
+   FŐ RENDER
+=================================== */
 
-function render(){
-    if(typeof db==="undefined") return;
+function render() {
 
-    db.items=Array.isArray(db.items)?db.items:[];
-    db.lists=Array.isArray(db.lists)?db.lists:[];
+    if (
+        typeof db === "undefined"
+    ) {
+
+        return;
+
+    }
+
+
+    if (!Array.isArray(db.items)) {
+        db.items = [];
+    }
+
+
+    if (!Array.isArray(db.lists)) {
+        db.lists = [];
+    }
+
+
+    /* ===================================
+       BAL OLDALI PANEL
+    =================================== */
 
     renderLists();
 
-    if(homePage) homePage.style.display="none";
-    if(browsePage) browsePage.style.display="none";
-    if(libraryPage) libraryPage.style.display="none";
 
-    if(currentView==="home"){
-        if(homePage) homePage.style.display="block";
-        if(typeof renderHome==="function") renderHome();
+    /* ===================================
+       OLDALAK ELREJTÉSE
+    =================================== */
 
-    }else if(currentView==="browse"){
-        if(browsePage) browsePage.style.display="block";
-        if(typeof renderBrowse==="function") renderBrowse();
-
-    }else{
-        if(libraryPage) libraryPage.style.display="block";
-        if(typeof renderItems==="function") renderItems();
+    if (homePage) {
+        homePage.style.display = "none";
     }
-}
 
 
-/* ÚJ LISTA */
+    if (browsePage) {
+        browsePage.style.display = "none";
+    }
 
-if(typeof addList!=="undefined"){
-    addList.onclick=()=>{
-        if(typeof closeFab==="function") closeFab();
 
-        const name=prompt("Új lista neve:");
-        if(name===null) return;
+    if (libraryPage) {
+        libraryPage.style.display = "none";
+    }
 
-        const value=name.trim();
-        if(!value) return;
 
-        if(db.lists.some(list=>
-            String(list.name||"")
-                .trim()
-                .toLowerCase()===value.toLowerCase()
-        )){
-            alert("Ez a lista már létezik.");
-            return;
+    /* ===================================
+       KEZDŐLAP
+    =================================== */
+
+    if (currentView === "home") {
+
+        if (homePage) {
+            homePage.style.display = "block";
         }
 
-        const icon=prompt("Lista emoji:","📝");
-        if(icon===null) return;
 
-        db.lists.push({
-            id:Date.now(),
-            name:value,
-            icon:icon.trim()||"📝"
-        });
+        if (
+            typeof renderHome === "function"
+        ) {
 
-        saveDB();
+            renderHome();
 
-        currentView="library";
-        currentList="all";
+        }
 
-        render();
-    };
+
+        return;
+
+    }
+
+
+    /* ===================================
+       BÖNGÉSZÉS
+    =================================== */
+
+    if (currentView === "browse") {
+
+        if (browsePage) {
+            browsePage.style.display = "block";
+        }
+
+
+        if (
+            typeof renderBrowse === "function"
+        ) {
+
+            renderBrowse();
+
+        }
+
+
+        return;
+
+    }
+
+
+    /* ===================================
+       KÖNYVTÁR
+    =================================== */
+
+    if (libraryPage) {
+        libraryPage.style.display = "block";
+    }
+
+
+    if (
+        typeof renderItems === "function"
+    ) {
+
+        renderItems();
+
+    }
+
 }
 
 
-/* LISTA SZERKESZTÉSE */
+/* ===================================
+   ÚJ LISTA
+=================================== */
 
-function editList(list){
-    if(!list) return;
+function handleAddList() {
 
-    document.getElementById("listEditModal")?.remove();
+    if (
+        typeof closeFab === "function"
+    ) {
 
-    const overlay=document.createElement("div");
-    overlay.id="listEditModal";
+        closeFab();
 
-    const box=document.createElement("div");
-    box.className="listEditBox";
+    }
 
-    box.innerHTML=`
+
+    const name =
+        prompt(
+            "Új lista neve:"
+        );
+
+
+    if (name === null) {
+        return;
+    }
+
+
+    const value =
+        name.trim();
+
+
+    if (!value) {
+
+        alert(
+            "A lista neve nem lehet üres."
+        );
+
+        return;
+
+    }
+
+
+    if (
+        !Array.isArray(db.lists)
+    ) {
+
+        db.lists = [];
+
+    }
+
+
+    const alreadyExists =
+        db.lists.some(
+            function(list) {
+
+                return (
+                    String(list.name || "")
+                        .trim()
+                        .toLowerCase() ===
+                    value.toLowerCase()
+                );
+
+            }
+        );
+
+
+    if (alreadyExists) {
+
+        alert(
+            "Ez a lista már létezik."
+        );
+
+        return;
+
+    }
+
+
+    const icon =
+        prompt(
+            "Lista emoji:",
+            "📝"
+        );
+
+
+    if (icon === null) {
+        return;
+    }
+
+
+    db.lists.push({
+
+        id: Date.now(),
+
+        name: value,
+
+        icon:
+            icon.trim() || "📝"
+
+    });
+
+
+    saveDB();
+
+
+    currentView =
+        "library";
+
+
+    currentList =
+        "all";
+
+
+    render();
+
+}
+
+
+/* ===================================
+   ÚJ LISTA GOMB
+=================================== */
+
+function setupListButton() {
+
+    if (!addList) {
+        return;
+    }
+
+
+    addList.onclick =
+        function(event) {
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            handleAddList();
+
+        };
+
+}
+
+
+/* ===================================
+   LISTA SZERKESZTÉSE
+=================================== */
+
+function editList(list) {
+
+    if (!list) {
+        return;
+    }
+
+
+    const oldModal =
+        document.getElementById(
+            "listEditModal"
+        );
+
+
+    if (oldModal) {
+        oldModal.remove();
+    }
+
+
+    const overlay =
+        document.createElement("div");
+
+
+    overlay.id =
+        "listEditModal";
+
+
+    const box =
+        document.createElement("div");
+
+
+    box.className =
+        "listEditBox";
+
+
+    box.innerHTML = `
+
         <h2>📝 Lista szerkesztése</h2>
 
         <label>Lista neve</label>
@@ -155,7 +499,6 @@ function editList(list){
         <input
             id="editListName"
             type="text"
-            value="${escapeHtml(list.name||"")}"
         >
 
         <label>Emoji</label>
@@ -163,7 +506,6 @@ function editList(list){
         <input
             id="editListIcon"
             type="text"
-            value="${escapeHtml(list.icon||"📝")}"
         >
 
         <div class="listEditButtons">
@@ -181,136 +523,332 @@ function editList(list){
             </button>
 
         </div>
+
     `;
 
+
     overlay.appendChild(box);
-    document.body.appendChild(overlay);
 
-    const nameInput=
-        document.getElementById("editListName");
-
-    const iconInput=
-        document.getElementById("editListIcon");
+    document.body.appendChild(
+        overlay
+    );
 
 
-    /* MENTÉS */
-
-    document.getElementById("editListSave").onclick=()=>{
-        const name=nameInput.value.trim();
-
-        if(!name){
-            alert("A lista neve nem lehet üres.");
-            return;
-        }
-
-        if(db.lists.some(item=>
-            item.id!==list.id&&
-            String(item.name||"")
-                .trim()
-                .toLowerCase()===name.toLowerCase()
-        )){
-            alert("Ez a lista már létezik.");
-            return;
-        }
-
-        list.name=name;
-        list.icon=iconInput.value.trim()||"📝";
-
-        saveDB();
-
-        overlay.remove();
-        render();
-    };
-
-
-    /* TÖRLÉS */
-
-    document.getElementById("editListDelete").onclick=()=>{
-        if(!confirm(
-            `Biztosan törlöd a(z) "${list.name}" listát?\n\n`+
-            "A listában lévő filmek, sorozatok, animék és könyvek nem törlődnek."
-        )) return;
-
-        db.lists=db.lists.filter(
-            item=>String(item.id)!==String(list.id)
+    const nameInput =
+        document.getElementById(
+            "editListName"
         );
 
-        db.items.forEach(item=>{
-            if(Array.isArray(item.lists)){
-                item.lists=item.lists.filter(
-                    id=>String(id)!==String(list.id)
+
+    const iconInput =
+        document.getElementById(
+            "editListIcon"
+        );
+
+
+    nameInput.value =
+        list.name || "";
+
+
+    iconInput.value =
+        list.icon || "📝";
+
+
+    /* ===================================
+       MENTÉS
+    =================================== */
+
+    document.getElementById(
+        "editListSave"
+    ).onclick =
+        function() {
+
+            const name =
+                nameInput.value.trim();
+
+
+            if (!name) {
+
+                alert(
+                    "A lista neve nem lehet üres."
                 );
+
+                return;
+
             }
-        });
-
-        saveDB();
-
-        overlay.remove();
-
-        currentView="library";
-        currentList="all";
-
-        render();
-    };
 
 
-    /* MÉGSE */
+            const exists =
+                db.lists.some(
+                    function(other) {
 
-    document.getElementById("editListCancel").onclick=()=>{
-        overlay.remove();
-    };
+                        return (
+                            other.id !== list.id &&
+                            String(
+                                other.name || ""
+                            )
+                                .trim()
+                                .toLowerCase() ===
+                            name.toLowerCase()
+                        );
+
+                    }
+                );
 
 
-    /* KATTINTÁS A HÁTTÉRRE */
+            if (exists) {
 
-    overlay.onclick=e=>{
-        if(e.target===overlay) overlay.remove();
-    };
+                alert(
+                    "Ez a lista már létezik."
+                );
+
+                return;
+
+            }
+
+
+            list.name =
+                name;
+
+
+            list.icon =
+                iconInput.value.trim() ||
+                "📝";
+
+
+            saveDB();
+
+
+            overlay.remove();
+
+
+            currentView =
+                "library";
+
+
+            currentList =
+                list.id;
+
+
+            render();
+
+        };
+
+
+    /* ===================================
+       TÖRLÉS
+    =================================== */
+
+    document.getElementById(
+        "editListDelete"
+    ).onclick =
+        function() {
+
+            if (
+                !confirm(
+                    'Biztosan törlöd a(z) "' +
+                    (list.name || "") +
+                    '" listát?\n\n' +
+                    "A listában lévő elemek nem törlődnek."
+                )
+            ) {
+
+                return;
+
+            }
+
+
+            db.lists =
+                db.lists.filter(
+                    function(item) {
+
+                        return (
+                            String(item.id) !==
+                            String(list.id)
+                        );
+
+                    }
+                );
+
+
+            db.items.forEach(
+                function(item) {
+
+                    if (
+                        Array.isArray(
+                            item.lists
+                        )
+                    ) {
+
+                        item.lists =
+                            item.lists.filter(
+                                function(id) {
+
+                                    return (
+                                        String(id) !==
+                                        String(list.id)
+                                    );
+
+                                }
+                            );
+
+                    }
+
+                }
+            );
+
+
+            saveDB();
+
+
+            overlay.remove();
+
+
+            currentView =
+                "library";
+
+
+            currentList =
+                "all";
+
+
+            render();
+
+        };
+
+
+    /* ===================================
+       MÉGSE
+    =================================== */
+
+    document.getElementById(
+        "editListCancel"
+    ).onclick =
+        function() {
+
+            overlay.remove();
+
+        };
+
+
+    /* ===================================
+       HÁTTÉR
+    =================================== */
+
+    overlay.onclick =
+        function(event) {
+
+            if (
+                event.target === overlay
+            ) {
+
+                overlay.remove();
+
+            }
+
+        };
 
 
     nameInput.focus();
     nameInput.select();
+
 }
 
 
-/* HTML BIZTONSÁG */
+/* ===================================
+   LISTA TÖRLÉS KOMPATIBILITÁS
+=================================== */
 
-function escapeHtml(value){
-    return String(value)
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-}
+function deleteList(list) {
+
+    if (!list) {
+        return;
+    }
 
 
-/* KOMPATIBILITÁS */
+    if (
+        !confirm(
+            'Biztosan törlöd a(z) "' +
+            (list.name || "") +
+            '" listát?'
+        )
+    ) {
 
-function deleteList(list){
-    if(!list) return;
+        return;
 
-    if(!confirm(
-        `Biztosan törlöd a(z) "${list.name}" listát?\n\n`+
-        "A listában lévő filmek, sorozatok, animék és könyvek nem törlődnek."
-    )) return;
+    }
 
-    db.lists=db.lists.filter(
-        item=>String(item.id)!==String(list.id)
+
+    db.lists =
+        db.lists.filter(
+            function(item) {
+
+                return (
+                    String(item.id) !==
+                    String(list.id)
+                );
+
+            }
+        );
+
+
+    db.items.forEach(
+        function(item) {
+
+            if (
+                Array.isArray(item.lists)
+            ) {
+
+                item.lists =
+                    item.lists.filter(
+                        function(id) {
+
+                            return (
+                                String(id) !==
+                                String(list.id)
+                            );
+
+                        }
+                    );
+
+            }
+
+        }
     );
 
-    db.items.forEach(item=>{
-        if(Array.isArray(item.lists)){
-            item.lists=item.lists.filter(
-                id=>String(id)!==String(list.id)
-            );
-        }
-    });
 
     saveDB();
 
-    currentView="library";
-    currentList="all";
+
+    currentView =
+        "library";
+
+
+    currentList =
+        "all";
+
 
     render();
+
+}
+
+
+/* ===================================
+   INDÍTÁSKOR GOMB BEKÖTÉSE
+=================================== */
+
+if (document.readyState === "loading") {
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        setupListButton,
+        {
+            once: true
+        }
+    );
+
+} else {
+
+    setupListButton();
+
 }
