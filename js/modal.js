@@ -106,13 +106,20 @@ function renderGenreOptions(
        MEGFELELŐ MŰFAJLISTA
     =================================== */
 
-    const genres =
-        (
-            type === "book"
-                ? bookGenres
-                : mediaGenres
-        ).slice();
-
+   const genres = (
+    type === "book"
+        ? bookGenres
+        : mediaGenres
+).slice().sort(
+    (a, b) =>
+        a.localeCompare(
+            b,
+            "hu",
+            {
+                sensitivity: "base"
+            }
+        )
+);
 
     /* ===================================
        ABC SORREND
