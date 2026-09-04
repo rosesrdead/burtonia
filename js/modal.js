@@ -102,11 +102,43 @@ function renderGenreOptions(
     ];
 
 
-    const genres =
-        type === "book"
-            ? bookGenres
-            : mediaGenres;
+    /* ===================================
+       MEGFELELŐ MŰFAJLISTA
+    =================================== */
 
+    const genres =
+        (
+            type === "book"
+                ? bookGenres
+                : mediaGenres
+        ).slice();
+
+
+    /* ===================================
+       ABC SORREND
+       
+       Magyar ékezetes betűket is
+       megfelelően kezel.
+    =================================== */
+
+    genres.sort(
+        function(a, b) {
+
+            return a.localeCompare(
+                b,
+                "hu",
+                {
+                    sensitivity: "base"
+                }
+            );
+
+        }
+    );
+
+
+    /* ===================================
+       MŰFAJOK KIRAJZOLÁSA
+    =================================== */
 
     genres.forEach(
         genre => {
@@ -275,16 +307,200 @@ function openModal(
        LISTÁK
     =================================== */
 
-    renderListCheckboxes(
+    if (
+        typeof renderListCheckboxes ===
+        "function"
+    ) {
+
+        renderListCheckboxes(
+            []
+        );
+
+    }
+
+
+    /* ===================================
+       MODAL
+    =================================== */
+
+    if (
+        typeof updateModalForType ===
+        "function"
+    ) {
+
+        updateModalForType(
+            type
+        );
+
+    }
+
+}
+
+
+/* ===================================
+   TÍPUS VÁLTOZÁS
+=================================== */
+
+function handleTypeChange() {
+
+    if (!itemType) {
+
+        return;
+
+    }
+
+
+    renderGenreOptions(
+        itemType.value,
         []
     );
 
 
-    /* ===================================
-       FAB BEZÁRÁSA
-    =================================== */
+    if (
+        typeof updateModalForType ===
+        "function"
+    ) {
 
-    closeFab();
+        updateModalForType(
+            itemType.value
+        );
+
+    }
+
+}
+
+
+/* ===================================
+   EDIT MODAL
+=================================== */
+
+function openEditModal(
+    item
+) {
+
+    if (!item) {
+
+        return;
+
+    }
+
+
+    editMode =
+        true;
+
+
+    selectedItem =
+        item;
+
+
+    modal.style.display =
+        "flex";
+
+
+    const typeTitles = {
+
+        movie:
+            "Film szerkesztése",
+
+        series:
+            "Sorozat szerkesztése",
+
+        anime:
+            "Anime szerkesztése",
+
+        book:
+            "Könyv szerkesztése"
+
+    };
+
+
+    modalTitle.textContent =
+        typeTitles[item.type] ||
+        "Elem szerkesztése";
+
+
+    itemTitle.value =
+        item.title ||
+        "";
+
+
+    itemOriginalTitle.value =
+        item.originalTitle ||
+        "";
+
+
+    itemCover.value =
+        item.cover ||
+        "";
+
+
+    itemCoverUrl.value =
+        item.coverUrl ||
+        "";
+
+
+    itemFinished.value =
+        item.finished ||
+        "";
+
+
+    itemYear.value =
+        item.year ||
+        "";
+
+
+    itemType.value =
+        item.type ||
+        "movie";
+
+
+    itemStatus.value =
+        item.status ||
+        "planned";
+
+
+    updateCoverPreview(
+        item.coverUrl ||
+        item.cover ||
+        ""
+    );
+
+
+    refreshStatusUI();
+
+
+    renderGenreOptions(
+        item.type,
+        Array.isArray(item.genres)
+            ? item.genres
+            : []
+    );
+
+
+    if (
+        typeof renderListCheckboxes ===
+        "function"
+    ) {
+
+        renderListCheckboxes(
+            Array.isArray(item.lists)
+                ? item.lists
+                : []
+        );
+
+    }
+
+
+    if (
+        typeof updateModalForType ===
+        "function"
+    ) {
+
+        updateModalForType(
+            item.type
+        );
+
+    }
 
 }
 
@@ -294,6 +510,13 @@ function openModal(
 =================================== */
 
 function closeModal() {
+
+    if (!modal) {
+
+        return;
+
+    }
+
 
     modal.style.display =
         "none";
@@ -310,29 +533,30 @@ function closeModal() {
 
 
 /* ===================================
-   MÉGSE
+   KATTINTÁS A HÁTTÉRRE
 =================================== */
 
-cancelItem.onclick =
-    closeModal;
+if (
+    typeof modal !== "undefined" &&
+    modal
+) {
 
+    modal.addEventListener(
+        "click",
+        function(event) {
 
-/* ===================================
-   HÁTTÉRRE KATTINTÁS
-=================================== */
+            if (
+                event.target === modal
+            ) {
 
-modal.onclick =
-    e => {
+                closeModal();
 
-        if (
-            e.target === modal
-        ) {
-
-            closeModal();
+            }
 
         }
+    );
 
-    };
+}
 
 
 /* ===================================
@@ -341,15 +565,15 @@ modal.onclick =
 
 document.addEventListener(
     "keydown",
-    e => {
+    function(event) {
 
         if (
-            e.key === "Escape"
+            event.key === "Escape" &&
+            modal &&
+            modal.style.display === "flex"
         ) {
 
             closeModal();
-
-            closeFab();
 
         }
 
