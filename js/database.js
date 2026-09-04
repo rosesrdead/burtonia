@@ -32,20 +32,13 @@ let db = {
 };
 
 
-let currentView =
-    "home";
+let currentView = "home";
 
+let currentList = "all";
 
-let currentList =
-    "all";
+let selectedItem = null;
 
-
-let selectedItem =
-    null;
-
-
-let editMode =
-    false;
+let editMode = false;
 
 
 /* ===================================
@@ -60,7 +53,9 @@ async function loadDB() {
         );
 
 
-    /* ===== HELYI ADATOK ===== */
+    /* ===================================
+       HELYI ADATOK
+    =================================== */
 
     if (saved) {
 
@@ -82,7 +77,7 @@ async function loadDB() {
         } catch (error) {
 
             console.error(
-                "Hibás helyi adatbázis:",
+                "BURTONIA: hibás helyi adatbázis:",
                 error
             );
 
@@ -92,7 +87,7 @@ async function loadDB() {
 
 
     /* ===================================
-       BIZTONSÁGI ELLENŐRZÉSEK
+       BIZTONSÁGI ELLENŐRZÉS
     =================================== */
 
     if (!Array.isArray(db.lists)) {
@@ -123,20 +118,17 @@ async function loadDB() {
     }
 
 
-    /*
-       Régi listák esetén biztosítjuk
-       az emoji mezőt.
-    */
+    db.lists.forEach(
+        list => {
 
-    db.lists.forEach(list => {
+            if (!list.icon) {
 
-        if (!list.icon) {
+                list.icon = "📝";
 
-            list.icon = "📝";
+            }
 
         }
-
-    });
+    );
 
 
     /* ===================================
@@ -151,21 +143,6 @@ async function loadDB() {
 
     );
 
-
-    /*
-       FONTOS:
-
-       A felhőből való betöltést NEM
-       itt végezzük.
-
-       A cloudSync.js kezeli majd,
-       amikor már biztosan tudjuk,
-       hogy van-e bejelentkezett user.
-
-       Így nem tud üres helyi adatbázis
-       véletlenül ráírni a felhőre.
-    */
-
 }
 
 
@@ -174,8 +151,6 @@ async function loadDB() {
 =================================== */
 
 function saveDB() {
-
-    /* ===== HELYI MENTÉS ===== */
 
     localStorage.setItem(
 
@@ -186,7 +161,10 @@ function saveDB() {
     );
 
 
-    /* ===== FELHŐ ===== */
+    /*
+       Automatikus felhőszinkron,
+       ha a felhő már be van jelentkezve.
+    */
 
     if (
         typeof syncDBToCloud === "function"
@@ -197,3 +175,149 @@ function saveDB() {
     }
 
 }
+
+
+/* ===================================
+   BURTONIA INDÍTÁSA
+=================================== */
+
+let burtoniaAppStarted = false;
+
+
+async function startBurtoniaApp() {
+
+    if (burtoniaAppStarted) {
+
+        return;
+
+    }
+
+
+    burtoniaAppStarted = true;
+
+
+    try {
+
+        /* ===================================
+           HELYI ADATOK
+        =================================== */
+
+        await loadDB();
+
+
+        /* ===================================
+           FELÜLET
+        =================================== */
+
+        if (
+            typeof render === "function"
+        ) {
+
+            render();
+
+        }
+
+
+        /* ===================================
+           FELHŐ
+        =================================== */
+
+        if (
+            typeof initCloudSync === "function"
+        ) {
+
+            try {
+
+                await initCloudSync();
+
+            } catch (cloudError) {
+
+                /*
+                   A felhő hibája NE akadályozza
+                   meg a helyi alkalmazást.
+                */
+
+                console.warn(
+                    "BURTONIA: felhő inicializálási hiba:",
+                    cloudError
+                );
+
+            }
+
+        }
+
+
+        /* ===================================
+           FELHŐ UTÁNI FRISSÍTÉS
+        =================================== */
+
+        if (
+            typeof render === "function"
+        ) {
+
+            render();
+
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "BURTONIA: alkalmazásindítási hiba:",
+            error
+        );
+
+
+        /*
+           Végső próbálkozás:
+           a helyi felület akkor is jelenjen meg.
+        */
+
+        try {
+
+            if (
+                typeof render === "function"
+            ) {
+
+                render();
+
+            }
+
+        } catch (renderError) {
+
+            console.error(
+                "BURTONIA: render hiba:",
+                renderError
+            );
+
+        }
+
+    }
+
+}
+
+
+/* ===================================
+   FONTOS:
+   AZ APP.JS NINCS BENNE AZ INDEX.HTML-BEN
+=================================== */
+
+/*
+   Ez a fájl viszont be van töltve.
+
+   Ezért innen indítjuk az alkalmazást,
+   miután az összes script betöltődött.
+*/
+
+
+window.addEventListener(
+    "load",
+    function() {
+
+        startBurtoniaApp();
+
+    },
+    {
+        once: true
+    }
+);
